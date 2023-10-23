@@ -230,11 +230,11 @@ if(value.dow=="Monday"){
     });
     $('#m_calendar').fullCalendar({
       header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay,listWeek'
+        // left: 'prev,next today',
+        center: 'Teacher Scheduke',
+        right: 'agendaWeek,agendaDay,listWeek'
       },
-      defaultView: 'agendaDay',
+      defaultView: 'listWeek',
       hiddenDays: [ 0 ] ,
       // defaultDate: '2018-01-12',
       navLinks: true, // can click day/week names to navigate views
@@ -249,8 +249,10 @@ if(value.dow=="Monday"){
 
 
   openSubjectList(data:any) {
-    var iValue=0; 
-    this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
+    var iValue=0;
+    console.log(data); 
+    this.datatable = $('.m_datatable').mDatatable({
+    // this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
       // datasource definition
       data: {
         type: 'local',

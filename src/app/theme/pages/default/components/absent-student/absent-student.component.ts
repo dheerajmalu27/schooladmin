@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit,Renderer2, ElementRef   } from '@angular/core';
 import { Helpers } from '../../../../../helpers';
+import { CommonService } from '../../../../../_services/common-api.service';
 import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
 import {ReactiveFormsModule,FormsModule,FormGroup,FormControl,Validators,FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
@@ -21,7 +22,7 @@ export class AbsentStudentComponent implements OnInit, AfterViewInit {
   studentDetail:any;
    addStudentForm : any;
    editStudentForm : any;
-  constructor(private elRef: ElementRef, 
+  constructor(private commonservice: CommonService,private elRef: ElementRef, 
     private renderer: Renderer2,private _script: ScriptLoaderService,private baseservice: BaseService, private router: Router,public fb: FormBuilder) {
     this.getAbsentStudentList();
     
@@ -68,7 +69,10 @@ export class AbsentStudentComponent implements OnInit, AfterViewInit {
     $("#editTemplate").show();
     $("#listTemplate").hide();
   
-      
+  }
+  
+  tableToExcel(table:any){
+    this.commonservice.tableToExcel(table,"Absent-Student-List");
   }
   // tableToExcel(table){
   //   let uri = 'data:application/vnd.ms-excel;base64,'

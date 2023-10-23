@@ -67,7 +67,7 @@
 					
 				<div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
 					<div class="m-demo__preview m-demo__preview--btn">
-						<button type="button" (click)="generatePDF()" *ngFor="let data of item;let j = index" [ngClass]="buttonsetcolor(j)">
+						<button type="button"  (click)="generatePDF(data.testId+'-'+data.classId+'-'+data.divId)" *ngFor="let data of item;let j = index" [ngClass]="buttonsetcolor(j)">
 							{{data.className}}-{{data.divName}}
 						</button>
 					</div>

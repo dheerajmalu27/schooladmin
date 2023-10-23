@@ -37,13 +37,13 @@ this.getTestClassList();
       return 'btn m-btn--pill m-btn--air btn-warning';
     }
   }
-  public generatePDF() 
+  public generatePDF(str:string) 
   { 
-	let str='1-1-1';
+	// let str='1-1-1';
     let res = str.split("-");
     let postdata={"testId":res[0],"classId":res[1],"divId":res[2] };
-    this.baseservice.post('bulktestmarks',postdata).subscribe((data:any) => { 
-      if(data.testreportclassdata!=null && data.testreportclassdata!=''){
+    this.baseservice.get('gettestclassdivisionreportlist?testId='+res[0]+'&classId=' + res[1] + '&divId=' + res[2]).subscribe((data:any) => { 
+      if(data.reportlist!=null && data.reportlist!=''){
         this.genratefile();
             }
     },
@@ -88,7 +88,7 @@ private genratefile(){
   var heightLeft = imgHeight; 
   
   const contentDataURL = canvas.toDataURL('image/png') 
-  let pdf =new jsPDF('p', 'mm', [500, 500]);//new jspdf('p', 'mm', 'a4'); // A4 size page of PDF 
+  let pdf =new jsPDF('p', 'mm', 'a4');//new jspdf('p', 'mm', 'a4'); // A4 size page of PDF 
   var position = 0; 
   pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight) 
   pdf.save('MYPdf.pdf'); // Generated PDF  

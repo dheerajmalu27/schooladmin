@@ -83,8 +83,8 @@ private commonservice: CommonService,private _script: ScriptLoaderService,privat
   //           window.location.href = uri + base64(format(template, ctx))
   //               }
   tableToExcel(table:any){
-    this.commonservice.tableToExcel(table);
-                 }
+    this.commonservice.tableToExcel(table,"Pending-Marks-Test-List");
+  }
   ngAfterViewInit() {
     
     

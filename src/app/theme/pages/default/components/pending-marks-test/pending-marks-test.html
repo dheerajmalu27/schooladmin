@@ -195,16 +195,16 @@
                             </span>
                           </a>
                         </li>
-                        <li class="m-nav__item">
+                        <!-- <li class="m-nav__item">
                           <a href="" class="m-nav__link">
                             <i class="m-nav__link-icon flaticon-chat-1"></i>
                             <span class="m-nav__link-text">
                               Upload File
                             </span>
                           </a>
-                        </li>
+                        </li> -->
                         <li class="m-nav__item">
-                          <a (click)="tableToExcel('exportTable')" href="" class="m-nav__link">
+                          <a (click)="tableToExcel('exportTable')" href="#" class="m-nav__link">
                             <i class="m-nav__link-icon flaticon-multimedia-2"></i>
                             <span class="m-nav__link-text">
                               Export List
@@ -255,21 +255,20 @@
     <thead>
       <tr>
         <th>Sr No</th>
-        <th>Roll No</th>
+        <th>Test Name</th>
         <th>Class-Div</th>
-        <th>Student Name</th>
-        <th>Parent Name</th>
-        <th>Contact No</th>
+        <th>Subject Name</th>
+        <th>Teacher Name</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let student of studentData;let i = index">
         <td>{{i+1}}</td>
-        <td>{{student.rollNo}}</td>
+        <td>{{student.testName}}</td>
         <td>{{student.className}} - {{student.divName}}</td>
-        <td>{{student.firstName}} {{student.lastName}}</td>
-        <td>{{student.fatherName}} {{student.lastName}}</td>
-        <td>{{student.parentNumber}}</td>
+        <td>{{student.subName}}</td>
+        <td>{{student.teacherName}}</td>
+
       </tr>
     </tbody>
   </table>

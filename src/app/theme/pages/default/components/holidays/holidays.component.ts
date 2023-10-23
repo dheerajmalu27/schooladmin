@@ -63,10 +63,13 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
     
   });
   var temp = this;
-  $('#m_datepickerSet').on('change', function (e:any) {
-    console.log(e.value);
-    temp.addHolidaysForm.controls['holidayDate'].setValue(e.value);
-  });
+  $('#m_datepickerSet').on('change', () => {
+    let value = $('#m_datepickerSet').val();
+    console.log(value);
+    this.addHolidaysForm.controls['holidayDate'].setValue(value);
+});
+
+
     $("#addTemplate").show();
     $("#editTemplate").hide();
     $("#listTemplate").hide();
@@ -83,10 +86,12 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
     }
   });
   var temp = this;
-  $('#m_datepickerSet1').on('change', function (e:any) {
-    console.log(e.value);
-    temp.editHolidaysForm.controls['holidayDate'].setValue(e.value);
-  });
+
+  $('#m_datepickerSet1').on('change', () => {
+    let value = $('#m_datepickerSet1').val();
+    console.log(value);
+    this.editHolidaysForm.controls['holidayDate'].setValue(value);
+});
     $("#addTemplate").hide();
     $("#editTemplate").show();
     $("#listTemplate").hide();

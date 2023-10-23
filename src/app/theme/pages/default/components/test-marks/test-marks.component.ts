@@ -78,7 +78,7 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
   //           window.location.href = uri + base64(format(template, ctx))
   //               }
   tableToExcel(table:any){
-   this.ComService.tableToExcel(table);
+   this.ComService.tableToExcel(table,'test-marks');
                 }
   ngAfterViewInit() {
     

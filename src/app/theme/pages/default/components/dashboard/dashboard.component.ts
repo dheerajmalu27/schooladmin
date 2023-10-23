@@ -144,7 +144,7 @@ public showabsentstudentlist(data: any) {
   let i = 1;
 
   // Assuming you've set up the datatable correctly
-  this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
+  this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable1')).mDatatable({
     // datasource definition
     data: {
       type: 'local',
@@ -211,17 +211,7 @@ public showabsentstudentlist(data: any) {
      field: "attendanceDate",
      title: "Attendance Date",
      
-   },
-     {
-      field: "id",
-      title: "Actions",
-
-      template: function (row:any) {
-        return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="'+row.id+'"></i></span>';
-       
-       
-      }
-    }]
+   }]
   });
 
    const query = this.datatable.getDataSourceQuery();

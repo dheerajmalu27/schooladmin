@@ -37,9 +37,9 @@ this.getTestClassList();
       return 'btn m-btn--pill m-btn--air btn-warning';
     }
   }
-  public generatePDF() 
+  public generatePDF(str:string) 
   { 
-	let str='1-1-1';
+	// let str='1-1-1';
     let res = str.split("-");
     let postdata={"testId":res[0],"classId":res[1],"divId":res[2] };
     this.baseservice.post('bulktestmarks',postdata).subscribe((data:any) => { 
@@ -63,6 +63,7 @@ this.getTestClassList();
   } 
   private getTestClassList() {
     this.baseservice.get('testclassreportlist').subscribe((data:any) => {
+      console.log(data);
       if(data.testreportclasslist!=null && data.testreportclasslist!=''){
         this.classData=_.groupBy(data.testreportclasslist,ct => ct.testId);
         this.classData=_.toArray(this.classData);

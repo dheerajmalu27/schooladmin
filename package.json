@@ -24,6 +24,7 @@
     "@fullcalendar/core": "^6.1.9",
     "@fullcalendar/daygrid": "^6.1.9",
     "@ng-bootstrap/ng-bootstrap": "^15.1.1",
+    "@popperjs/core": "^2.11.8",
     "amcharts3": "^3.21.15",
     "bootstrap": "^5.3.2",
     "core-js": "^3.33.0",

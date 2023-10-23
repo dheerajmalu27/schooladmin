@@ -155,17 +155,21 @@ private commonservice: CommonService,private _script: ScriptLoaderService, priva
     2000);
     
   }
-  // tableToExcel(table){
-  //   let uri = 'data:application/vnd.ms-excel;base64,'
-  //       , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
-  //       , base64 = function(s) { return window.btoa(decodeURIComponent(encodeURIComponent(s))) }
-  //       , format = function(s,c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-  //           if (!table.nodeType) table = document.getElementById(table)
-  //           var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-  //           window.location.href = uri + base64(format(template, ctx))
-  //               }
+//    tableToExcel(table: any, worksheetName: string) {
+//     const uri = 'data:application/vnd.ms-excel;base64,';
+//     const template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>';
+//     const base64 = (s: any) => window.btoa(decodeURIComponent(encodeURIComponent(s)));
+//     const format = (s: any, c: any) => s.replace(/{(\w+)}/g, (m: any, p: any) => c[p]);
+
+//     if (!table.nodeType) table = document.getElementById(table);
+//     const ctx = {
+//         worksheet: worksheetName || 'Worksheet',
+//         table: table.innerHTML
+//     };
+//     window.location.href = uri + base64(format(template, ctx));
+// }
   tableToExcel(table:any){
-    this.commonservice.tableToExcel(table);
+    this.commonservice.tableToExcel(table,'Student List');
                  }
   ngAfterViewInit() {
    
@@ -241,15 +245,17 @@ selectFile(event: any) {
   this.selectedFiles = event.target.files[0];
 }
 public addStudentSubmitForm(data:any){
-  data.stateId=$('.state_select2_drop_down').val();
-  data.cityId=$('.city_select2_drop_down').val();
-  data.divId=$('.division_select2_drop_down').val();
-  data.classId=$('.class_select2_drop_down').val();
-  data.dateOfBirth=$("#m_datepickerSet").val();
-  console.log(this.selectedFiles);
-  
-  const formData: FormData = new FormData(data);
+  const formData: FormData = new FormData();
 
+    formData.append('stateId', $('.state_select2_drop_down').val() as string);
+    formData.append('cityId', $('.city_select2_drop_down').val() as string);
+    formData.append('divId', $('.division_select2_drop_down').val() as string);
+    formData.append('classId', $('.class_select2_drop_down').val() as string);
+    formData.append('dateOfBirth', $("#m_datepickerSet").val() as string);
+
+    if (this.selectedFiles && this.selectedFiles.length > 0) {
+        formData.append('image', this.selectedFiles[0]);
+    }
 if(data.id!=''&& data.id!=undefined && data.id!=null)  {
 data.image=this.selectedFiles;
 this.baseservice.put('student/'+data.id,data).subscribe((data:any) => {

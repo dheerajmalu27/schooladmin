@@ -85,6 +85,7 @@ export class SubjectComponent implements OnInit, AfterViewInit {
   }
 private getSubjectList() {
     this.baseservice.get('subject').subscribe((data: any) => {
+      console.log(data);
         this.subjectData = data.subject;
         this.showtablerecord(data);
     },
@@ -96,10 +97,12 @@ private getSubjectList() {
 
 
 showtablerecord(data:any) {
-  this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
+  console.log(data);
+  let i=1;
+  this.datatable = $('.m_datatable').mDatatable({
     data: {
       type: 'local',
-      source: data.subjects,
+      source: data.subject,
       pageSize: 10
     },
     layout: {
@@ -113,28 +116,37 @@ showtablerecord(data:any) {
     pagination: true,
     columns: [
       {
-        field: 'id',
-        title: 'Sr.No.'
+        field: "",
+        title: "Sr.No.",
+        textAlign: 'center',
+        sortable:false,
+        template: function (row:any) {
+          return i++;
+        },
       },
       {
         field: 'subName',
-        title: 'Subject Name'
+        title: 'Subject Name',
+        template: function (row:any) {
+         
+          return row.subName;
+        },
       },
-      {
-        field: 'active',
-        title: 'Status',
-        template: (row: any) => {
-          const status: { [key: string]: { title: string, class: string } } = {
-            'true': { title: 'Active', class: 'm-badge--success' },
-            'false': { title: 'Inactive', class: 'm-badge--danger' }
-          };
+      // {
+      //   field: 'active',
+      //   title: 'Status',
+      //   template: (row: any) => {
+      //     const status: { [key: string]: { title: string, class: string } } = {
+      //       'true': { title: 'Active', class: 'm-badge--success' },
+      //       'false': { title: 'Inactive', class: 'm-badge--danger' }
+      //     };
           
-          // Check if the row.active value exists in the status object, if not, default to the inactive status.
-          const currentStatus = status[row.active.toString()] || status['false'];
+      //     // Check if the row.active value exists in the status object, if not, default to the inactive status.
+      //     const currentStatus = status[row.active.toString()] || status['false'];
           
-          return `<span class="m-badge ${currentStatus.class} m-badge--wide">${currentStatus.title}</span>`;
-        }        
-      },
+      //     return `<span class="m-badge ${currentStatus.class} m-badge--wide">${currentStatus.title}</span>`;
+      //   }        
+      // },
       {
         field: 'createdAt',
         width: 110,
