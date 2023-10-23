@@ -1,0 +1,213 @@
+import { Component, OnInit, ViewEncapsulation, AfterViewInit,Renderer2, ElementRef  } from '@angular/core';
+import { Helpers } from '../../../../../helpers';
+import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
+import { BaseService } from '../../../../../_services/base.service';
+import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import * as _ from 'lodash';
+// import { BOOL_TYPE } from '@angular/compiler/src/output/output_ast';
+declare let $: any
+@Component({
+  selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
+  templateUrl: "./pending-attendance-record.html",
+  encapsulation: ViewEncapsulation.None,
+})
+export class PendingAttendanceRecordComponent implements OnInit, AfterViewInit {
+  attendancePending: any = null;
+  SrNo: any = 1;
+  datatable: any ;
+  divisionData: any = null;
+  classData: any = null;
+  studentData: any = null;
+  showTemplate: any;
+  dateOfAttendance: any = null;
+  selectedFiles: any;
+  addAttenaceFormList: any;
+  constructor(private elRef: ElementRef, 
+    private renderer: Renderer2,private _script: ScriptLoaderService, private baseservice: BaseService
+    , private router: Router, public fb: FormBuilder) {
+
+  }
+  ngOnInit() {
+   
+    this.listTemplate();
+    
+  }
+  listTemplate() {
+    this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+    'assets/demo/default/custom/components/datatables/base/html-table.js');
+    $("#addTemplate").hide();
+    $("#editTemplate").hide();
+    $("#listTemplate").show();
+    this.getAttendancePendingList();
+  }
+  addTemplate() {
+    $("#addTemplate").show();
+    $("#editTemplate").hide();
+    $("#listTemplate").hide();
+    
+    this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+      'assets/demo/default/custom/components/forms/widgets/bootstrap-datepicker.js');
+    this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+      'assets/demo/default/custom/components/forms/widgets/select2.js');
+    $('#m_datepickerSet').datepicker({
+      format: "yyyy-mm-dd",
+      todayHighlight: true,
+      templates: {
+        leftArrow: '<i class="la la-angle-left"></i>',
+        rightArrow: '<i class="la la-angle-right"></i>'
+      }
+    });
+    $('#m_datepickerSet').on('change', function () {
+    });
+  }
+  
+  private getAttendancePendingList() {
+    this.baseservice.get('pendingattendance').subscribe((data:any) => {
+      this.attendancePending = data;
+     
+      this.showtablerecord(data);
+    },
+    (err) => {
+    //  localStorage.clear();
+    });
+  }
+  private getAttendanceData(attendanceId:any){
+ 
+  let excludeProjects = [Number(attendanceId)];
+  let pendingattendanceData=_.filter(this.attendancePending, (v) => _.includes(excludeProjects, v.row_number));
+  if(pendingattendanceData.length>0){
+  this.addAttendanceSubmitForm(pendingattendanceData[0]);
+  this.addTemplate();
+  }
+  }
+
+  public addAttendanceSubmitForm(data:any){
+   
+    if (data.selectedDate != '' && data.classId!= '' && data.divId!= '') {
+      this.baseservice.get('addattendancestudentlist?classId=' + data.classId + '&divId=' + data.divId+'&date='+data.selectedDate).subscribe((data:any) => {  
+        this.studentData = data;    
+      },
+        (err) => {
+          console.log(err);        
+        });
+    }
+  }
+
+  addStudentAttenaceSumitForm(data:any){
+    
+    var newArrData = _.map(data, function(o) {
+      o.attendanceResult=JSON.parse(o.attendanceResult);
+      return _.omit(o, ['studentName', 'className','divName','rollNo']); });
+  
+    let postdata=JSON.stringify(newArrData);
+    this.baseservice.post('bulkattendance',postdata).subscribe((data:any) => { 
+      this.datatable.destroy();
+      this.listTemplate();
+    },
+    (err) => {
+     console.log(err);
+    //  localStorage.clear();
+    });
+  }
+
+  public showtablerecord(data: any): void {
+    let i = 1;
+
+    this.datatable = $('.m_datatable').mDatatable({
+      data: {
+        type: 'local',
+        source: data,
+        pageSize: 10,
+      },
+      layout: {
+        theme: 'default',
+        class: '',
+        scroll: false,
+        height: 450,
+        footer: false,
+      },
+      sortable: true,
+      pagination: true,
+      columns: [
+        {
+          field: '',
+          title: 'Sr.No.',
+          textAlign: 'center',
+          sortable: false,
+          template: (row: any) => {
+            return i++;
+          },
+        },
+        {
+          field: 'className',
+          title: 'Class-Div',
+          template: (row: any) => {
+            return row.className + '-' + row.divName;
+          },
+        },
+        {
+          field: 'teacherName',
+          title: 'Class Teacher',
+        },
+        {
+          field: 'selectedDate',
+          title: 'Date',
+        },
+        {
+          field: 'active',
+          title: 'Status',
+          template: (row: any) => {
+            return '<span class="m-badge m-badge-brand m-badge-wide"> Pending </span>';
+          },
+        },
+        {
+          field: 'id',
+          title: 'Action',
+          template: (row: any) => {
+            return `<span class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" (click)="editAttendance(${row.row_number})"><i class="edit-button la la-edit" data-id="${row.row_number}"></i></span>`;
+          },
+        },
+      ],
+    });
+
+    const query = this.datatable.getDataSourceQuery();
+
+    const formSearch = this.elRef.nativeElement.querySelector('#m_form_search');
+    this.renderer.listen(formSearch, 'keyup', (event: KeyboardEvent) => {
+      this.datatable.search((event.target as HTMLInputElement).value.toLowerCase());
+    });
+    formSearch.value = query.generalSearch;
+
+    const formStatus = this.elRef.nativeElement.querySelector('#m_form_status');
+    this.renderer.listen(formStatus, 'change', () => {
+      this.datatable.search(formStatus.value, 'Status');
+    });
+    formStatus.value = query.Status || '';
+
+    const formType = this.elRef.nativeElement.querySelector('#m_form_type');
+    this.renderer.listen(formType, 'change', () => {
+      this.datatable.search(formType.value, 'Type');
+    });
+    formType.value = query.Type || '';
+
+    // Avoid using jQuery for event handling
+    const editButtons = this.elRef.nativeElement.querySelectorAll('.edit-button');
+    editButtons.forEach((button: HTMLButtonElement) => {
+      this.renderer.listen(button, 'click', (event: Event) => {
+        event.preventDefault();
+        const id = button.getAttribute('data-id');
+        this.getAttendanceData(id);
+      });
+    });
+
+    // Use Angular for event binding
+  }
+
+  ngAfterViewInit() {
+    this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+      'assets/demo/default/custom/components/datatables/base/html-table.js');
+
+
+  }
+}

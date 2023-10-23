@@ -1,0 +1,419 @@
+<div id="addTemplate">
+  <div class="m-subheader">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h3 class="m-subheader__title m-subheader__title--separator">
+          Teacher List
+        </h3>
+        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+          <li class="m-nav__item m-nav__item--home">
+            <a (click)="listTemplate()" href="#" class="m-nav__link m-nav__link--icon">
+              <i class="m-nav__link-icon la la-home"></i>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            -
+          </li>
+          <li class="m-nav__item m-nav__item--home">
+            <a href="#" class="m-nav__link m-nav__link--icon">
+              {{TitleSet}}
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <div class="m-content">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="m-portlet">
+          <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+              <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                  <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                  {{TitleSet}}
+                </h3>
+              </div>
+            </div>
+          </div>
+           <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" [formGroup]="addTeacherForm"  (ngSubmit)="addTeacherSubmitForm(addTeacherForm.value)">
+            <div class="m-portlet__body">
+              <div class="form-group m-form__group row">
+                <div class="col-lg-4" [ngClass]="{'has-danger':!addTeacherForm.controls['firstName'].valid && addTeacherForm.controls['firstName'].touched}">
+                  <label class="col-form-label">
+                    First Name:
+                  </label>
+                  <div>
+                    <input class="form-control" type="text" placeholder="first name" formControlName="firstName">
+                    <span *ngIf="addTeacherForm.controls['firstName'].hasError('required') && addTeacherForm.controls['firstName'].touched"
+                      class="m--font-danger">Please enter first name.</span>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <label class="col-form-label">
+                    Middle Name:
+                  </label>
+                  <div>
+                    <input class="form-control" type="text" placeholder="middle name" formControlName="middleName">
+
+                  </div>
+                </div>
+                <div class="col-lg-4" [ngClass]="{'has-danger':!addTeacherForm.controls['lastName'].valid && addTeacherForm.controls['lastName'].touched}">
+                  <label class="col-form-label">
+                    Last Name:
+                  </label>
+                  <div>
+                    <input class="form-control" type="text" placeholder="last name" formControlName="lastName">
+                    <span *ngIf="addTeacherForm.controls['lastName'].hasError('required') && addTeacherForm.controls['lastName'].touched"
+                      class="m--font-danger">Please enter last name.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <div class="col-lg-4">
+                  <label class="col-form-label">
+                    Teacher Image:
+                  </label>
+                  <div>
+                    <input class="form-control" type="file" (change)="selectFile($event)" formControlName="image">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <label class="col-form-label">
+                    Date of birth:
+                  </label>
+                  <div class='input-group date'>
+                    <input type='text' id='m_datepickerSet' class="form-control m-input" formControlName="dob"
+                      name="dob" placeholder="Select date">
+                    <span class="input-group-addon">
+                      <i class="la la-calendar-check-o"></i>
+                    </span>
+
+                  </div>
+                  <!-- <span *ngIf="addTeacherForm.controls['dob'].hasError('required')" class="m--font-danger">Please enter
+                    Date Of Birth.</span> -->
+                </div>
+                <div class="col-lg-4">
+                  <label class="col-form-label">
+                    Gender:
+                  </label>
+                  <div>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="gender" value="1" [checked]="addTeacherForm.controls['gender'].value ==1"
+                          formControlName="gender">
+                        Male
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="gender" value="2" [checked]="addTeacherForm.controls['gender'].value ==2"
+                          formControlName="gender">
+                        Female
+                      </label>
+                    </div>
+                    <!-- <span *ngIf="addTeacherForm.controls['gender'].hasError('required') && addTeacherForm.controls['gender'].touched"
+                        class="m--font-danger">Please select gender.</span> -->
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="form-group m-form__group row">
+                <div class="col-lg-4">
+                  <label class="col-form-label">
+                    Qualification:
+                  </label>
+                  <div>
+                    <input class="form-control" type="text" placeholder="" formControlName="qualification">
+
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <label class="col-form-label">
+                    Experience:
+                  </label>
+                  <div>
+                    <input class="form-control" type="text" placeholder="" formControlName="experience">
+
+                  </div>
+                </div>
+
+
+
+              </div>
+              <div class="form-group m-form__group row">
+                <div class="col-lg-4">
+                  <label class="col-form-label">
+                    Blood Group:
+                  </label>
+                  <div>
+                    <input class="form-control" type="text" placeholder="" formControlName="bloodGroup">
+
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <label class="col-form-label">
+                    Nationality:
+                  </label>
+                  <div>
+                    <input class="form-control" type="text" placeholder="nationality" formControlName="nationality">
+                   
+                  </div>
+                </div>
+
+                <div class="col-lg-4">
+                  <label class="col-form-label">
+                    Caste:
+                  </label>
+                  <div>
+                    <input class="form-control" type="text" placeholder="" formControlName="caste">
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group m-form__group row">
+                <div class="col-lg-4">
+                  <label class="col-form-label">
+                    Residential Address:
+                  </label>
+                  <div>
+                    <input class="form-control" type="text" placeholder="address" formControlName="address">
+                    <span *ngIf="addTeacherForm.controls['address'].hasError('required') && addTeacherForm.controls['address'].touched"
+                      class="m--font-danger">Please enter teacher address.</span>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <label class="col-form-label">
+                    Select State
+                  </label>
+                  <div>
+                    <select class="form-control m-select2 state_select2_drop_down" id="m_select2_1" formControlName="stateId">
+                    </select>
+                    <!-- <span *ngIf="addTeacherForm.controls['stateId'].hasError('required') && addTeacherForm.controls['stateId'].touched"
+                      class="m--font-danger">Please select state name.</span> -->
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <label class="col-form-label">
+                    Select City
+                  </label>
+                  <div>
+                    <select class="form-control m-select2 city_select2_drop_down" id="m_select2_2" formControlName="cityId">
+                    </select>
+                    <!-- <span *ngIf="addTeacherForm.controls['cityId'].hasError('required') && addTeacherForm.controls['cityId'].touched"
+                      class="m--font-danger">Please select city name.</span> -->
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-group m-form__group row">
+                <div class="col-lg-4" [ngClass]="{'has-danger':!addTeacherForm.controls['mobileNumber'].valid && addTeacherForm.controls['mobileNumber'].touched}">
+                  <label class="col-form-label">
+                    Mobile No:
+                  </label>
+                  <div>
+                    <input class="form-control" type="text" placeholder="mobile Number" formControlName="mobileNumber">
+                    <span *ngIf="addTeacherForm.controls['mobileNumber'].hasError('required') && addTeacherForm.controls['mobileNumber'].touched"
+                      class="m--font-danger">Please enter mobile number.</span>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <label class="col-form-label">
+                    mobile Number Second:
+                  </label>
+                  <div>
+                    <input class="form-control" type="text" placeholder="mobile number." formControlName="mobileNumberSecond">
+
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                    <label class="col-form-label">
+                      Joining Date:
+                    </label>
+                    <div class='input-group date'>
+                      <input type='text' id='m_datepickerSet1' class="form-control m-input" formControlName="joiningDate"
+                        name="joiningDate" placeholder="Select date">
+                      <span class="input-group-addon">
+                        <i class="la la-calendar-check-o"></i>
+                      </span>
+  
+                    </div>
+                    <!-- <span *ngIf="addTeacherForm.controls['dob'].hasError('required')" class="m--font-danger">Please enter
+                      Date Of Birth.</span> -->
+                  </div>
+
+              </div>
+
+            </div>
+            <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+              <div class="m-form__actions m-form__actions--solid">
+                <div class="row">
+                  <div class="col-lg-2"></div>
+                  <div class="col-lg-6">
+                    <button type="submit" class="btn btn-brand" [disabled]="!addTeacherForm.valid">Submit</button>
+
+                    <button type="button" (click)="listTemplate()" class="btn btn-secondary">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="listTemplate">
+  <div class="m-subheader">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h3 class="m-subheader__title m-subheader__title--separator">
+          Teacher List
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="m-content">
+    <div class="m-portlet m-portlet--mobile">
+      <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+              Teacher List
+            </h3>
+          </div>
+        </div>
+        <div class="m-portlet__head-tools">
+          <ul class="m-portlet__nav">
+            <li class="m-portlet__nav-item">
+              <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                data-dropdown-toggle="hover" aria-expanded="true">
+                <a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                  <i class="la la-ellipsis-h m--font-brand"></i>
+                </a>
+                <div class="m-dropdown__wrapper">
+                  <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                  <div class="m-dropdown__inner">
+                    <div class="m-dropdown__body">
+                      <div class="m-dropdown__content">
+                        <ul class="m-nav">
+                          <li class="m-nav__section m-nav__section--first">
+                            <span class="m-nav__section-text">
+                              Quick Actions
+                            </span>
+                          </li>
+
+                          <li class="m-nav__item">
+                            <a href="" class="m-nav__link">
+                              <i class="m-nav__link-icon flaticon-chat-1"></i>
+                              <span class="m-nav__link-text">
+                                Send Messages
+                              </span>
+                            </a>
+                          </li>
+                          <li class="m-nav__item">
+                            <a href="" class="m-nav__link">
+                              <i class="m-nav__link-icon flaticon-chat-1"></i>
+                              <span class="m-nav__link-text">
+                                Upload File
+                              </span>
+                            </a>
+                          </li>
+                          <li class="m-nav__item">
+                            <a (click)="tableToExcel('exportTable', 'EmployeeList')" href="" class="m-nav__link">
+                              <i class="m-nav__link-icon flaticon-multimedia-2"></i>
+                              <span class="m-nav__link-text">
+                                Export List
+                              </span>
+                            </a>
+                          </li>
+
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      <div class="m-portlet__body">
+        <!--begin: Search Form -->
+        <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+          <div class="row align-items-center">
+            <div class="col-xl-8 order-2 order-xl-1">
+              <div class="form-group m-form__group row align-items-center">
+                <div class="col-md-4">
+                  <div class="m-input-icon m-input-icon--left">
+                    <input type="text" class="form-control m-input m-input--solid" placeholder="Search..." id="m_form_search">
+                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                      <span>
+                        <i class="la la-search"></i>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+              <a (click)="addTemplate()" href="#" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+
+
+                <span>
+                    <i class="flaticon-user-add"></i>
+                    <span>
+                  Add Teacher
+                    </span>
+                </span>
+
+              </a>
+              <div class="m-separator m-separator--dashed d-xl-none"></div>
+            </div>
+          </div>
+        </div>
+        <!--end: Search Form -->
+        <!--begin: Datatable -->
+
+        <!--begin: Datatable -->
+        <div class="m_datatable" id="local_data"></div>
+        <!--end: Datatable -->
+        <!--end: Datatable -->
+      </div>
+    </div>
+  </div>
+</div>
+<div id="exportTable" style="display:none">
+  <table>
+    <thead>
+      <tr>
+        <th>Sr No</th>
+        <th>Names</th>
+        <th>Class-Div</th>
+        <th>Contact No</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let teacher of teacherData;let i = index">
+        <td>{{i+1}}</td>
+        <td>{{teacher.firstName}} {{teacher.lastName}}</td>
+        <td>{{teacher.className}}-{{teacher.divName}}</td>
+        <td>{{teacher.mobileNumber}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

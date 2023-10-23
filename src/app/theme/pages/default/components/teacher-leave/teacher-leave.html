@@ -1,0 +1,258 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+		<div class="d-flex align-items-center">
+			<div class="mr-auto">
+				<h3 class="m-subheader__title m-subheader__title--separator">
+					Teacher Leave List
+				</h3>
+				
+			</div>
+			<div>
+				
+			</div>
+		</div>
+	</div>
+	<!-- END: Subheader -->
+	
+		<div class="m-content" id="addTemplate">
+	
+			<div class="row">
+				<div class="col-lg-12">
+					<!--begin::Portlet-->
+					<div class="m-portlet">
+						<div class="m-portlet__head">
+							<div class="m-portlet__head-caption">
+								<div class="m-portlet__head-title">
+									<span class="m-portlet__head-icon m--hide">
+										<i class="la la-gear"></i>
+									</span>
+									<h3 class="m-portlet__head-text">
+										Add Leave
+									</h3>
+								</div>
+							</div>
+						</div>
+	
+						<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" [formGroup]="addTeacherLeaveForm" (ngSubmit)="addSubjectSubmitForm(addTeacherLeaveForm.value)">
+							<div class="m-portlet__body">
+								<div class="form-group m-form__group row" [ngClass]="{'has-danger':!addTeacherLeaveForm.controls['subjectName'].valid && addTeacherLeaveForm.controls['subjectName'].touched}">
+									<label class="col-lg-2 col-form-label">Subject Title:</label>
+									<div class="col-lg-6">
+										<input class="form-control" type="text" placeholder="subject name"formControlName="subjectName">
+										<span *ngIf="addTeacherLeaveForm.controls['subjectName'].hasError('required') && addTeacherLeaveForm.controls['subjectName'].touched"
+										 class="m--font-danger">You must include a subject title.</span>
+									</div>
+								</div>
+								
+								<div class="form-group m-form__group row">
+										<label class="col-lg-2 col-form-label">From:</label>
+										<div class="col-lg-6">
+											<div class='input-group date' id='m_datepicker_2'>
+												<input type='text' class="form-control m-input"formControlName="from" readonly placeholder="Select date" name="dob">
+												<span class="input-group-addon">
+													<i class="la la-calendar-check-o"></i>
+												</span>
+											</div>
+											<span class="m-form__help">
+												Please enter your leave date
+											</span>
+										</div>
+									</div>
+
+									<div class="form-group m-form__group row">
+											<label class="col-lg-2 col-form-label">To:</label>
+										<div class="col-lg-6">
+											<div class='input-group date' id='m_datepicker_2'>
+													<input type='text' class="form-control m-input"formControlName="to" readonly placeholder="Select date" name="dob">
+													<span class="input-group-addon">
+														<i class="la la-calendar-check-o"></i>
+													</span>
+												</div>
+												<span class="m-form__help">
+														Please enter your leave date upto
+												</span>
+											</div>
+										</div>
+										<div class="form-group m-form__group row">
+												<label class="col-lg-2 col-form-label">Description:</label>	
+											<div class="col-lg-6">
+													
+													<div class="m-input-icon m-input-icon--right">
+														<input type="text" class="form-control m-input" placeholder="Enter your address"formControlName="Description" name="address">
+														<span class="m-input-icon__icon m-input-icon__icon--right">
+															<span>
+																<i class="la la-map-marker"></i>
+															</span>
+														</span>
+													</div>
+													
+												</div>
+											</div>
+							</div>
+							<div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+								<div class="m-form__actions m-form__actions--solid">
+									<div class="row">
+										<div class="col-lg-2"></div>
+										<div class="col-lg-6">
+											<button type="submit" class="btn btn-brand" [disabled]="!addTeacherLeaveForm.valid">Submit</button>
+	
+											<button type="button" (click)="listTemplate()" class="btn btn-secondary">Cancel</button>
+										</div>
+									</div>
+								</div>
+							</div>
+	
+	
+						</form>
+						<!--end::Form-->
+					</div>
+					<!--end::Portlet-->
+				</div>
+			</div>
+		</div>
+		<div class="m-content" id="editTemplate">
+	
+			<div class="row">
+				<div class="col-lg-12">
+					<!--begin::Portlet-->
+					<div class="m-portlet">
+						<div class="m-portlet__head">
+							<div class="m-portlet__head-caption">
+								<div class="m-portlet__head-title">
+									<span class="m-portlet__head-icon m--hide">
+										<i class="la la-gear"></i>
+									</span>
+									<h3 class="m-portlet__head-text">
+										Edit Subject
+									</h3>
+								</div>
+							</div>
+						</div>
+						<!--begin::Form-->
+						<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" [formGroup]="editTeacherLeaveForm" (ngSubmit)="editSubjectSubmitForm(editTeacherLeaveForm.value)">
+							<div class="m-portlet__body">
+								<div class="form-group m-form__group row" [ngClass]="{'has-danger':!editTeacherLeaveForm.controls['subjectName'].valid && editTeacherLeaveForm.controls['subjectName'].touched}">
+									<label class="col-lg-2 col-form-label">Subject Title:</label>
+									<div class="col-lg-6">
+										<input class="form-control" type="text" placeholder="subject name" formControlName="subjectName">
+										<span *ngIf="editTeacherLeaveForm.controls['subjectName'].hasError('required') && editTeacherLeaveForm.controls['subjectName'].touched"
+										 class="m--font-danger">You must include a subject title.</span>
+									</div>
+								</div>
+								<div class="form-group m-form__group row">
+										<label class="col-lg-2 col-form-label">From:</label>
+										<div class="col-lg-6">
+											<div class='input-group date' id='m_datepicker_2'>
+												<input type='text' class="form-control m-input" formControlName="from" readonly placeholder="Select date" name="dob">
+												<span class="input-group-addon">
+													<i class="la la-calendar-check-o"></i>
+												</span>
+											</div>
+											<span class="m-form__help">
+												Please enter your leave date
+											</span>
+										</div>
+									</div>
+
+									<div class="form-group m-form__group row">
+											<label class="col-lg-2 col-form-label">To:</label>
+										<div class="col-lg-6">
+											<div class='input-group date' id='m_datepicker_2'>
+													<input type='text' class="form-control m-input" formControlName="to" readonly placeholder="Select date" name="dob">
+													<span class="input-group-addon">
+														<i class="la la-calendar-check-o"></i>
+													</span>
+												</div>
+												<span class="m-form__help">
+														Please enter your leave date upto
+												</span>
+											</div>
+										</div>
+										<div class="form-group m-form__group row">
+												<label class="col-lg-2 col-form-label">Description:</label>	
+											<div class="col-lg-6">
+													
+													<div class="m-input-icon m-input-icon--right">
+														<input type="text" class="form-control m-input" placeholder="Enter your address" formControlName="Description" name="address">
+														<span class="m-input-icon__icon m-input-icon__icon--right">
+															<span>
+																<i class="la la-map-marker"></i>
+															</span>
+														</span>
+													</div>
+													
+												</div>
+											</div>
+								
+							</div>
+							<div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+								<div class="m-form__actions m-form__actions--solid">
+									<div class="row">
+										<div class="col-lg-2"></div>
+										<div class="col-lg-6">
+											<button type="submit" class="btn btn-brand" [disabled]="!editTeacherLeaveForm.valid">Submit</button>
+	
+											<button type="button" (click)="listTemplate()" class="btn btn-secondary">Cancel</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+						<!--end::Form-->
+						<!--end::Form-->
+					</div>
+					<!--end::Portlet-->
+				</div>
+			</div>
+		</div>
+		<div class="m-content" id="listTemplate">
+			<div class="m-portlet m-portlet--mobile">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text">
+								Teacher Leave List
+							</h3>
+						</div> 
+					</div>
+					
+				</div>
+				<div class="m-portlet__body">
+					<!--begin: Search Form -->
+					<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+						<div class="row align-items-center">
+							<div class="col-xl-8 order-2 order-xl-1">
+								<div class="form-group m-form__group row align-items-center">
+									<div class="col-md-4">
+										<div class="m-input-icon m-input-icon--left">
+											<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." id="m_form_search">
+											<span class="m-input-icon__icon m-input-icon__icon--left">
+												<span>
+													<i class="la la-search"></i>
+												</span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-4 order-1 order-xl-2 m--align-right">
+								<a (click)="addTemplate()" href="#" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+									<span>
+										<i class="la la-cart-plus"></i>
+										<span>
+											add Leave
+										</span>
+									</span>
+								</a>
+								<div class="m-separator m-separator--dashed d-xl-none"></div>
+							</div>
+						</div>
+					</div>
+					<!--end: Search Form -->
+					<!--begin: Datatable -->
+				<div class="m_datatable" id="local_data"></div>
+				<!--end: Datatable -->
+				</div>
+			</div>
+		</div>
+	
