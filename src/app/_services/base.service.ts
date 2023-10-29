@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-// import { HttpService } from './http.service'; // Make sure this is also updated
+import { catchError, map } from 'rxjs/operators';
 import { Error } from '../interfaces/error.interface';
 import { Router } from '@angular/router';
 import { ServerResponse } from '../interfaces/server-response.interface';
@@ -10,50 +9,58 @@ import { appVariables } from './../app.constants';
 import { CustomErrorHandlerService } from './custom-error-handler.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BaseService {
   constructor(
     private router: Router,
-    public http: HttpClient,  // This needs to use HttpClient or be updated
-    public errorHandler: CustomErrorHandlerService
+    private http: HttpClient,
+    private errorHandler: CustomErrorHandlerService
   ) {}
 
-  get(url:any): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(appVariables.apiUrl + url)
+  get(url: any): Observable<ServerResponse> {
+    return this.http
+      .get<ServerResponse>(appVariables.apiUrl + url)
       .pipe(
-        map(res => this.handleResponse(res)),
+        map((res) => this.handleResponse(res)),
         catchError(this.catchAuthError.bind(this))
       );
   }
 
-  post(url:any, postBody: any, options?: HttpHeaders): Observable<ServerResponse> {
-    return this.http.post<ServerResponse>(appVariables.apiUrl + url, postBody, { headers: options })
+  post(
+    url: any,
+    postBody: any,
+    options?: HttpHeaders
+  ): Observable<ServerResponse> {
+    return this.http
+      .post<ServerResponse>(appVariables.apiUrl + url, postBody, {
+        headers: options,
+      })
       .pipe(
-        map(res => this.handleResponse(res)),
+        map((res) => this.handleResponse(res)),
         catchError(this.catchAuthError.bind(this))
       );
   }
 
-  delete(url:any): Observable<ServerResponse> {
-    return this.http.delete<ServerResponse>(appVariables.apiUrl + url)
+  delete(url: any): Observable<ServerResponse> {
+    return this.http
+      .delete<ServerResponse>(appVariables.apiUrl + url)
       .pipe(
-        map(res => this.handleResponse(res)),
+        map((res) => this.handleResponse(res)),
         catchError(this.catchAuthError.bind(this))
       );
   }
 
-  put(url:any, putData:any): Observable<ServerResponse> {
-    return this.http.put<ServerResponse>(appVariables.apiUrl + url, putData)
-      .pipe(
-        map(res => this.handleResponse(res))
-      );
+  put(url: any, putData: any): Observable<ServerResponse> {
+    return this.http
+      .put<ServerResponse>(appVariables.apiUrl + url, putData)
+      .pipe(map((res) => this.handleResponse(res)));
   }
 
-  upload(url: string, file: File, data:any): Observable<ServerResponse> {
+  upload(url: string, file: File, data: any): Observable<ServerResponse> {
     const formData: FormData = new FormData(data);
     if (file) {
-      data.append('files', file, file.name);
+      formData.append('files', file, file.name);
     }
     appVariables.addContentTypeHeader = false;
     return this.post(url, data);

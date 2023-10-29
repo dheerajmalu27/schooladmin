@@ -100,11 +100,13 @@ export class TeacherLeaveComponent implements OnInit, AfterViewInit {
   }
 
   public showtablerecord(data: any) {
-    // Assuming you are still using the jQuery-based datatable
-    this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
+    data.forEach((item:any, index:any) => {
+      item.srNo = index + 1;
+    }); 
+    this.datatable =  $('.m_datatable').mDatatable({
       data: {
         type: 'local',
-        source: data.subject,
+        source: data,
         pageSize: 10
       },
 
@@ -126,10 +128,9 @@ export class TeacherLeaveComponent implements OnInit, AfterViewInit {
       // editable: false,
 
       // columns definition
-      columns: [{
-        field: "id",
+      columns: [ {
+        field: "srNo",
         title: "Sr.No.",
-        
       }, {
         field: "subName",
         title: "Teacher Name",

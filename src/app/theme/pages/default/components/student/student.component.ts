@@ -177,7 +177,7 @@ private commonservice: CommonService,private _script: ScriptLoaderService, priva
   private getStudentList() {
     this.baseservice.get('student').subscribe((data:any) => {
       this.studentData = data.student;
-      this.showtablerecord(data);
+      this.refreshDataTable(data);
     },
     (err) => {
     //  localStorage.clear();
@@ -252,6 +252,12 @@ public addStudentSubmitForm(data:any){
     formData.append('divId', $('.division_select2_drop_down').val() as string);
     formData.append('classId', $('.class_select2_drop_down').val() as string);
     formData.append('dateOfBirth', $("#m_datepickerSet").val() as string);
+    
+    data.stateId=$('.state_select2_drop_down').val();
+    data.cityId=$('.city_select2_drop_down').val();
+    data.divId=$('.division_select2_drop_down').val();
+    data.classId=$('.class_select2_drop_down').val();
+    data.dob=$("#m_datepickerSet").val();
 
     if (this.selectedFiles && this.selectedFiles.length > 0) {
         formData.append('image', this.selectedFiles[0]);
@@ -269,6 +275,8 @@ this.baseservice.put('student/'+data.id,data).subscribe((data:any) => {
 }else{
  data.image=this.selectedFiles;
 delete data.id;
+console.log(formData);
+console.log(data);
 this.baseservice.post('student',data).subscribe((data:any) => { 
   this.getStudentList();
   this.listTemplate();
@@ -280,7 +288,19 @@ this.baseservice.post('student',data).subscribe((data:any) => {
 }
      
 }
+public refreshDataTable(newData: any): void {
+  // Destroy existing datatable
+  
+    if (this.datatable) {
+      this.datatable.destroy();  // Destroy existing datatable instance
+      this.showtablerecord(newData); // Reinitialize datatable with new data
+  }else{
+    this.showtablerecord(newData);
+  }
 
+  // Show new data in datatable
+ 
+}
   public showtablerecord(data: any) {
     try{
       let i = 1;
@@ -318,7 +338,7 @@ this.baseservice.post('student',data).subscribe((data:any) => {
         title: "Student Name",
         template: function (row:any) {
          
-          return '<span (click)="detailProfile('+row.id+')"  class="teacherFn" data-id="'+row.id+'">'+row.firstName+' '+row.lastName+'</span>';
+          return '<span (click)="detailProfile('+row.id+')" style="cursor: pointer;"  class="teacherFn" data-id="'+row.id+'">'+row.firstName+' '+row.lastName+'</span>';
         },
       }, {
         field: "className",

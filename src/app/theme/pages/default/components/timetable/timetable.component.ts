@@ -234,14 +234,20 @@ this.getTimeTableList();
       });
     }
 
-    // If you wish to continue using jQuery for the other listeners:
-    $(this.elRef.nativeElement.querySelector('.m_datatable')).on('click', '.teacherFn', (e:any) => {
-      // ... your existing logic
-    });
 
-    $(this.elRef.nativeElement.querySelector('.m_datatable')).on('click', '.edit-button', (e:any) => {
-      // ... your existing logic
+    this.renderer.listen(this.elRef.nativeElement.querySelector('.m_datatable'), 'click', (e) => {
+      if ((e.target as HTMLElement).classList.contains('edit-button')) {
+        e.preventDefault();
+        const id = (e.target as HTMLElement).getAttribute('data-id');
+        this.getTimeTableData(id);
+      }
+      // if ((e.target as HTMLElement).classList.contains('teacherFn')) {
+      //              e.preventDefault();
+      //              const id = (e.target as HTMLElement).getAttribute('data-id');
+      //       this.router.navigate(['/teacher/profile/', id]);
+      // }
     });
+  
   }
 
 private getTimeTableData(data:any){
@@ -308,10 +314,10 @@ private getTimeTableData(data:any){
       hiddenDays: [ 0 ] ,
       allDaySlot: false,
       minTime:'10:00:00',
-      maxTime:'17:00:00',
+      maxTime:'18:00:00',
     slotDuration: '00:05:00',
     slotLabelInterval: 5,
-    slotMinutes: 5,
+    slotMinutes: 30,
     slotEventOverlap:false,
       // defaultDate: '2018-01-12',
       navLinks: true, // can click day/week names to navigate views
@@ -347,7 +353,15 @@ private getTimeTableData(data:any){
       } else if (element.find('.fc-list-item-title').lenght !== 0) {
           element.find('.fc-list-item-title').append('<div class="fc-description">' + event.description + '</div>');
       }
-  }
+  },
+  eventClick: function(event:any, jsEvent:any, view:any) {
+    // Confirm before removing
+    let isConfirmed = confirm("Are you sure you want to remove this event?");
+
+    if (isConfirmed) {
+        $('#m_calendar').fullCalendar('removeEvents', event._id);
+    }
+}
     });
 
     
@@ -372,6 +386,11 @@ private getTimeTableData(data:any){
             revert: true, // will cause the event to go back to its original position after the drag
             revertDuration: 0
         });
+        $element.draggable({
+          zIndex: 999,
+          revert: true, // will cause the event to go back to its original position after the drag
+          revertDuration: 0
+      });
     });
 }
 

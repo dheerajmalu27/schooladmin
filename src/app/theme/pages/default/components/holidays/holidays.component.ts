@@ -139,7 +139,10 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
 
   showtablerecord(data:any) {
     var iValue=0; 
-    this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
+    data.holidays.forEach((item:any, index:any) => {
+      item.srNo = index + 1;
+    }); 
+    this.datatable = $('.m_datatable').mDatatable({
         
       data: {
         type: 'local',
@@ -166,11 +169,8 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
 
       // columns definition
       columns: [{
-        field: "id",
+        field: "srNo",
         title: "Sr.No.",
-        template: function () {
-         return iValue=iValue+1;
-       }
       }, {
         field: "holidayDate",
         title: "Date",

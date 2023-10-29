@@ -34,6 +34,7 @@ export class ThemeComponent implements OnInit {
       }
       if (route instanceof NavigationEnd) {
         // init required js
+        console.log("init menu");
         (<any>mApp).init();
         (<any>mUtil).init();
         Helpers.setLoading(false);

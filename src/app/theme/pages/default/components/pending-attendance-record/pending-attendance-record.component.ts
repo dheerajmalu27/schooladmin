@@ -113,7 +113,9 @@ export class PendingAttendanceRecordComponent implements OnInit, AfterViewInit {
 
   public showtablerecord(data: any): void {
     let i = 1;
-
+    data.forEach((item:any, index:any) => {
+      item.srNo = index + 1;
+    }); 
     this.datatable = $('.m_datatable').mDatatable({
       data: {
         type: 'local',
@@ -131,13 +133,8 @@ export class PendingAttendanceRecordComponent implements OnInit, AfterViewInit {
       pagination: true,
       columns: [
         {
-          field: '',
-          title: 'Sr.No.',
-          textAlign: 'center',
-          sortable: false,
-          template: (row: any) => {
-            return i++;
-          },
+          field: "srNo",
+          title: "Sr.No.",
         },
         {
           field: 'className',
@@ -149,6 +146,10 @@ export class PendingAttendanceRecordComponent implements OnInit, AfterViewInit {
         {
           field: 'teacherName',
           title: 'Class Teacher',
+          template: (row: any) => {
+            return `<span  style="cursor: pointer;" class="teacherFn" data-id="${row.teacherId}">${row.teacherName}</span>`;
+          }
+  
         },
         {
           field: 'selectedDate',
@@ -172,35 +173,43 @@ export class PendingAttendanceRecordComponent implements OnInit, AfterViewInit {
     });
 
     const query = this.datatable.getDataSourceQuery();
-
+  
     const formSearch = this.elRef.nativeElement.querySelector('#m_form_search');
-    this.renderer.listen(formSearch, 'keyup', (event: KeyboardEvent) => {
-      this.datatable.search((event.target as HTMLInputElement).value.toLowerCase());
-    });
-    formSearch.value = query.generalSearch;
-
     const formStatus = this.elRef.nativeElement.querySelector('#m_form_status');
-    this.renderer.listen(formStatus, 'change', () => {
-      this.datatable.search(formStatus.value, 'Status');
-    });
-    formStatus.value = query.Status || '';
-
     const formType = this.elRef.nativeElement.querySelector('#m_form_type');
-    this.renderer.listen(formType, 'change', () => {
-      this.datatable.search(formType.value, 'Type');
+  
+    if(formSearch){
+      this.renderer.listen(formSearch, 'keyup', (e) => {
+        this.datatable.search(e.target.value.toLowerCase());
+      });
+    }
+ 
+    if(formStatus){
+      this.renderer.listen(formStatus, 'change', (e) => {
+        this.datatable.search(e.target.value, 'Status');
+      });
+    }
+
+    if(formType){
+      this.renderer.listen(formType, 'change', (e) => {
+        this.datatable.search(e.target.value, 'Type');
+      });
+    }
+  
+    this.renderer.listen(this.elRef.nativeElement.querySelector('.m_datatable'), 'click', (e) => {
+      if ((e.target as HTMLElement).classList.contains('edit-button')) {
+        e.preventDefault();
+        const id = (e.target as HTMLElement).getAttribute('data-id');
+        this.getAttendanceData(id);
+      }
+      if ((e.target as HTMLElement).classList.contains('teacherFn')) {
+                   e.preventDefault();
+                   const id = (e.target as HTMLElement).getAttribute('data-id');
+            this.router.navigate(['/teacher/profile/', id]);
+      }
     });
-    formType.value = query.Type || '';
 
     // Avoid using jQuery for event handling
-    const editButtons = this.elRef.nativeElement.querySelectorAll('.edit-button');
-    editButtons.forEach((button: HTMLButtonElement) => {
-      this.renderer.listen(button, 'click', (event: Event) => {
-        event.preventDefault();
-        const id = button.getAttribute('data-id');
-        this.getAttendanceData(id);
-      });
-    });
-
     // Use Angular for event binding
   }
 

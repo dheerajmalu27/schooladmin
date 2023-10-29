@@ -214,10 +214,11 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
   
   
   public showtablerecord(data: any) {
-    let i = 1;
-
+    data.forEach((item:any, index:any) => {
+      item.srNo = index + 1;
+    }); 
     // Assuming you've set up the datatable correctly
-    this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
+    this.datatable = $('.m_datatable').mDatatable({
       // datasource definition
       data: {
         type: 'local',
@@ -239,14 +240,9 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
       sortable: true,
 
       pagination: true,
-      columns: [{
-        field: "",
+      columns: [ {
+        field: "srNo",
         title: "Sr.No.",
-        textAlign: 'center',
-       
-        template: function (row:any) {
-          return i++;
-        },
       }, {
         field: "testName",
         title: "Test Name",
@@ -282,25 +278,30 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
       }]
     });
 
-    let query = this.datatable.getDataSourceQuery();
-
-    const searchElem = this.elRef.nativeElement.querySelector('#m_form_search');
-    this.renderer.listen(searchElem, 'keyup', (e) => {
+   
+    const query = this.datatable.getDataSourceQuery();
+  
+    const formSearch = this.elRef.nativeElement.querySelector('#m_form_search');
+    const formStatus = this.elRef.nativeElement.querySelector('#m_form_status');
+    const formType = this.elRef.nativeElement.querySelector('#m_form_type');
+  
+    if(formSearch){
+      this.renderer.listen(formSearch, 'keyup', (e) => {
         this.datatable.search(e.target.value.toLowerCase());
-    });
-    searchElem.value = query.generalSearch;
-
-    const statusElem = this.elRef.nativeElement.querySelector('#m_form_status');
-    this.renderer.listen(statusElem, 'change', (e) => {
+      });
+    }
+ 
+    if(formStatus){
+      this.renderer.listen(formStatus, 'change', (e) => {
         this.datatable.search(e.target.value, 'Status');
-    });
-    statusElem.value = typeof query.Status !== 'undefined' ? query.Status : '';
+      });
+    }
 
-    const typeElem = this.elRef.nativeElement.querySelector('#m_form_type');
-    this.renderer.listen(typeElem, 'change', (e) => {
+    if(formType){
+      this.renderer.listen(formType, 'change', (e) => {
         this.datatable.search(e.target.value, 'Type');
-    });
-    typeElem.value = typeof query.Type !== 'undefined' ? query.Type : '';
+      });
+    }
 
     //... Other event bindings using the same approach as above ...
 

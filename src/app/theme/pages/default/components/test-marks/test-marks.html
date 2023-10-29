@@ -1,4 +1,4 @@
-<div id="addTemplate">
+<div id="addTemplate" style="display: none;">
   <div class="m-subheader">
     <div class="d-flex align-items-center">
       <div class="mr-auto">
@@ -56,7 +56,7 @@
             </div>
           </div>
           <!--begin::Form-->
-          <form id="addTestmarksForm1"
+          <form id="addTestmarksForm1" [formGroup]="addTestmarksFormList"
             class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
             (ngSubmit)="addTestmarksSubmitForm(addTestmarksFormList.value)">
             <div class="m-portlet__body">
@@ -207,7 +207,7 @@
     </div>
   </div>
 </div>
-<div id="editTemplate">
+<div id="editTemplate" style="display: none;">
   <div class="m-subheader">
     <div class="d-flex align-items-center">
       <div class="mr-auto">

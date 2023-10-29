@@ -101,8 +101,10 @@ export class AbsentStudentComponent implements OnInit, AfterViewInit {
   
 
   showtablerecord(data:any) {
-    let i=1;      
-    this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
+    data.forEach((item:any, index:any) => {
+      item.srNo = index + 1;
+    });      
+    this.datatable = $('.m_datatable').mDatatable({
       // datasource definition
       data: {
         type: 'local',
@@ -124,13 +126,9 @@ export class AbsentStudentComponent implements OnInit, AfterViewInit {
       sortable: true,
 
       pagination: true,
-      columns: [{
-        field: "",
-        title: "Sr No",
-        textAlign: 'center',
-        template: function (row:any) {
-          return i++;        
-          },
+      columns: [ {
+        field: "srNo",
+        title: "Sr.No.",
       },{
         
         field: "rollNo",
@@ -141,7 +139,7 @@ export class AbsentStudentComponent implements OnInit, AfterViewInit {
         title: "Student Name",
         template: function (row:any) {
         
-          return '<span (click)="detailProfile('+row.studentId+')"  class="teacherFn" data-id="'+row.id+'">'+row.studentName+'</span>';
+          return '<span style="cursor: pointer;"  class="studentFn" data-id="'+row.id+'">'+row.studentName+'</span>';
         },
       }, {
         field: "className",
@@ -163,7 +161,9 @@ export class AbsentStudentComponent implements OnInit, AfterViewInit {
        {
         field: "teacherName",
         title: "Teacher Name",
-        
+        template: (row: any) => {
+          return `<span  style="cursor: pointer;" class="teacherFn" data-id="${row.classTeacherId}">${row.teacherName}</span>`;
+        }
       },
       {
        field: "attendanceDate",
@@ -209,12 +209,18 @@ export class AbsentStudentComponent implements OnInit, AfterViewInit {
     // Assuming selectpicker() is necessary for styling, if it's based on jQuery, you can retain this.
     $(this.elRef.nativeElement.querySelectorAll('#m_form_status, #m_form_type')).selectpicker();
   
-    $('.m_datatable').on('click', '.teacherFn', (e:any) => {
+    $('.m_datatable').on('click', '.studentFn', (e:any) => {
       e.preventDefault();
       var id = $(e.target).attr('data-id');
      
       this.router.navigate(['/student/profile/', id]); 
       });
+      $('.m_datatable').on('click', '.teacherFn', (e:any) => {
+        e.preventDefault();
+        var id = $(e.target).attr('data-id');
+       
+        this.router.navigate(['/teacher/profile/', id]);
+        });
      $('.m_datatable').on('click', '.edit-button', (e:any) => {
       e.preventDefault();
       var id = $(e.target).attr('data-id');

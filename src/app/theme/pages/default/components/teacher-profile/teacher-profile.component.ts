@@ -10,7 +10,8 @@ import { AmChartsService } from '@amcharts/amcharts3-angular';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import {BaseService} from '../../../../../_services/base.service';
-// import { count } from 'rxjs/operator/count';
+import { jsPDF } from 'jspdf'; 
+import html2canvas from 'html2canvas'; 
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./teacher-profile.html",
@@ -43,6 +44,27 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
 
   }
 
+   genratefile(){
+    const data = document.getElementById('m_calendar');
+      
+      if (!data) {
+          console.error('Element #contentToConvert not found!');
+          return; // exit the function if the element wasn't found
+      } 
+    html2canvas(data).then(canvas => { 
+    // Few necessary setting options 
+    var imgWidth = 208; 
+    var pageHeight = 295; 
+    var imgHeight = canvas.height * imgWidth / canvas.width; 
+    var heightLeft = imgHeight; 
+    
+    const contentDataURL = canvas.toDataURL('image/png') 
+    let pdf =new jsPDF('p', 'mm', 'a4');//new jspdf('p', 'mm', 'a4'); // A4 size page of PDF 
+    var position = 0; 
+    pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight) 
+    pdf.save('MYPdf.pdf'); // Generated PDF  
+    }); 
+  }
   private getTeacherData(newid:any, newAmCharts:any) {
     this.baseservice.get('teacherprofile/' + newid).subscribe((data:any) => {
      
@@ -51,11 +73,11 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
       this.openSubjectList(data);
       this.teacherInfo = this.teacherData.info[0];
       if(this.teacherData.classtestresult.length>0)
-     { this.teacherTestChart = _.meanBy(this.teacherData.classtestresult, 'result');
+     { this.teacherTestChart = _.meanBy(this.teacherData.classtestresult, 'result').toFixed(2);
     }
     if(this.teacherData.monthlyattendance.length>0){
       this.teacherData.monthlyattendance = _.each(this.teacherData.monthlyattendance, item => item.result = parseFloat(item.result));
-      this.teacherAttendChart = _.meanBy(this.teacherData.monthlyattendance, 'result');
+      this.teacherAttendChart = _.meanBy(this.teacherData.monthlyattendance, 'result').toFixed(2);
   }
       newAmCharts.makeChart("m_amcharts_1", {
         "type": "serial",
@@ -140,7 +162,7 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
         resultArray.push(
           {
             "subjectTitle": key,
-            "subjectAvg": _.meanBy(value, 'avgRecord')
+            "subjectAvg": _.meanBy(value, 'avgRecord').toFixed(2)
           });
       });
       this.teacherSubjectChart = resultArray;
@@ -200,6 +222,17 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
    openCalender() {
     $('#m_user_profile_tab_3').hide();   
     var result = this.teacherData.timetable;
+    const earliestEvent = result.reduce((prev:any, current:any) => {
+      return (prev.start < current.start) ? prev : current;
+  });
+ 
+  const latestEvent = result.reduce((prev:any, current:any) => {
+    return (prev.end > current.end) ? prev : current;
+});
+// Extract the hour and minute from the start and end times.
+const [startHour, startMinute] = earliestEvent.start.split(':').map(Number);
+const [endHour, endMinute] = latestEvent.end.split(':').map(Number);
+
     var resultArray: Array<any> = [];
     _.forOwn(result, function(value, key) {
       var dayValue;
@@ -234,14 +267,18 @@ if(value.dow=="Monday"){
         center: 'Teacher Scheduke',
         right: 'agendaWeek,agendaDay,listWeek'
       },
-      defaultView: 'listWeek',
+      minTime: `${startHour}:${startMinute}:00`,
+      maxTime: `${endHour + 1}:${endMinute}:00`,
+      columnFormat: 'dddd',
+      defaultView: 'agendaWeek',
       hiddenDays: [ 0 ] ,
       // defaultDate: '2018-01-12',
       navLinks: true, // can click day/week names to navigate views
-      editable: true,
-      height: 900,
+      // editable: true,
+      // height:2000,
       eventLimit: true, // allow "more" link when too many events
-      events:resultArray
+      events:resultArray,
+     
     });
 
   }
@@ -249,10 +286,12 @@ if(value.dow=="Monday"){
 
 
   openSubjectList(data:any) {
-    var iValue=0;
-    console.log(data); 
+    var iValue=1;
+    data.subjects.forEach((item:any, index:any) => {
+      item.srNo = index + 1;
+    }); 
     this.datatable = $('.m_datatable').mDatatable({
-    // this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
+    // this.datatable = $('.m_datatable').mDatatable({
       // datasource definition
       data: {
         type: 'local',
@@ -279,13 +318,8 @@ if(value.dow=="Monday"){
 
       // columns definition
       columns: [{
-        field: "id",
+        field: "srNo",
         title: "Sr.No.",
-        textAlign: 'center',
-        template: function (row:any) {
-          console.log(row);
-          return iValue++;
-        }
       }, {
         field: "className",
         title: "Class Name",

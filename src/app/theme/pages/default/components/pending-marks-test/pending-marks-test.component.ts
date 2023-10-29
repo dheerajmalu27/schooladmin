@@ -151,8 +151,10 @@ private commonservice: CommonService,private _script: ScriptLoaderService,privat
 
 
   showtablerecord(data:any) {
-    let i=1;      
-    this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
+    data.forEach((item:any, index:any) => {
+      item.srNo = index + 1;
+    });       
+    this.datatable = $('.m_datatable').mDatatable({
       // datasource definition
       data: {
         type: 'local',
@@ -174,14 +176,9 @@ private commonservice: CommonService,private _script: ScriptLoaderService,privat
       sortable: true,
 
       pagination: true,
-      columns: [{
-        field: "",
+      columns: [ {
+        field: "srNo",
         title: "Sr.No.",
-        textAlign: 'center',
-       
-        template: function (row:any) {
-          return i++;
-        },
       }, {
         field: "testName",
         title: "Test Name",

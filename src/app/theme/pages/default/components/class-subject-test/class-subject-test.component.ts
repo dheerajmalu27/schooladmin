@@ -86,8 +86,10 @@ export class classSubjectTestComponent implements OnInit, AfterViewInit {
   }
   public showtablerecord(data:any){
      // let dataJSONArray = JSON.parse(data.teacher);
-                
-     this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
+     data.class.forEach((item:any, index:any) => {
+      item.srNo = index + 1;
+    });         
+     this.datatable = $('.m_datatable').mDatatable({
         // datasource definition
         data: {
           type: 'local',
@@ -113,10 +115,9 @@ export class classSubjectTestComponent implements OnInit, AfterViewInit {
         // editable: false,
   
         // columns definition
-        columns: [{
-          field: "id",
+        columns: [ {
+          field: "srNo",
           title: "Sr.No.",
-          
         }, {
           field: "testName",
           title: "Test Name",

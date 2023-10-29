@@ -97,12 +97,22 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
     this.baseservice.get('getattendancelist').subscribe((data:any) => {
       this.attendancePending = data;
      
-      this.showtablerecord(data);
+      this.refreshDataTable(data);
     },
       (err) => {
         //  localStorage.clear();
       });
 
+  }
+  public refreshDataTable(newData: any): void {
+    // Destroy existing datatable
+    
+      if (this.datatable) {
+        this.datatable.destroy();  // Destroy existing datatable instance
+        this.showtablerecord(newData); // Reinitialize datatable with new data
+    }else{
+      this.showtablerecord(newData);
+    }
   }
   private getClassList() {
 
@@ -188,8 +198,10 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
  
 
   showtablerecord(data:any) {
-    let i=0;
-    this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
+    data.forEach((item:any, index:any) => {
+      item.srNo = index + 1;
+    }); 
+    this.datatable = $('.m_datatable').mDatatable({
       // datasource definition
       data: {
         type: 'local',
@@ -217,14 +229,9 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
       // editable: false,
 
       // columns definition
-      columns: [{
-        field: "",
+      columns: [ {
+        field: "srNo",
         title: "Sr.No.",
-        textAlign: 'center',
-
-        template: function (row:any) {
-          return i++;
-        },
       }, {
         field: "className",
         title: "Class-Div",
@@ -232,9 +239,13 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
 
           return row.className + '-' + row.divName;
         },
-      }, {
+      },
+       {
         field: "teacherName",
         title: "Class Teacher",
+        template: (row: any) => {
+          return `<span  style="cursor: pointer;" class="teacherFn" data-id="${row.teacherId}">${row.teacherName}</span>`;
+        }
 
       }, {
         field: "selectedDate",
@@ -291,7 +302,13 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
         const id = (e.target as HTMLElement).getAttribute('data-id');
         this.getAttendanceData(id);
       }
+      if ((e.target as HTMLElement).classList.contains('teacherFn')) {
+        e.preventDefault();
+        const id = (e.target as HTMLElement).getAttribute('data-id');
+        this.router.navigate(['/teacher/profile/', id]);
+        }
     });
+    
     // $(".reload").on('click', function(){
 
     //   this.datatable.reload();

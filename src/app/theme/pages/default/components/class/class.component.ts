@@ -102,7 +102,9 @@ export class ClassComponent implements OnInit, AfterViewInit {
     this.editTemplate();
   }
   showtablerecord(data:any) {
-    let i=0;
+    data.class.forEach((item:any, index:any) => {
+      item.srNo = index + 1;
+    });
     this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
       // datasource definition
       data: {
@@ -129,15 +131,9 @@ export class ClassComponent implements OnInit, AfterViewInit {
       // editable: false,
 
       // columns definition
-      columns: [{
-        field: "",
+      columns: [ {
+        field: "srNo",
         title: "Sr.No.",
-        textAlign: 'center',
-
-        template: function (row:any) {
-          return i++;
-        },
-        
       }, {
         field: "className",
         title: "Class Name",
@@ -163,7 +159,7 @@ export class ClassComponent implements OnInit, AfterViewInit {
         overflow: 'visible',
         template: function (row:any) {
           return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.id + '*'+row.className+'"></i></span>';
-        }
+        } 
       }]
     });
   

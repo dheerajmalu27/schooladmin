@@ -4920,7 +4920,7 @@ jQuery.fn.extend({
                 Plugin.resetActiveItem();
 
                 var item = $(item);
-                item.addClass('m-menu__item--active');
+                // item.addClass('m-menu__item--active');
                 item.parents('.m-menu__item--submenu').each(function() {
                     $(this).addClass('m-menu__item--open');
                 });

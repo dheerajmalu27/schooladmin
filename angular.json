@@ -28,13 +28,13 @@
               "src/styles.css"
             ],
             "scripts": ["node_modules/jquery/dist/jquery.min.js",
-            "node_modules/amcharts3/amcharts/amcharts.js",
-        "node_modules/amcharts3/amcharts/xy.js",
-        "node_modules/amcharts3/amcharts/serial.js",
-        "node_modules/amcharts3/amcharts/themes/light.js",
+            "node_modules/bootstrap/dist/js/bootstrap.min.js",
+                          "node_modules/amcharts3/amcharts/amcharts.js",
+                      "node_modules/amcharts3/amcharts/xy.js",
+                      "node_modules/amcharts3/amcharts/serial.js",
+                      "node_modules/amcharts3/amcharts/themes/light.js",
         "node_modules/amcharts3/amcharts/plugins/export/libs/fabric.js/fabric.min.js",
-        "node_modules/amcharts3/amcharts/plugins/export/libs/pdfmake/pdfmake.min.js",
-            "node_modules/bootstrap/dist/js/bootstrap.min.js"]
+        "node_modules/amcharts3/amcharts/plugins/export/libs/pdfmake/pdfmake.min.js"]
           },
           "configurations": {
             "production": {
@@ -63,6 +63,13 @@
           },
           "defaultConfiguration": "production"
         },
+        "allowedCommonJsDependencies": ["lodash",
+          "jquery",
+          "html2canvas",
+          "canvg",
+          "rgbcolor",
+          "raf"
+        ],
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {

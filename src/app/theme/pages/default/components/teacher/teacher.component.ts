@@ -192,7 +192,7 @@ export class TeacherComponent implements OnInit, AfterViewInit {
   private getTeacherList() {
     this.baseservice.get('teacher').subscribe((data: any) => {
       this.teacherData = data.teacher;
-      this.showtablerecord(data);
+      this.refreshDataTable(data);
     },
     (err) => {
       // Handle errors as necessary
@@ -227,6 +227,16 @@ export class TeacherComponent implements OnInit, AfterViewInit {
     selectFile(event: any) {
       this.selectedFiles = event.target.files[0];
     }
+    public refreshDataTable(newData: any): void {
+      // Destroy existing datatable
+      
+        if (this.datatable) {
+          this.datatable.destroy();  // Destroy existing datatable instance
+          this.showtablerecord(newData); // Reinitialize datatable with new data
+      }else{
+        this.showtablerecord(newData);
+      }
+    }
     public addTeacherSubmitForm(data:any){
       data.stateId=$('.state_select2_drop_down').val();
       data.cityId=$('.city_select2_drop_down').val();
@@ -236,7 +246,7 @@ export class TeacherComponent implements OnInit, AfterViewInit {
       data.joiningDate=$("#m_datepickerSet1").val();
     
       
-      const formData: FormData = new FormData(data);
+      // const formData: FormData = new FormData(data);
     
     if(data.id!=''&& data.id!=undefined && data.id!=null)  {
     // data.image=this.selectedFiles;
@@ -274,6 +284,9 @@ export class TeacherComponent implements OnInit, AfterViewInit {
   
     }
     showtablerecord(data:any) {
+      data.teacher.forEach((item:any, index:any) => {
+        item.srNo = index + 1;
+      }); 
       this.datatable = $('.m_datatable').mDatatable({
         // datasource definition
         data: {
@@ -293,9 +306,8 @@ export class TeacherComponent implements OnInit, AfterViewInit {
         pagination: true,
         columns: [
           {
-            field: 'id',
-            title: 'Sr.No.',
-            textAlign: 'center'
+            field: "srNo",
+            title: "Sr.No.",
           },
           {
             field: 'firstName',

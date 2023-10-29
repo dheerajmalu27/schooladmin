@@ -60,9 +60,9 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
       this.studentData = data;
       console.log(this.studentData);
       this.studentInfo = this.studentData.info[0];
-      this.studentTestChart = _.meanBy(this.studentData.testresult, 'result');
+      this.studentTestChart = _.meanBy(this.studentData.testresult, 'result').toFixed(2);
       this.studentData.monthlyattendance = _.each(this.studentData.monthlyattendance, item => item.result = parseFloat(item.result));
-      this.studentAttendChart = _.meanBy(this.studentData.monthlyattendance, 'result');
+      this.studentAttendChart = _.meanBy(this.studentData.monthlyattendance, 'result').toFixed(2);
       newAmCharts.makeChart("m_amcharts_1", {
         "type": "serial",
         "theme": "light",
@@ -141,7 +141,7 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
         resultArray.push(
           {
             "subjectTitle": key,
-            "subjectAvg": _.meanBy(value, 'totalAvg')
+            "subjectAvg": _.meanBy(value, 'totalAvg').toFixed(2)
           });
       });
       this.studentSubjectChart = resultArray;

@@ -5,6 +5,8 @@ import { ScriptLoaderService } from '../../../../../_services/script-loader.serv
 import {BaseService} from '../../../../../_services/base.service';
 import { Router } from '@angular/router';
 declare let $: any
+declare const Chart: any; // You might replace `any` with the actual Chart.js type if available
+declare const mUtil: any; // Assuming mUtil is from an external library and its type is not available
 
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -25,11 +27,85 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   }
   ngAfterViewInit() {
+    this.dailySales();
     this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
       'assets/demo/default/custom/components/datatables/base/html-table.js');
 
-    
+  
   }
+
+
+
+    // Daily Sales chart based on Chartjs plugin (http://www.chartjs.org/)
+    private  dailySales() {
+        let  chartData = {
+          labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+          datasets: [{
+              //label: 'Dataset 1',
+              backgroundColor: mUtil.getColor('success'),
+              data: [
+                  100, 98, 95, 93, 90, 98
+              ]
+          }, {
+              //label: 'Dataset 2',
+              backgroundColor: '#f3f3fb',
+              data: [
+                  0, 2, 5, 7, 10, 2
+              ]
+          }]
+      };
+
+        const chartContainer = $('#m_chart_daily_sales');
+
+        if (chartContainer.length === 0) {
+            return;
+        }
+
+        const chart = new Chart(chartContainer, {
+          type: 'bar',
+          data: chartData,
+          options: {
+              title: {
+                  display: false,
+              },
+              tooltips: {
+                  intersect: false,
+                  mode: 'nearest',
+                  xPadding: 10,
+                  yPadding: 10,
+                  caretPadding: 10
+              },
+              legend: {
+                  display: false
+              },
+              responsive: true,
+              maintainAspectRatio: false,
+              barRadius: 4,
+              scales: {
+                  xAxes: [{
+                      display: true,
+                      gridLines: false,
+                      stacked: true
+                  }],
+                  yAxes: [{
+                      display: true,
+                      stacked: true,
+                      gridLines: false
+                  }]
+              },
+              layout: {
+                  padding: {
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 0
+                  }
+              }
+          }
+      });
+    }
+
+ 
 
   private getDashboardData() {
     this.baseservice.get('dashboard').subscribe(
@@ -37,17 +113,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.dashboardData = data.dashboarddata[0];
         this.showpendingattendancelist(data.todayattendancependinglist);
         this.showabsentstudentlist(data.todayabsentstudentlist);
+        $("#dashboard-data").show();
       },
       (err) => {
+        console.log(err);
         // Handle the error here, or clear localStorage as needed.
       }
     );
   }
   public showpendingattendancelist(data: any) {
-    let i = 1;
-
+    data.forEach((item:any, index:any) => {
+      item.srNo = index + 1;
+    }); 
     // Assuming you've set up the datatable correctly
-    this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
+    this.datatable = $('.m_datatable').mDatatable({
       // datasource definition
       data: {
         type: 'local',
@@ -72,14 +151,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       // editable: false,
       
       // columns definition
-      columns: [{
-        field: "",
+      columns: [ {
+        field: "srNo",
         title: "Sr.No.",
-        textAlign: 'center',
-        sortable:false,
-        template: function (row:any) {
-          return i++;
-        },
       }, {
         field: "className",
         title: "Class-Div",

@@ -1,5 +1,5 @@
 <!-- BEGIN: Subheader -->
-<div id="addTemplate">
+<div id="addTemplate" style="display: none;">
   <div class="m-subheader">
     <div class="d-flex align-items-center">
       <div class="mr-auto">
@@ -57,7 +57,7 @@
             </div>
           </div>
           <!--begin::Form-->
-          <form id="addAttendanceForm1" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+          <form id="addAttendanceForm1" [formGroup]="addAttenaceFormList" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
             (ngSubmit)="addAttendanceSubmitForm(addAttenaceFormList.value)">
             <div class="m-portlet__body">
               <div class="form-group m-form__group row">
@@ -192,7 +192,7 @@
     </div>
   </div>
 </div>
-<div id="editTemplate">
+<div id="editTemplate" style="display: none;">
   <div class="m-subheader">
     <div class="d-flex align-items-center">
       <div class="mr-auto">

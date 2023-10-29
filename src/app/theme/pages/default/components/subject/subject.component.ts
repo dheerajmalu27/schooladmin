@@ -98,7 +98,9 @@ private getSubjectList() {
 
 showtablerecord(data:any) {
   console.log(data);
-  let i=1;
+  data.subject.forEach((item:any, index:any) => {
+    item.srNo = index + 1;
+  }); 
   this.datatable = $('.m_datatable').mDatatable({
     data: {
       type: 'local',
@@ -116,13 +118,8 @@ showtablerecord(data:any) {
     pagination: true,
     columns: [
       {
-        field: "",
+        field: "srNo",
         title: "Sr.No.",
-        textAlign: 'center',
-        sortable:false,
-        template: function (row:any) {
-          return i++;
-        },
       },
       {
         field: 'subName',

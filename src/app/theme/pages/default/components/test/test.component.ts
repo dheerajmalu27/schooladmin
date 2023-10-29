@@ -102,11 +102,13 @@ export class TestComponent implements OnInit, AfterViewInit {
 }
   
 public showtablerecord(data: any) {
-  console.log(data.test);    
-  let iValue = 0;
+    
+  data.test.forEach((item:any, index:any) => {
+    item.srNo = index + 1;
+  }); 
 
   // Assume you still use jQuery-based datatable for now
-  this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
+  this.datatable = $('.m_datatable').mDatatable({
         
     data: {
       type: 'local',
@@ -127,12 +129,9 @@ public showtablerecord(data: any) {
     pagination: true,
     // inline and bactch editing(cooming soon)
     // editable: false,
-    columns: [{
-      field: "id",
+    columns: [ {
+      field: "srNo",
       title: "Sr.No.",
-      template: function () {
-       return iValue=iValue+1;
-     }
     }, {
       field: "testName",
       title: "Test Name",
