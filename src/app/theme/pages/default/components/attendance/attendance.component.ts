@@ -162,7 +162,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
       o.attendanceResult=JSON.parse(o.attendanceResult);
       return _.omit(o, ['AttendanceStudent', 'AttendanceClass','AttendanceDivision','AttendanceClassTeacher','createdAt','updatedAt']); });
   
-    let postdata=JSON.stringify(newArrData);
+    let postdata=(newArrData);
     this.baseservice.post('bulkattendance',postdata).subscribe((data:any) => { 
       
       this.datatable.destroy();

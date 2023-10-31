@@ -15,34 +15,31 @@ export class classSubjectTestComponent implements OnInit, AfterViewInit {
   datatable:any;
   showTemplate:any;
   classData:any;
+  divisionData:any;
+  testData:any;
+  subjectData:any;
   addClassForm : FormGroup;
   editClassForm : FormGroup;
 
   constructor(private elRef: ElementRef, 
     private renderer: Renderer2,private _script: ScriptLoaderService,private baseservice: BaseService
-    , private router: Router,fb: FormBuilder){
+    , private router: Router,private fb: FormBuilder){
     this.getSubjectClassTestList();
     this.addClassForm = fb.group({
-      'className' : [null, Validators.required],
-      // 'lastName': [null,  Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(10)])],
-      // 'gender' : [null, Validators.required],
-      // 'hiking' : [false],
-      // 'running' : [false],
-      // 'swimming' : [false]
+      'className': new FormControl(),
+      'divisions': new FormControl(),
+      'tests': new FormControl(),
+      'subjects': new FormControl(),
+      'optionalSubjects': new FormControl(),
     });
     this.editClassForm = fb.group({
-      'className' : [null, Validators.required],
-      // 'lastName': [null,  Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(10)])],
-      // 'gender' : [null, Validators.required],
-      // 'hiking' : [false],
-      // 'running' : [false],
-      // 'swimming' : [false]
+      'classId': new FormControl(),
+      'className': new FormControl(),
+      'divisions': new FormControl(),
+      'tests': new FormControl(),
+      'subjects': new FormControl(),
+      'optionalSubjects': new FormControl(),
     });
-    // console.log(this.addClassForm);
-    // this.addClassForm.valueChanges.subscribe( (form: any) => {
-    //   console.log('form changed to:', form);
-    // }
-    // );
   }
   ngOnInit() {
     this.listTemplate();
@@ -60,29 +57,171 @@ export class classSubjectTestComponent implements OnInit, AfterViewInit {
     $("#addTemplate").show();
     $("#editTemplate").hide();
     $("#listTemplate").hide();
+    this.getDivisionList('');
+    this.getTestList('');
+    this.getSubjectList('','');
   }
-  editTemplate(studentData:any) {
+  editTemplate(editClassData:any) {
     $("#addTemplate").hide();
     $("#editTemplate").show();
     $("#listTemplate").hide();
-    
+    $(".edit_class_id").val(editClassData.id);
+    this.getDivisionList(editClassData.divIds);
+    this.getTestList(editClassData.testIds.toString());
+    this.getSubjectList(editClassData.subjectIds,editClassData.optionalSubjectIds);
+    console.log(editClassData);
+    this.editClassForm = this.fb.group({
+      'className': editClassData.className,
+   
+    });
+    console.log(this.editClassForm );
     // this.studentDetail = studentData;
     
   }
-  addClassSubmitForm(value: any){
-    console.log(value);
+  getClassData(id:any){
+    const result = this.classData.find((item: any) => item.id == id);
+
+    if (result) {
+      this.editTemplate(result);
+    } else {
+      console.log("Record not found.");
+    }
   }
-  editClassSubmitForm(value: any){
-    console.log(value);
+  addClassSubmitForm(data:any){
+
+    data.divIds = $('.division_select2_drop_down').val().join(',');
+    data.testIds = $('.test_select2_drop_down').val().join(',');
+    data.subjectIds = ($('.subject_select2_drop_down').val()).join(',');
+    data.optionalSubjectIds = ($('.optionalSubjects_select2_drop_down').val()).join(',');
+    data.className = $('.class_name').val();
+    // console.log($('.division_select2_drop_down').val());
+    // console.log($('.test_select2_drop_down').val());
+    // console.log($('.subject_select2_drop_down').val());
+     if (data.subjectIds != '' && data.testIds!= '' && data.divIds!= '') {
+      this.baseservice.post('class',data).subscribe((data:any) => {
+        this.getSubjectClassTestList();
+      // this.addStudentData = data;
+        this.listTemplate();
+      },
+        (err) => {
+          console.log(err);
+          //  localStorage.clear();
+        });
+
+    }
   }
+  editClassSubmitForm(data: any){
+   
+    data.divIds = $('.edit_division_select2_drop_down').val().join(',');
+    data.testIds = $('.edit_test_select2_drop_down').val().join(',');
+    data.subjectIds = ($('.edit_subject_select2_drop_down').val()).join(',');
+    data.optionalSubjectIds = ($('.edit_optionalSubjects_select2_drop_down').val()).join(',');
+    data.className = $('.edit_class_name').val();
+    // console.log($('.division_select2_drop_down').val());
+    // console.log($('.test_select2_drop_down').val());
+    // console.log($('.subject_select2_drop_down').val());
+     if (data.subjectIds != '' && data.testIds!= '' && data.divIds!= '' &&  $(".edit_class_id").val()!='') {
+      this.baseservice.put('class/'+$(".edit_class_id").val(),data).subscribe((data:any) => {
+        this.getSubjectClassTestList();
+      // this.addStudentData = data;
+        this.listTemplate();
+      },
+        (err) => {
+          console.log(err);
+          //  localStorage.clear();
+        });
+
+    }
+  }
+  private getTestList(editTestData: any) {
+    this.baseservice.get('testlist').subscribe((data: any) => {
+        this.testData = data.test;
+
+        // Initialize the dropdowns
+        $('.test_select2_drop_down').select2({ data: this.testData });
+
+        if (editTestData) {
+            const valuesArray = editTestData.split(','); // Convert '1,2' to ['1', '2']
+
+            $('.edit_test_select2_drop_down')
+                .select2({ data: this.testData })  // Ensure you initialize it first
+                .val(valuesArray)
+                .trigger('change');
+        }
+    }, (err) => {
+        // handle error here
+    }); 
+}
+
+private getDivisionList(editValue: any) {
+  this.baseservice.get('divisionlist').subscribe((data: any) => {
+      this.divisionData = data.division;
+
+      // Initialize the primary dropdown
+      $('.division_select2_drop_down').select2({ data: this.divisionData });
+
+      if (editValue) {
+          const valuesArray = (typeof editValue === 'string') ? editValue.split(',') : editValue;
+
+          $('.edit_division_select2_drop_down')
+              .select2({ data: this.divisionData })  // Ensure you initialize it first
+              .val(valuesArray)
+              .trigger('change');
+      }
+  }, (err) => {
+      // handle error here
+  }); 
+}
+
+private getSubjectList(editSubjectData: any, editOptionalSubjectData: any) {
+  this.baseservice.get('subjectlist').subscribe((data: any) => {
+      this.subjectData = data.subject;
+
+      // Initialize the primary dropdowns
+      $('.subject_select2_drop_down').select2({ data: this.subjectData });
+      $('.optionalSubjects_select2_drop_down').select2({ data: this.subjectData });
+
+      if (editSubjectData) {
+          // Convert string values to arrays if needed
+          const valuesArraySubject = (typeof editSubjectData === 'string') ? editSubjectData.split(',') : editSubjectData;
+          const valuesArrayOptional = (typeof editOptionalSubjectData === 'string') ? editOptionalSubjectData.split(',') : editOptionalSubjectData;
+
+          $('.edit_subject_select2_drop_down')
+              .select2({ data: this.subjectData })
+              .val(valuesArraySubject)
+              .trigger('change');
+
+          $('.edit_optionalSubjects_select2_drop_down')
+              .select2({ data: this.subjectData })
+              .val(valuesArrayOptional)
+              .trigger('change');
+      }
+  }, (err) => {
+      // handle error here
+  });
+}
+
   private getSubjectClassTestList() {
-    this.baseservice.get('class').subscribe((data:any) => {
+    this.baseservice.get('classdetails').subscribe((data:any) => {
       this.classData = data.class;
-      this.showtablerecord(data);
+      this.refreshDataTable(data);
     },
     (err) => {
     //  localStorage.clear();
     });
+  }
+  public refreshDataTable(newData: any): void {
+    // Destroy existing datatable
+    
+      if (this.datatable) {
+        this.datatable.destroy();  // Destroy existing datatable instance
+        this.showtablerecord(newData); // Reinitialize datatable with new data
+    }else{
+      this.showtablerecord(newData);
+    }
+  
+    // Show new data in datatable
+   
   }
   public showtablerecord(data:any){
      // let dataJSONArray = JSON.parse(data.teacher);
@@ -119,35 +258,23 @@ export class classSubjectTestComponent implements OnInit, AfterViewInit {
           field: "srNo",
           title: "Sr.No.",
         }, {
-          field: "testName",
-          title: "Test Name",
-         
-        }, {
           field: "className",
-          title: "Class-Div",
-          template: function (row:any) {
-            console.log(row);
-            return row.className+'-'+row.divName;
-          },
+          title: "Class",
         },  {
-          field: "subName",
+          field: "divisionNames",
+          title: "Division Names",
+          
+        }, {
+          field: "subjectNames",
           title: "Subject Name",
           
         }, {
-          field: "teacherName",
-          title: "Teacher Name",
+          field: "testNames",
+          title: "Test Name",
           
         }, {
-          field: "active",
-          title: "Status",
-          // callback function support for column rendering
-          template: function (row: { active: boolean }) {
-            if(row.active) {
-                return '<span class="m-badge m-badge--success m-badge--wide">Active</span>';
-            } else {
-                return '<span class="m-badge m-badge--danger m-badge--wide">Inactive</span>';
-            }
-          } 
+          field: "optionalSubjectNames",
+          title: "Optional Subjects",
         }, {
           field: "createdAt",
           width: 110,
@@ -155,23 +282,8 @@ export class classSubjectTestComponent implements OnInit, AfterViewInit {
           sortable: false,
           overflow: 'visible',
           template: function (row:any) {
-            var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
+            return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.id+'"></i></span>';
   
-            return '\
-              <div class="dropdown ' + dropup + '">\
-                <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">\
-                                  <i class="la la-ellipsis-h"></i>\
-                              </a>\
-                  <div class="dropdown-menu dropdown-menu-right">\
-                    <a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>\
-                    <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>\
-                    <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>\
-                  </div>\
-              </div>\
-              <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View ">\
-                              <i class="la la-edit"></i>\
-                          </a>\
-            ';
           }
         }]
       });
@@ -202,6 +314,19 @@ export class classSubjectTestComponent implements OnInit, AfterViewInit {
     }
   
       $('#m_form_status, #m_form_type').selectpicker();
+
+      this.renderer.listen(this.elRef.nativeElement.querySelector('.m_datatable'), 'click', (e) => {
+        if ((e.target as HTMLElement).classList.contains('edit-button')) {
+          e.preventDefault();
+          const id = (e.target as HTMLElement).getAttribute('data-id');
+          this.getClassData(id);
+        }
+        // if ((e.target as HTMLElement).classList.contains('teacherFn')) {
+        //   e.preventDefault();
+        //   const id = (e.target as HTMLElement).getAttribute('data-id');
+        //   this.router.navigate(['/teacher/profile/', id]);
+        //   }
+      });
       // $('.m_datatable').on('click', '.teacherFn', (e) => {
       //   e.preventDefault();
       //   var id = $(e.target).attr('data-id');

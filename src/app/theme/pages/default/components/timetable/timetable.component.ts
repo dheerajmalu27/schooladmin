@@ -148,7 +148,18 @@ this.getTimeTableList();
     //  localStorage.clear();
     });
   }
-
+  public deleteTimeTableById(id:any){
+    console.log(id);
+    this.baseservice.delete('timetable/'+id).subscribe((data:any) => { 
+      // this.datatable.destroy();
+      // this.getTimeTableList();
+      // this.listTemplate();
+    },
+    (err) => {
+    console.log(err);
+    //  localStorage.clear();
+    });
+  }
   public addTimetableSubmitForm(data:any){
 
     data.divId = $('.division_select2_drop_down').val();
@@ -301,68 +312,77 @@ private getTimeTableData(data:any){
   private openCalender(data:any){
       var tmpMain=this;
       var subID=null;
-    $('#m_calendar').fullCalendar({
-        timeZone: 'UTC',
-        defaultTimedEventDuration: '00:30:00',
-    forceEventDuration: true,
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'agendaWeek,listWeek'
-      },
-      defaultView: 'agendaWeek',
-      hiddenDays: [ 0 ] ,
-      allDaySlot: false,
-      minTime:'10:00:00',
-      maxTime:'18:00:00',
-    slotDuration: '00:05:00',
-    slotLabelInterval: 5,
-    slotMinutes: 30,
-    slotEventOverlap:false,
-      // defaultDate: '2018-01-12',
-      navLinks: true, // can click day/week names to navigate views
-      height: 900,
-      eventLimit: true, // allow "more" link when too many events
-      events:data,
-      draggable:true,
-    editable: true,
-    droppable: true, // this allows things to be dropped onto the calendar
-    eventReceive: function(event:any, view:any) {
-        
-       let ind= _.findIndex(tmpMain.subjectList, {text: event.title});
-       if(ind!=-1){
-         subID=tmpMain.subjectList[ind].id;
-       }else{
-        subID=null;
-       }
-        event.subId=subID;
-        $('#m_calendar').fullCalendar('updateEvent', event);
 
-    //   alert("Dropped event: " + event['title']);  // any data linked to the dropped event 
+      var result = data;
+    const earliestEvent = result.reduce((prev:any, current:any) => {
+      return (prev.start < current.start) ? prev : current;
+  });
+ 
+  const latestEvent = result.reduce((prev:any, current:any) => {
+    return (prev.end > current.end) ? prev : current;
+});
+// Extract the hour and minute from the start and end times.
+const [startHour, startMinute] = earliestEvent.start.split(' ')[1].split(':').map(Number);
+const [endHour, endMinute] = latestEvent.end.split(' ')[1].split(':').map(Number);
+
+$('#m_calendar').fullCalendar({
+  timeZone: 'UTC',
+  defaultTimedEventDuration: '00:30:00',
+  forceEventDuration: true,
+  header: {
+      left: 'today',
+      center: 'title',
+      right: 'agendaWeek,listWeek'
   },
-//    
-
-    eventRender: function(event:any, element:any) {
-      // default render
+  defaultView: 'agendaWeek',
+  hiddenDays: [0],
+  allDaySlot: false,
+  minTime: `${startHour}:${startMinute}:00`,
+  maxTime: '18:00:00',
+  slotDuration: '00:05:00',
+  slotLabelInterval: 5,
+  slotMinutes: 30,
+  slotEventOverlap: false,
+  navLinks: true,
+  height: 900,
+  eventLimit: true,
+  events: data,
+  draggable: true,
+  editable: true,
+  droppable: true,
+  eventReceive: (event:any, view:any) => {
+      let ind = _.findIndex(tmpMain.subjectList, { text: event.title });
+      if (ind !== -1) {
+          subID = tmpMain.subjectList[ind].id;
+      } else {
+          subID = null;
+      }
+      event.subId = subID;
+      $('#m_calendar').fullCalendar('updateEvent', event);
+  },
+  eventRender: (event:any, element:any) => {
       if (element.hasClass('fc-day-grid-event')) {
           element.data('content', event.description);
           element.data('placement', 'top');
           mApp.initPopover(element);
       } else if (element.hasClass('fc-time-grid-event')) {
           element.find('.fc-title').append('<div class="fc-description">' + event.description + '</div>');
-      } else if (element.find('.fc-list-item-title').lenght !== 0) {
+      } else if (element.find('.fc-list-item-title').length !== 0) { // Corrected 'lenght' to 'length'
           element.find('.fc-list-item-title').append('<div class="fc-description">' + event.description + '</div>');
       }
   },
-  eventClick: function(event:any, jsEvent:any, view:any) {
-    // Confirm before removing
-    let isConfirmed = confirm("Are you sure you want to remove this event?");
+  eventClick: (event:any, jsEvent:any, view:any) => {
+      // Confirm before removing
+      let isConfirmed = confirm("Are you sure you want to remove this event?");
 
-    if (isConfirmed) {
-        $('#m_calendar').fullCalendar('removeEvents', event._id);
-    }
-}
-    });
+      if (isConfirmed) {
+          $('#m_calendar').fullCalendar('removeEvents', event._id);
+          console.log(event);
+          this.deleteTimeTableById(event.id);
+      }
+  }
+});
+
 
     
   }
@@ -393,6 +413,7 @@ private getTimeTableData(data:any){
       });
     });
 }
+
 
   public showSubjectList(){
     $('#m_user_profile_tab_3').show();

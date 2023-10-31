@@ -134,39 +134,58 @@
 								<div class="form-group m-form__group row" [ngClass]="{'has-danger':!addClassForm.controls['className'].valid && addClassForm.controls['className'].touched}">
 									<label class="col-lg-2 col-form-label">Class Title:</label>
 									<div class="col-lg-6">
-										<input class="form-control" type="text" placeholder="class name" formControlName="className">
+										<input class="form-control class_name" type="text" placeholder="class name" formControlName="className">
 										<span *ngIf="addClassForm.controls['className'].hasError('required') && addClassForm.controls['className'].touched"
 										 class="m--font-danger">You must include a class title.</span>
 									</div>
 								</div>
-								<!-- <div class="form-group m-form__group row" [ngClass]="{'has-danger':!addClassForm.controls['lastName'].valid && addClassForm.controls['lastName'].touched}">
-							  <label class="col-lg-2 col-form-label">Last Name</label>
-							  <div class="col-lg-6">
-							  <input class="form-control" type="text" placeholder="Doe" formControlName="lastName">
-							  <div *ngIf="addClassForm.controls['lastName'].hasError('required') && addClassForm.controls['lastName'].touched" class="form-control-feedback">You must include a last name.</div>
-							  <div *ngIf="addClassForm.controls['lastName'].hasError('minlength') && addClassForm.controls['lastName'].touched" class="form-control-feedback">Your last name must be at least 5 characters long.</div>
-							  <div *ngIf="addClassForm.controls['lastName'].hasError('maxlength') && addClassForm.controls['lastName'].touched" class="form-control-feedback">Your last name cannot exceed 10 characters.</div>
+
+								
+								<div class="form-group m-form__group row">
+									<label class="col-lg-2 col-form-label">Divisions</label>
+									<div class="col-lg-6">
+								
+										<select class="form-control m-select2 division_select2_drop_down" id="edit_division_select2_1"
+											formControlName="tests" multiple>
+										</select>
+								
+								
+										<!-- <div *ngIf="addClassForm.controls['divisions'].hasError('required') && addClassForm.controls['divisions'].touched" class="form-control-feedback">You must include Division.</div> -->
+								
+									</div>
+								</div>
+							
+							<div class="form-group m-form__group row">
+								<label class="col-lg-2 col-form-label">Test</label>
+								<div class="col-lg-6">
+									<select class="form-control m-select2 test_select2_drop_down" id="add_test_select2_1" formControlName="tests"
+										multiple>
+									</select>
+									<!-- <div *ngIf="addClassForm.controls['tests'].hasError('required') && addClassForm.controls['test'].touched" class="form-control-feedback">You must include tests.</div> -->
+								</div>
 							</div>
+
+							<div class="form-group m-form__group row">
+								<label class="col-lg-2 col-form-label">Subjects</label>
+								<div class="col-lg-6">
+									<select class="form-control m-select2 subject_select2_drop_down" id="add_subject_select2_1"
+										formControlName="subjects" multiple>
+									</select>
+							
+							
+									<!-- <div *ngIf="addClassForm.controls['subjects'].hasError('required') && addClassForm.controls['subjects'].touched" class="form-control-feedback">You must include subjects.</div> -->
+								</div>
 							</div>
 							<div class="form-group m-form__group row">
-							  <label class="col-lg-2 col-form-label">Gender</label>
-							  <div class="form-control-feedback" *ngIf="!addClassForm.controls['gender'].valid && addClassForm.controls['gender'].touched">You must select a gender.</div>
-							
-							<div class="col-lg-6">
-							<div class="radio">
-							  <label>
-								<input type="radio" name="gender" value="Male" formControlName="gender">
-								Male
-							  </label>
+								<label class="col-lg-2 col-form-label">Optional Subjects</label>
+								<div class="col-lg-6">
+									<select class="form-control m-select2 optionalSubjects_select2_drop_down" id="add_optionalSubjects_select2_1" formControlName="optionalSubjects"
+										multiple>
+									</select>
+									<!-- <div *ngIf="addClassForm.controls['tests'].hasError('required') && addClassForm.controls['test'].touched" class="form-control-feedback">You must include tests.</div> -->
+								</div>
 							</div>
-							<div class="radio">
-							  <label>
-								<input type="radio" name="gender" value="Female" formControlName="gender">
-								Female
-							  </label>
-							</div>
-						</div>
-							</div> -->
+
 							</div>
 							<div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
 								<div class="m-form__actions m-form__actions--solid">
@@ -208,58 +227,81 @@
 							</div>
 						</div>
 						<!--begin::Form-->
-						<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" [formGroup]="editClassForm" (ngSubmit)="editClassSubmitForm(editClassForm.value)">
-							<div class="m-portlet__body">
-								<div class="form-group m-form__group row" [ngClass]="{'has-danger':!editClassForm.controls['className'].valid && editClassForm.controls['className'].touched}">
-									<label class="col-lg-2 col-form-label">Class Title:</label>
+						<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" [formGroup]="editClassForm" (ngSubmit)="editClassSubmitForm(editClassForm.value)">>
+								<div class="m-portlet__body">
+									<div class="form-group m-form__group row">
+										<label class="col-lg-2 col-form-label">Class Title:</label>
+										<div class="col-lg-6">
+											<input class="form-control edit_class_id" type="hidden"  formControlName="classId">
+											<input class="form-control edit_class_name" type="text" placeholder="class name" formControlName="className">
+											<!-- <span *ngIf="editClassForm.controls['className'].hasError('required') && editClassForm.controls['className'].touched"
+											 class="m--font-danger">You must include a class title.</span> -->
+										</div>
+									</div>
+	
+									
+									<div class="form-group m-form__group row">
+										<label class="col-lg-2 col-form-label">Divisions</label>
+										<div class="col-lg-6">
+									
+											<select class="form-control m-select2 edit_division_select2_drop_down" id="edit_division_select2_1"
+												formControlName="tests" multiple>
+											</select>
+									
+									
+											<!-- <div *ngIf="editClassForm.controls['divisions'].hasError('required') && editClassForm.controls['divisions'].touched" class="form-control-feedback">You must include Division.</div> -->
+									
+										</div>
+									</div>
+								
+								<div class="form-group m-form__group row">
+									<label class="col-lg-2 col-form-label">Test</label>
 									<div class="col-lg-6">
-										<input class="form-control" type="text" placeholder="class name" formControlName="className">
-										<span *ngIf="editClassForm.controls['className'].hasError('required') && editClassForm.controls['className'].touched"
-										 class="m--font-danger">You must include a class title.</span>
+										<select class="form-control m-select2 edit_test_select2_drop_down" id="edit_test_select2_1" formControlName="tests"
+											multiple>
+										</select>
+										<!-- <div *ngIf="editClassForm.controls['tests'].hasError('required') && editClassForm.controls['test'].touched" class="form-control-feedback">You must include tests.</div> -->
 									</div>
 								</div>
-								<!-- <div class="form-group m-form__group row" [ngClass]="{'has-danger':!editClassForm.controls['lastName'].valid && editClassForm.controls['lastName'].touched}">
-								  <label class="col-lg-2 col-form-label">Last Name</label>
-								  <div class="col-lg-6">
-								  <input class="form-control" type="text" placeholder="Doe" formControlName="lastName">
-								  <div *ngIf="editClassForm.controls['lastName'].hasError('required') && editClassForm.controls['lastName'].touched" class="form-control-feedback">You must include a last name.</div>
-								  <div *ngIf="editClassForm.controls['lastName'].hasError('minlength') && editClassForm.controls['lastName'].touched" class="form-control-feedback">Your last name must be at least 5 characters long.</div>
-								  <div *ngIf="editClassForm.controls['lastName'].hasError('maxlength') && editClassForm.controls['lastName'].touched" class="form-control-feedback">Your last name cannot exceed 10 characters.</div>
-								</div>
+	
+								<div class="form-group m-form__group row">
+									<label class="col-lg-2 col-form-label">Subjects</label>
+									<div class="col-lg-6">
+										<select class="form-control m-select2 edit_subject_select2_drop_down" id="edit_subject_select2_1"
+											formControlName="subjects" multiple>
+										</select>
+								
+								
+										<!-- <div *ngIf="editClassForm.controls['subjects'].hasError('required') && editClassForm.controls['subjects'].touched" class="form-control-feedback">You must include subjects.</div> -->
+									</div>
 								</div>
 								<div class="form-group m-form__group row">
-								  <label class="col-lg-2 col-form-label">Gender</label>
-								  <div class="form-control-feedback" *ngIf="!editClassForm.controls['gender'].valid && editClassForm.controls['gender'].touched">You must select a gender.</div>
-								
-								<div class="col-lg-6">
-								<div class="radio">
-								  <label>
-									<input type="radio" name="gender" value="Male" formControlName="gender">
-									Male
-								  </label>
+									<label class="col-lg-2 col-form-label">Optional Subjects</label>
+									<div class="col-lg-6">
+										<select class="form-control m-select2 edit_optionalSubjects_select2_drop_down" id="edit_optionalSubjects_select2_1" formControlName="optionalSubjects"
+											multiple>
+										</select>
+										<!-- <div *ngIf="editClassForm.controls['tests'].hasError('required') && editClassForm.controls['test'].touched" class="form-control-feedback">You must include tests.</div> -->
+									</div>
 								</div>
-								<div class="radio">
-								  <label>
-									<input type="radio" name="gender" value="Female" formControlName="gender">
-									Female
-								  </label>
-								</div>
-							</div>
-								</div> -->
-							</div>
-							<div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
-								<div class="m-form__actions m-form__actions--solid">
-									<div class="row">
-										<div class="col-lg-2"></div>
-										<div class="col-lg-6">
-											<button type="submit" class="btn btn-brand" [disabled]="!editClassForm.valid">Submit</button>
 	
-											<button type="button" (click)="listTemplate()" class="btn btn-secondary">Cancel</button>
+								</div>
+								<div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+									<div class="m-form__actions m-form__actions--solid">
+										<div class="row">
+											<div class="col-lg-2"></div>
+											<div class="col-lg-6">
+												<button type="submit" class="btn btn-brand">Submit</button>
+		
+												<button type="button" (click)="listTemplate()" class="btn btn-secondary">Cancel</button>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</form>
+		
+		
+							</form>
+							<!--end::Form-->
 						<!--end::Form-->
 						<!--end::Form-->
 					</div>

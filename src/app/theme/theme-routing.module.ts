@@ -69,12 +69,12 @@ const routes: Routes = [
     }, 
 
       // Setting section 
+      // {
+      //   path: "class",
+      //   loadChildren: () => import('./pages/default/components/class/class.module').then(x => x.ClassModule)
+      // },
       {
         path: "class",
-        loadChildren: () => import('./pages/default/components/class/class.module').then(x => x.ClassModule)
-      },
-      {
-        path: "class-subject-test",
         loadChildren: () => import('./pages/default/components/class-subject-test/class-subject-test.module').then(x => x.ClassSubjectTestModule)
       },
       {

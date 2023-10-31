@@ -264,7 +264,7 @@ if(value.dow=="Monday"){
     $('#m_calendar').fullCalendar({
       header: {
         // left: 'prev,next today',
-        center: 'Teacher Scheduke',
+        center: 'Teacher Schedule',
         right: 'agendaWeek,agendaDay,listWeek'
       },
       minTime: `${startHour}:${startMinute}:00`,
