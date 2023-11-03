@@ -5,6 +5,8 @@ import {BaseService} from '../../../../../_services/base.service';
 import {ReactiveFormsModule,FormsModule,FormGroup,FormControl,Validators,FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
+import { jsPDF } from 'jspdf'; 
+import html2canvas from 'html2canvas'; 
 declare let $: any
 import { CommonService } from "../../../../../_services/common-api.service";
 @Component({
@@ -19,7 +21,7 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
   addStudentData:any;
   divisionData:any=null;
   classData:any =null;
-  editStudentData: any = null;
+  editTestMarksData: any = null;
   showTemplate: any;
   studentDetail:any;
   addTestmarksFormList: any;
@@ -67,18 +69,8 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
   
       
   }
-
-  // tableToExcel(table:any){
-  //   let uri = 'data:application/vnd.ms-excel;base64,'
-  //       , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
-  //       , base64 = function(s) { return window.btoa(decodeURIComponent(encodeURIComponent(s))) }
-  //       , format = function(s,c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-  //           if (!table.nodeType) table = document.getElementById(table)
-  //           var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-  //           window.location.href = uri + base64(format(template, ctx))
-  //               }
-  tableToExcel(table:any){
-   this.ComService.tableToExcel(table,'test-marks');
+  tableToExcel(table:any,){
+   this.ComService.tableToExcel(table,'Test-Marks');
                 }
   ngAfterViewInit() {
     
@@ -158,22 +150,28 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
     const value = event.target instanceof HTMLInputElement ? event.target.value : '';
       $('.totalmarksval').val(value); 
   }
-  private getTestMarksStudentData(data:any){
+  private getTestMarksStudentData(data:any,type:any){
  
-    let excludeData  = data.split('*');
-  this.getStudentTestMarksList(excludeData);    
-    }
-    private getStudentTestMarksList(data:any){ 
-      this.baseservice.get('getbyrecordtestmarks?classId=' + data[0] + '&divId=' + data[1]+'&testId='+data[2]+'&subId='+data[3]).subscribe((data:any) => {  
-        this.editStudentData = data.testmarksstudentlist; 
+    let excludeData  = data.split('*'); 
+  this.baseservice.get('getbyrecordtestmarks?classId=' + excludeData[0] + '&divId=' + excludeData[1]+'&testId='+excludeData[2]+'&subId='+excludeData[3]).subscribe((data:any) => {  
+    this.editTestMarksData = data.testmarksstudentlist; 
+     if(type!=''){
 
-        this.editTemplate();   
-      },
-        (err) => {
-          console.log(err);        
-        });
+    setTimeout(() => 
+    {
+      this.ComService.tableToExcel('exportTable',type);
+
+    }, 2000);
+    }else{
+      this.editTemplate();  
+    }
     
-  }
+  },
+    (err) => {
+      console.log(err);        
+    });
+    }
+   
   setMarksVal(data:any,maxvalue:any){
     if(data.value>maxvalue){
       data.value=0;
@@ -271,7 +269,7 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
         field: "subId",
         title: "Actions",
         template: function (row:any) {
-          return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="'+row.classId+ '*'+row.divId+'*'+row.testId+'*'+row.subId+'"></i></span>';
+          return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="'+row.classId+ '*'+row.divId+'*'+row.testId+'*'+row.subId+'"></i></span><span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="export-excel fa fa-file-excel-o" data-id="'+row.classId+ '*'+row.divId+'*'+row.testId+'*'+row.subId+'"  data-filename="'+row.testName+ '-'+row.subName+'-'+row.className+'-'+row.divName+'"></i></span><span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" >';
          
          
         }
@@ -314,10 +312,38 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
         } else if (e.target && e.target.classList.contains('edit-button')) {
             e.preventDefault();
             const id = e.target.getAttribute('data-id');
-            this.getTestMarksStudentData(id);
-        }
+            this.getTestMarksStudentData(id,'');
+        } else if (e.target && e.target.classList.contains('export-excel')) {
+            e.preventDefault();
+            const id = e.target.getAttribute('data-id');
+            
+            const filename = e.target.getAttribute('data-filename');
+            this.getTestMarksStudentData(id,filename);
+          } 
     });
 }
 
+public genratefile(){
   
+  const data = document.getElementById('contentToConvert');
+    
+    if (!data) {
+        console.error('Element #contentToConvert not found!');
+        return; // exit the function if the element wasn't found
+    } 
+  html2canvas(data).then(canvas => { 
+    console.log(canvas); // Log the canvas object to the console
+  // Few necessary setting options 
+  var imgWidth = 208; 
+  var pageHeight = 295; 
+  var imgHeight = canvas.height * imgWidth / canvas.width; 
+  var heightLeft = imgHeight; 
+  
+  const contentDataURL = canvas.toDataURL('image/png') 
+  let pdf =new jsPDF('p', 'mm', 'a4');//new jspdf('p', 'mm', 'a4'); // A4 size page of PDF 
+  var position = 0; 
+  pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight) 
+  pdf.save('TestMarks.pdf'); // Generated PDF  
+  }); 
+}
 }

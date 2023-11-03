@@ -263,6 +263,52 @@
                 </h3>
               </div>
             </div>
+            <div class="m-portlet__head-tools">
+              <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                  <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                    data-dropdown-toggle="hover" aria-expanded="true">
+                    <a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                      <i class="la la-ellipsis-h m--font-brand"></i>
+                    </a>
+                    <div class="m-dropdown__wrapper">
+                      <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                      <div class="m-dropdown__inner">
+                        <div class="m-dropdown__body">
+                          <div class="m-dropdown__content">
+                            <ul class="m-nav">
+                              <li class="m-nav__section m-nav__section--first">
+                                <span class="m-nav__section-text">
+                                  Quick Actions
+                                </span>
+                              </li>
+    
+                              <li class="m-nav__item">
+                                <a href="" class="m-nav__link" (click)="genratefile()">
+                                  <i class="m-nav__link-icon fa fa-file-excel-o"></i>
+                                  <span class="m-nav__link-text">
+                                   Export PDF
+                                  </span>
+                                </a>
+                              </li>
+                              <li class="m-nav__item">
+                                <a (click)="tableToExcel('exportTable')" href="" class="m-nav__link">
+                                  <i class="m-nav__link-icon fa fa-file-pdf-o"></i>
+                                  <span class="m-nav__link-text">
+                                    Export Excel
+                                  </span>
+                                </a>
+                              </li>
+    
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="m-portlet__body">
             <div class="form-group m-form__group">
@@ -270,8 +316,8 @@
                 <div class="m-section__content">
                   <form id="editStudentTestmarksForm"
                     class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
-                    (ngSubmit)="editStudentTestmarksSumitForm(editStudentData)">
-                    <table class="table table-striped m-table">
+                    (ngSubmit)="editStudentTestmarksSumitForm(editTestMarksData)">
+                    <table class="table table-striped m-table" id="contentToConvert">
                       <thead>
                         <tr>
                           <th>
@@ -296,7 +342,7 @@
                       </thead>
                       <tbody>
 
-                        <tr *ngFor="let Data of editStudentData; let i=index">
+                        <tr *ngFor="let Data of editTestMarksData; let i=index">
                           <th scope="row">
 
                             {{Data.TestmarksStudent.rollNo}}
@@ -315,9 +361,9 @@
 
                             <div class="col-lg-6">
                               <input class="form-control"
-                                (change)="setMarksVal($event.target,editStudentData[i].totalMarks)"
-                                value="{{Data.getMarks}}" max="{{editStudentData[i].totalMarks}}" type="number"
-                                [(ngModel)]="editStudentData[i].getMarks" [ngModelOptions]="{standalone: true}">
+                                (change)="setMarksVal($event.target,editTestMarksData[i].totalMarks)"
+                                value="{{Data.getMarks}}" max="{{editTestMarksData[i].totalMarks}}" type="number"
+                                [(ngModel)]="editTestMarksData[i].getMarks" [ngModelOptions]="{standalone: true}">
                             </div>
 
                           </td>
@@ -325,7 +371,7 @@
 
                             <div class="col-lg-6">
                               
-                                <input class="form-control totalmarksval" [value]="Data.totalMarks" type="number" [(ngModel)]="editStudentData[i].totalMarks" [ngModelOptions]="{standalone: true}" (change)="setTotalVal($event)">
+                                <input class="form-control totalmarksval" [value]="Data.totalMarks" type="number" [(ngModel)]="editTestMarksData[i].totalMarks" [ngModelOptions]="{standalone: true}" (change)="setTotalVal($event)">
 
                             </div>
 
@@ -380,7 +426,7 @@
             </h3>
           </div>
         </div>
-        <div class="m-portlet__head-tools">
+        <!-- <div class="m-portlet__head-tools">
           <ul class="m-portlet__nav">
             <li class="m-portlet__nav-item">
               <div
@@ -435,7 +481,7 @@
               </div>
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
       <div class="m-portlet__body">
         <!--begin: Search Form -->
@@ -479,26 +525,36 @@
     </div>
   </div>
 </div>
-<div id="exportTable" style="display:none">
-  <table>
+<div >
+  <table id="exportTable" style="display:none">
     <thead>
       <tr>
         <th>Sr No</th>
         <th>Roll No</th>
-        <th>Class-Div</th>
         <th>Student Name</th>
-        <th>Parent Name</th>
-        <th>Contact No</th>
+        <th>Class-Div</th>
+        <th>Subject</th>
+        <th>Test Marks</th>
+        <th>Total Marks</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let student of studentData;let i = index">
+      <tr *ngFor="let Data of editTestMarksData;let i = index">
         <td>{{i+1}}</td>
-        <td>{{student.rollNo}}</td>
-        <td>{{student.className}} - {{student.divName}}</td>
-        <td>{{student.firstName}} {{student.lastName}}</td>
-        <td>{{student.fatherName}} {{student.lastName}}</td>
-        <td>{{student.parentNumber}}</td>
+        <td>
+          {{Data.TestmarksStudent.rollNo}}
+        </td>
+        <td>
+          {{Data.TestmarksStudent.firstName}} {{Data.TestmarksStudent.lastName}}
+        </td>
+        <td>
+          {{Data.TestmarksClass.className}}-{{Data.TestmarksDivision.divName}}
+        </td>
+        <td>
+          {{Data.TestmarksSubject.subName}}
+        </td>
+        <td>{{Data.getMarks}}</td>
+        <td>{{Data.totalMarks}}</td>
       </tr>
     </tbody>
   </table>

@@ -157,30 +157,8 @@ export class TeacherComponent implements OnInit, AfterViewInit {
     alert(id);
     this.router.navigate(['/teacher/profile/', id]); 
   }
-  tableToExcel(table:any, EmployeeList: string) {
-    const uri = 'data:application/vnd.ms-excel;base64,';
-    const template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>';
-    const base64 = function (s:any) { return window.btoa(decodeURIComponent(encodeURIComponent(s))) };
-    const format = function (s:any, c:any) { return s.replace(/{(\w+)}/g, function (m:any, p:any) { return c[p]; }) };
-    
-    // Using Angular's ViewChild to get the table content
-    const ctx = { worksheet: EmployeeList || 'Worksheet',  table: table.innerHTML };
-    const link = document.createElement('a');
-    link.href = uri + base64(format(template, ctx));
-    link.download = 'data.xls';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-  // tableToExcel(table, EmployeeList){
-  //   let uri = 'data:application/vnd.ms-excel;base64,'
-  //       , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
-  //       , base64 = function(s) { return window.btoa(decodeURIComponent(encodeURIComponent(s))) }
-  //       , format = function(s,c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-  //           if (!table.nodeType) table = document.getElementById(table)
-  //           var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-  //           window.location.href = uri + base64(format(template, ctx))
-  //               }
+
+
   ngAfterViewInit() {
     this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
       'assets/demo/default/custom/components/forms/widgets/select2.js');
@@ -189,6 +167,9 @@ export class TeacherComponent implements OnInit, AfterViewInit {
       
 
   }
+  tableToExcel(table:any){
+    this.commonservice.tableToExcel(table,'Teacher List');
+    }
   private getTeacherList() {
     this.baseservice.get('teacher').subscribe((data: any) => {
       this.teacherData = data.teacher;

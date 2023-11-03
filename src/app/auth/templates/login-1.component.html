@@ -25,7 +25,7 @@
 								to continue or singup.
 							</div>
 						</div>
-						<form (ngSubmit)="f.form.valid && signin()" #f="ngForm" class="m-login__form m-form" action="">
+						<form (ngSubmit)="f.form.valid && signin()" #f="ngForm" class="m-login__form m-form" >
 							<ng-template #alertSignin></ng-template>
 							<div class="form-group m-form__group">
 								<input class="form-control m-input" type="text" placeholder="Email" name="email" [(ngModel)]="model.email" #email="ngModel" autocomplete="off">

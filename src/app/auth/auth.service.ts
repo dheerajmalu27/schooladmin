@@ -18,7 +18,7 @@ export class AuthService {
     // be called after the token is refreshed
   }
   public getToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem('accessToken');
 }
   // public getToken(): string {
   //   return localStorage.getItem('token');

@@ -73,10 +73,7 @@ const routes: Routes = [
       //   path: "class",
       //   loadChildren: () => import('./pages/default/components/class/class.module').then(x => x.ClassModule)
       // },
-      {
-        path: "class",
-        loadChildren: () => import('./pages/default/components/class-subject-test/class-subject-test.module').then(x => x.ClassSubjectTestModule)
-      },
+    
       {
         path: "division",
         loadChildren: () => import('./pages/default/components/division/division.module').then(x => x.DivisionModule)
@@ -88,6 +85,14 @@ const routes: Routes = [
       {
         path: "test",
         loadChildren: () => import('./pages/default/components/test/test.module').then(x => x.TestModule)
+      },
+      {
+        path: "class",
+        loadChildren: () => import('./pages/default/components/class-subject-test/class-subject-test.module').then(x => x.ClassSubjectTestModule)
+      },
+      {
+        path: "teacher-subject",
+        loadChildren: () => import('./pages/default/components/teacher-subject/teacher-subject.module').then(x => x.TeacherSubjectModule)
       },
       {
         path: "holidays",
@@ -221,7 +226,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/self-layout-blank/snippets/pages/user/user-login-1/user-login-1.module').then(x => x.UserLogin1Module)
   },
   {
-    path: "snippets/pages/user/login-2",
+    path: "login",
     loadChildren: () => import('./pages/self-layout-blank/snippets/pages/user/user-login-2/user-login-2.module').then(x => x.UserLogin2Module)
   },
   {

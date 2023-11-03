@@ -361,6 +361,10 @@ $('#m_calendar').fullCalendar({
       $('#m_calendar').fullCalendar('updateEvent', event);
   },
   eventRender: (event:any, element:any) => {
+    // element.css('background-color', 'red');
+    // element.css('color', 'white');
+    // element.find('.fc-content').css('color', 'white');
+    // element.find('.fc-content .fc-time').css('color', 'white');
       if (element.hasClass('fc-day-grid-event')) {
           element.data('content', event.description);
           element.data('placement', 'top');

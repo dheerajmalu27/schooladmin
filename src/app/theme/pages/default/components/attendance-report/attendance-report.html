@@ -1,110 +1,186 @@
 <!-- BEGIN: Subheader -->
-<div id="addTemplate" style="display: none;">
+<div id="formTemplate">
 	<div class="m-subheader">
 		<div class="d-flex align-items-center">
-		<div class="mr-auto">
-			<h3 class="m-subheader__title m-subheader__title--separator">
-			Attendance Report
-			</h3>
-			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-			<li class="m-nav__item m-nav__item--home">
-				<a href="#" class="m-nav__link m-nav__link--icon">
-				<i class="m-nav__link-icon la la-home"></i>
-				</a>
-			</li>
-			
-			</ul>
-		</div>
-	
+			<div class="mr-auto">
+				<h3 class="m-subheader__title m-subheader__title--separator">
+					Attendance Report
+				</h3>
+				<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+					<li class="m-nav__item m-nav__item--home">
+						<a href="#" class="m-nav__link m-nav__link--icon">
+							<i class="m-nav__link-icon la la-home"></i>
+						</a>
+					</li>
+
+				</ul>
+			</div>
+
 		</div>
 	</div>
 	<div class="m-content">
-	
+
 		<div class="row">
-		<div class="col-lg-12">
-			<!--begin::Portlet-->
-			<div class="m-portlet">
-			<div class="m-portlet__head">
-				<div class="m-portlet__head-caption">
-				<div class="m-portlet__head-title">
-					<span class="m-portlet__head-icon m--hide">
-					<i class="la la-gear"></i>
-					</span>
-					<h3 class="m-portlet__head-text">
-					 Attendance Report
-					</h3>
-				</div>
-				</div>
-			</div>
-			<!--begin::Form-->
-			<form id="attendanceReport1" [formGroup]="attendanceReportForm" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
-				(ngSubmit)="attendanceReportSubmitForm(attendanceReportForm.value)">
-				<div class="m-portlet__body">
-				<div class="form-group m-form__group row">
-					<div class="col-lg-4">
-					<label class="col-form-label">
-						Select Class
-					</label>
-					<div>
-							<select class="form-control m-select2 class_select2_drop_down" id="m_select2_1"
-							formControlName="classId">
-						</select>
-	
+			<div class="col-lg-12">
+				<!--begin::Portlet-->
+				<div class="m-portlet">
+					<div class="m-portlet__head">
+						<div class="m-portlet__head-caption">
+							<div class="m-portlet__head-title">
+								<span class="m-portlet__head-icon m--hide">
+									<i class="la la-gear"></i>
+								</span>
+								<h3 class="m-portlet__head-text">
+									Attendance Report
+								</h3>
+							</div>
+						</div>
 					</div>
-					</div>
-					<div class="col-lg-4">
-					<label class="col-form-label">
-						Select Div
-					</label>
-					<div>
-						<select class="form-control m-select2 division_select2_drop_down" id="m_select2_2"
-						formControlName="divId">
-						</select>
-	
-					</div>
-					</div>
-					<div class="col-lg-4">
+					<!--begin::Form-->
+					<form id="attendanceReport1" [formGroup]="attendanceReportForm"
+						class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+						(ngSubmit)="attendanceReportSubmitForm(attendanceReportForm.value)">
+						<div class="m-portlet__body">
+							<div class="form-group m-form__group row">
+								<div class="col-lg-4">
+									<label class="col-form-label">
+										Select Class
+									</label>
+									<div>
+										<select class="form-control m-select2 class_select2_drop_down" id="m_select2_1"
+											formControlName="classId">
+										</select>
+
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<label class="col-form-label">
+										Select Div
+									</label>
+									<div>
+										<select class="form-control m-select2 division_select2_drop_down"
+											id="m_select2_2" formControlName="divId">
+										</select>
+
+									</div>
+								</div>
+								<div class="col-lg-4">
 
 
 
-						
-								<label class="col-form-label">
-									Input Group Setup
-								</label>
-								<div class='input-group' id='m_daterangepicker_2'>
-										<input type='text' id='m_datepickerSet' autocomplete="off" class="form-control m-input" formControlName="attendanceDate" readonly placeholder="Select date range"/>
+
+									<label class="col-form-label">
+										Date Range
+									</label>
+									<div class='input-group' id='m_daterangepicker_2'>
+										<input type='text' id='m_datepickerSet' autocomplete="off"
+											class="form-control m-input" formControlName="attendanceDate" readonly
+											placeholder="Select date range" />
 										<span class="input-group-addon">
 											<i class="la la-calendar-check-o"></i>
 										</span>
 									</div>
-								
-					<!-- <span *ngIf="attendanceReportForm.controls['dob'].hasError('required')" class="m--font-danger">Please enter
+
+									<!-- <span *ngIf="attendanceReportForm.controls['dob'].hasError('required')" class="m--font-danger">Please enter
 							Date Of Birth.</span> -->
-					</div>
+								</div>
+							</div>
+
+
+						</div>
+						<div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+							<div class="m-form__actions m-form__actions--solid">
+								<div class="row">
+									<div class="col-lg-2"></div>
+									<div class="col-lg-6">
+										<button type="submit" class="btn btn-brand"
+											[disabled]="!attendanceReportForm.valid">Show</button>
+
+										<button type="reset" class="reload btn btn-secondary">Cancel</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+
+					<!--end::Form-->
 				</div>
-	
-	
-				</div>
-				<div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
-				<div class="m-form__actions m-form__actions--solid">
-					<div class="row">
-					<div class="col-lg-2"></div>
-					<div class="col-lg-6">
-						<button type="submit" class="btn btn-brand" [disabled]="!attendanceReportForm.valid">Show</button>
-	
-						<button type="reset"  class="reload btn btn-secondary">Cancel</button>
-					</div>
-					</div>
-				</div>
-				</div>
-			</form>
-			
-			<!--end::Form-->
+				<!--end::Portlet-->
 			</div>
-			<!--end::Portlet-->
-		</div>
 		</div>
 	</div>
+</div>
+
+<div class="m-content" id="listTemplate">
+	<div class="m-portlet m-portlet--mobile">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						{{TableTitle}}
+					</h3>
+				</div>
+			</div>
+			<div class="m-portlet__head-tools">
+				<ul class="m-portlet__nav">
+					<li class="m-portlet__nav-item">
+						<div class="m-widget4">	<div class="m-widget4__item"><div class="m-widget4__img m-widget4__img--icon"><img src="./assets/app/media/img/files/csv.svg" alt=""></div><div class="m-widget4__info"><span class="m-widget4__text">Export Excel </span></div><div class="m-widget4__ext"><a href="#" (click)="tableToExcel('exportTable')" class="m-widget4__icon" ng-reflect-href="#"><i class="la la-download"></i></a></div></div></div>
+					
+
+						<!-- <a (click)="tableToExcel('exportTable')" href="" class="m-nav__link">
+							<i class="m-nav__link-icon fa fa-file-pdf-o"></i>
+							<span class="m-nav__link-text">
+							  
+							</span>
+						  </a> -->
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<!--begin: Search Form -->
+			<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+				<div class="row align-items-center">
+					<div class="col-xl-8 order-2 order-xl-1">
+						<div class="form-group m-form__group row align-items-center">
+							<div class="col-md-4">
+								<div class="m-input-icon m-input-icon--left">
+									<input type="text" class="form-control m-input m-input--solid"
+										placeholder="Search..." id="m_form_search">
+									<span class="m-input-icon__icon m-input-icon__icon--left">
+										<span>
+											<i class="la la-search"></i>
+										</span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<!--end: Search Form -->
+			<!--begin: Datatable -->
+			<div class="m_datatable" id="local_data"></div>
+			<!--end: Datatable -->
+		</div>
 	</div>
-
-
+</div>
+<div>
+	<table id="exportTable" style="display:none">
+		<thead>
+			<tr>
+			  <th>Roll No</th>
+			  <th>Full Name</th>
+			  <th *ngFor="let dateHeader of dateHeaders">{{ dateHeader }}</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr *ngFor="let student of AttendanceReportData">
+			  <td>{{ student.rollNo }}</td>
+			  <td>{{ student.fullName }}</td>
+			  <td *ngFor="let dateHeader of dateHeaders">{{ student[dateHeader] }}</td>
+			</tr>
+		  </tbody>
+	</table>
+  </div>

@@ -17,10 +17,12 @@ export class AmchartsChartsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
     '//www.amcharts.com/lib/3/plugins/tools/polarScatter/polarScatter.min.js',
-    '//www.amcharts.com/lib/3/plugins/export/export.min.js',
+    // 'node_modules/amcharts3/amcharts/plugins/export/export.min.js',
+    // 'node_modules/amcharts3/amcharts/plugins/export/libs/FileSaver.js/FileSaver.min.js',
     'assets/demo/default/custom/components/charts/amcharts/charts.js');
   Helpers.loadStyles('.m-grid__item.m-grid__item--fluid.m-wrapper', [
     '//www.amcharts.com/lib/3/plugins/export/export.css']);
+   
   }
   ngAfterViewInit() {
     // this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',

@@ -25,7 +25,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/amcharts3/amcharts/plugins/export/export.css"
             ],
             "scripts": ["node_modules/jquery/dist/jquery.min.js",
             "node_modules/bootstrap/dist/js/bootstrap.min.js",
@@ -34,6 +35,9 @@
                       "node_modules/amcharts3/amcharts/serial.js",
                       "node_modules/amcharts3/amcharts/themes/light.js",
         "node_modules/amcharts3/amcharts/plugins/export/libs/fabric.js/fabric.min.js",
+        "node_modules/amcharts3/amcharts/plugins/export/export.min.js",
+        "node_modules/amcharts3/amcharts/plugins/export/libs/FileSaver.js/FileSaver.min.js",
+        "node_modules/amcharts3/amcharts/plugins/export/libs/jszip/jszip.min.js",
         "node_modules/amcharts3/amcharts/plugins/export/libs/pdfmake/pdfmake.min.js"]
           },
           "configurations": {

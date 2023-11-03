@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { Helpers } from '../../../helpers';
+import { Router } from "@angular/router";
+import { AuthenticationService } from "../../../auth/_services/authentication.service";
 
 declare let mLayout: any;
 @Component({
@@ -10,7 +12,8 @@ declare let mLayout: any;
 export class HeaderNavComponent implements OnInit, AfterViewInit {
 
 
-  constructor() {
+  constructor(private _router: Router,
+    private _authService: AuthenticationService) {
 
   }
   ngOnInit() {
@@ -21,5 +24,11 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
     mLayout.initHeader();
 
   }
+ logout(){
+  Helpers.setLoading(true);
+  // reset login status
+  this._authService.logout();
+  this._router.navigate(['/login']);
+ }
 
 }

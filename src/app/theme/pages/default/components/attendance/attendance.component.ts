@@ -5,6 +5,7 @@ import { BaseService } from '../../../../../_services/base.service';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
+import { CommonService } from "../../../../../_services/common-api.service";
 declare let $: any
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -23,7 +24,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
   dateOfAttendance: any = null;
   selectedFiles: any;
   addAttenaceFormList: any;
-  constructor(private elRef: ElementRef, 
+  constructor(private ComService: CommonService,private elRef: ElementRef, 
     private renderer: Renderer2,private _script: ScriptLoaderService, private baseservice: BaseService
     , private router: Router, public fb: FormBuilder) {
 
@@ -78,21 +79,27 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private getAttendanceData(data:any){
+  private getAttendanceData(data:any,type:any){
  
     let excludeData  = data.split('*');
-  this.getStudentAttendanceList(excludeData);    
+    this.baseservice.get('getbyrecord?classId=' + excludeData[0] + '&divId=' + excludeData[1]+'&date='+excludeData[2]).subscribe((data:any) => {  
+      this.editStudentData = data.attendancestudentList; 
+      if(type!=''){
+
+        setTimeout(() => 
+        {
+          this.ComService.tableToExcel('exportTable',type);
+    
+        }, 2000);
+        }else{
+          this.editTemplate();  
+        }  
+    },
+      (err) => {
+        console.log(err);        
+      });  
     }
-    private getStudentAttendanceList(data:any){ 
-        this.baseservice.get('getbyrecord?classId=' + data[0] + '&divId=' + data[1]+'&date='+data[2]).subscribe((data:any) => {  
-          this.editStudentData = data.attendancestudentList; 
-          this.editTemplate();   
-        },
-          (err) => {
-            console.log(err);        
-          });
-      
-    }
+   
   private getAttendanceList() {
     this.baseservice.get('getattendancelist').subscribe((data:any) => {
       this.attendancePending = data;
@@ -245,6 +252,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
         title: "Class Teacher",
         template: (row: any) => {
           return `<span  style="cursor: pointer;" class="teacherFn" data-id="${row.teacherId}">${row.teacherName}</span>`;
+          
         }
 
       }, {
@@ -263,7 +271,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
         title: "Action",
 
         template: function (row:any) {
-          return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.classId + '*'+row.divId+'*'+row.selectedDate+'"></i></span>';
+          return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.classId + '*'+row.divId+'*'+row.selectedDate+'"></i></span><span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="export-excel fa fa-file-excel-o" data-id="'+row.classId+ '*'+row.divId+'*'+row.selectedDate+'"  data-filename="AttendanceList-'+row.selectedDate+'-'+row.className+'-'+row.divName+'"></i></span>';
 
         }
       }]
@@ -300,13 +308,19 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
       if ((e.target as HTMLElement).classList.contains('edit-button')) {
         e.preventDefault();
         const id = (e.target as HTMLElement).getAttribute('data-id');
-        this.getAttendanceData(id);
+        this.getAttendanceData(id,'');
       }
       if ((e.target as HTMLElement).classList.contains('teacherFn')) {
         e.preventDefault();
         const id = (e.target as HTMLElement).getAttribute('data-id');
         this.router.navigate(['/teacher/profile/', id]);
         }
+       if (e.target && e.target.classList.contains('export-excel')) {
+          e.preventDefault();
+          const id = e.target.getAttribute('data-id');
+          const filename = e.target.getAttribute('data-filename');
+          this.getAttendanceData(id,filename);
+        } 
     });
     
     // $(".reload").on('click', function(){

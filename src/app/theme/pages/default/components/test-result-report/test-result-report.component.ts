@@ -15,6 +15,7 @@ declare let $: any
 export class testResultReportComponent implements OnInit, AfterViewInit {
    myArray= [];
   classData:any =null;
+  testResultData:any;
   
   constructor(private _script: ScriptLoaderService,private baseservice: BaseService
     , private router: Router) {
@@ -44,7 +45,8 @@ this.getTestClassList();
     let postdata={"testId":res[0],"classId":res[1],"divId":res[2] };
     this.baseservice.get('gettestclassdivisionreportlist?testId='+res[0]+'&classId=' + res[1] + '&divId=' + res[2]).subscribe((data:any) => { 
       if(data.reportlist!=null && data.reportlist!=''){
-        this.genratefile();
+        this.testResultData=data.reportlist;
+        // this.genratefile();
             }
     },
     (err) => {

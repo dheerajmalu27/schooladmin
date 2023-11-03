@@ -27,7 +27,7 @@ export class HttpService {
       // };
       let headersConfig = {
         'Content-Type': 'application/json',
-        'Authorization': localStorage.getItem('token') || 'default_token_value'
+        'Authorization': token || 'default_token_value'
       };
       
       tokenizedReq = new HttpRequest('GET', url, { headers: new HttpHeaders(headersConfig) });
@@ -46,7 +46,7 @@ export class HttpService {
     // const headersConfig = {
     //   'Authorization': token
     // };
-    let headersConfig: { [key: string]: string } = { 'Authorization': 'some_value' };  // or however you initialize it
+    let headersConfig: { [key: string]: string } = { 'Authorization': token };  // or however you initialize it
 
     if (appVariables.addContentTypeHeader && typeof appVariables.addContentTypeHeader === 'string') {
       headersConfig['Content-Type'] = appVariables.addContentTypeHeader;

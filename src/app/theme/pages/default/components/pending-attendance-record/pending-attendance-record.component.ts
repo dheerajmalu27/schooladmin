@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit,Renderer2, ElementRef  } from '@angular/core';
-import { Helpers } from '../../../../../helpers';
+import { CommonService } from '../../../../../_services/common-api.service';
 import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
 import { BaseService } from '../../../../../_services/base.service';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
@@ -23,7 +23,7 @@ export class PendingAttendanceRecordComponent implements OnInit, AfterViewInit {
   dateOfAttendance: any = null;
   selectedFiles: any;
   addAttenaceFormList: any;
-  constructor(private elRef: ElementRef, 
+  constructor(private commonservice: CommonService,private elRef: ElementRef, 
     private renderer: Renderer2,private _script: ScriptLoaderService, private baseservice: BaseService
     , private router: Router, public fb: FormBuilder) {
 
@@ -219,4 +219,7 @@ export class PendingAttendanceRecordComponent implements OnInit, AfterViewInit {
 
 
   }
+  tableToExcel(table:any){
+    this.commonservice.tableToExcel(table,'Pending Attendance List');
+                 }
 }
