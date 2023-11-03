@@ -6,7 +6,8 @@ import { CommonService } from '../../../../../_services/common-api.service';
 import {ReactiveFormsModule,FormsModule,FormGroup,FormControl,Validators,FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
-declare let $: any
+declare let $: any;
+declare var toastr: any;
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./pending-marks-test.html",
@@ -129,9 +130,11 @@ private commonservice: CommonService,private _script: ScriptLoaderService,privat
       this.datatable.destroy();
       this.getAbsentStudentList();
       this.listTemplate();
+      toastr.success('Record has been added/updated successfully...!');
     },
     (err) => {
      console.log(err);
+     toastr.error('Something went wrong...!');
     //  localStorage.clear();
     });
   }

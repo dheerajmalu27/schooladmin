@@ -4,7 +4,8 @@ import { ScriptLoaderService } from '../../../../../_services/script-loader.serv
 import {ReactiveFormsModule,FormsModule,FormGroup,FormControl,Validators,FormBuilder} from '@angular/forms';
 import {BaseService} from '../../../../../_services/base.service';
 import { Router } from '@angular/router';
-declare let $: any
+declare let $: any;
+declare var toastr: any;
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./division.html",
@@ -60,9 +61,11 @@ export class DivisionComponent implements OnInit, AfterViewInit {
       this.datatable.destroy();
       this.getDivisionList();
       this.listTemplate();
+      toastr.success('Record has been added successfully...!');
     },
     (err) => { 
     //  localStorage.clear();
+    toastr.error('Something went wrong...!');
     });
   }
   editDivisionSubmitForm(data: any){
@@ -70,9 +73,10 @@ export class DivisionComponent implements OnInit, AfterViewInit {
       this.datatable.destroy();
       this.getDivisionList();
       this.listTemplate();
+      toastr.success('Record has been updated successfully...!');
     },
     (err) => {
-    
+      toastr.error('Something went wrong...!');
     //  localStorage.clear();
     });
   }

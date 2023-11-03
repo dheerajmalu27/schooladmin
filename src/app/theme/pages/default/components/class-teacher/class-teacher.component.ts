@@ -5,35 +5,35 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from "@angular/common/http"; // New HttpClient
 import { Router } from '@angular/router';
 import { BaseService } from '../../../../../_services/base.service';
+
 declare let $: any;
 declare var toastr: any;
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
-  templateUrl: "./teacher-subject.html",
+  templateUrl: "./class-teacher.html",
   encapsulation: ViewEncapsulation.None,
 })
-export class TeacherSubjectComponent implements OnInit, AfterViewInit {
+export class ClassTeacherComponent implements OnInit, AfterViewInit {
   showTemplate:any;
-  subjectData:any;
+  classteacherData:any;
   datatable:any;
   divisionData:any;
   classData:any;
   teacherData:any;
-  addTeacherSubjectForm : any;
-  editSubjectForm : any;
+  addClassTeacherForm : any;
+  editClassteacherForm : any;
 
   constructor(private elRef: ElementRef, private renderer: Renderer2,private _script: ScriptLoaderService,private baseservice: BaseService, private router: Router,fb: FormBuilder){
-    this.getTeacherSubjectList();
-    this.addTeacherSubjectForm = fb.group({
-      'subId' : [ Validators.required],
+    this.getClassTeacherList();
+    this.addClassTeacherForm = fb.group({
+      
       'divId' : [ Validators.required],
       'classId' : [ Validators.required],
       'teacherId' : [Validators.required],
       
     });
-    this.editSubjectForm = fb.group({
+    this.editClassteacherForm = fb.group({
       'id' : [Validators.required], 
-      'subId' : [ Validators.required],
       'divId' : [ Validators.required],
       'classId' : [ Validators.required],
       'teacherId' : [Validators.required],
@@ -59,7 +59,7 @@ export class TeacherSubjectComponent implements OnInit, AfterViewInit {
     this.getClassList();
     this.getDivisionList();
     this.getTeacherList();
-    this.getSubjectList();
+
     this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
     'assets/demo/default/custom/components/forms/widgets/select2.js');
   
@@ -72,7 +72,7 @@ export class TeacherSubjectComponent implements OnInit, AfterViewInit {
     this.getClassList();
     this.getDivisionList();
     this.getTeacherList();
-    this.getSubjectList(); 
+  
   }
   private getClassList() {
     this.baseservice.get('classlist').subscribe((data:any) => {
@@ -107,71 +107,75 @@ export class TeacherSubjectComponent implements OnInit, AfterViewInit {
         });
   
     }
-  private editTeacherSubjectData(data:any){
+  private editClassTeacherData(data:any){
     this.editTemplate();
     let excludeData  = data.split('*');
-    // this.editSubjectForm.controls['classId'].setValue(excludeData[0]);
-    // this.editSubjectForm.controls['divId'].setValue(excludeData[1]);
-    // this.editSubjectForm.controls['subId'].setValue(excludeData[2]);
-    // this.editSubjectForm.controls['teacherId'].setValue(excludeData[3]);
+  
     setTimeout(() => 
     {
       $(".editclass_select2_drop_down").val(<string>excludeData[0]).trigger('change');
       $(".editclass_select2_drop_down").attr("disabled", "disabled");
     $(".editdivision_select2_drop_down").val(<string>excludeData[1]).trigger('change');
     $(".editdivision_select2_drop_down").attr("disabled", "disabled");
-    $(".editsubject_select2_drop_down").val(<string>excludeData[2]).trigger('change');
-    $(".editsubject_select2_drop_down").attr("disabled", "disabled");
-    $(".editteacher_select2_drop_down").val(<string>excludeData[3]).trigger('change');
+    $(".editteacher_select2_drop_down").val(<string>excludeData[2]).trigger('change');
+    if(excludeData[3]!='null' && excludeData[3]){
+      $('#classteacherId').val(excludeData[3]);
+    }
     },
     1000);
    
    
   }
-  addTeacherSubjectSubmitForm(data: any){
+  addClassTeacherSubmitForm(data: any){
     console.log(data);
 
     data.divId = $('.division_select2_drop_down').val();
     data.classId = $('.class_select2_drop_down').val();
     data.classId = $('.class_select2_drop_down').val();
-    data.subId = $('.subject_select2_drop_down').val();
+   
     data.teacherId = $('.teacher_select2_drop_down').val();
-     if (data.classId!= '' && data.divId!= '' && data.subId!= '' && data.teacherId!= '') {
-      this.baseservice.post('teachersubject',data).subscribe((result:any) => { 
+     if (data.classId!= '' && data.divId!= '' && data.teacherId!= '') {
+      this.baseservice.post('updateclassteacher',data).subscribe((result:any) => { 
         this.datatable.destroy();
-        this.getTeacherSubjectList();
+        this.getClassTeacherList();
         this.listTemplate();
         toastr.success('Record has been added successfully...!');
       },
-      (err) => {
-        toastr.error('Something went wrong...!');
+      (err) => { 
       //  localStorage.clear();
       });
     }
    
   }
-  editSubjectSubmitForm(data: any){
+  editClassteacherSubmitForm(data: any){
     data.divId = $('.editdivision_select2_drop_down').val();
     data.classId = $('.editclass_select2_drop_down').val();
-    data.subId = $('.editsubject_select2_drop_down').val();
+
     data.teacherId = $('.editteacher_select2_drop_down').val();
-    if (data.classId!= '' && data.divId!= '' && data.subId!= '' && data.teacherId!= '') {
-    this.baseservice.post('updateteachersubject',data).subscribe((result:any) => { 
+    if($('#classteacherId').val()){
+      data.id = $('#classteacherId').val();
+    }
+    if(data.id==null){
+      delete data.id;
+    }
+    if (data.classId!= '' && data.divId!= '' &&  data.teacherId!= '') {
+    this.baseservice.post('updateclassteacher',data).subscribe((result:any) => { 
+     
       this.datatable.destroy();
-      this.getTeacherSubjectList();
+      this.getClassTeacherList();
       this.listTemplate();
-      toastr.success('Record has been updated successfully...!');
+      toastr.info('Record has been updated successfully...!');
     },
     (err) => {
-      toastr.error('Something went wrong...!');
+    
     //  localStorage.clear();
     });
   }
   }
-private getTeacherSubjectList() {
-    this.baseservice.get('teachersubjectlist').subscribe((data: any) => {
+private getClassTeacherList() {
+    this.baseservice.get('classteacher').subscribe((data: any) => {
       console.log(data);
-        this.subjectData = data.subjectteacherlist;
+        this.classteacherData = data.classteacher;
         this.showtablerecord(data);
     },
     (err) => {
@@ -179,28 +183,17 @@ private getTeacherSubjectList() {
         // localStorage.clear();
     });
 }
-private getSubjectList() {
-  this.baseservice.get('subjectlist').subscribe((data: any) => {
-    console.log(data);
-      this.subjectData = data.subject;
-        (<any>$('.subject_select2_drop_down')).select2({ data: this.subjectData });
-        (<any>$('.editsubject_select2_drop_down')).select2({ data: this.subjectData });
-  },
-  (err) => {
-      // Handle the error here. You might want to do something more than just clearing local storage.
-      // localStorage.clear();
-  });
-}
+
 
 showtablerecord(data:any) {
   console.log(data);
-  data.subjectteacherlist.forEach((item:any, index:any) => {
+  data.classteacher.forEach((item:any, index:any) => {
     item.srNo = index + 1;
   }); 
   this.datatable = $('.m_datatable').mDatatable({
     data: {
       type: 'local',
-      source: data.subjectteacherlist,
+      source: data.classteacher,
       pageSize: 10
     },
     layout: {
@@ -224,10 +217,6 @@ showtablerecord(data:any) {
          
           return row.className+'-'+row.divName;
         },
-      },
-      {
-        field: 'subName',
-        title: 'Subject Name',
       },
       {
         field: 'teacherName',
@@ -263,7 +252,7 @@ showtablerecord(data:any) {
         overflow: 'visible',
         template: (row: any) => {
           return `<span class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
-            <i class="edit-button la la-edit" data-id="${row.classId}*${row.divId}*${row.subId}*${row.teacherId}"></i>
+            <i class="edit-button la la-edit" data-id="${row.classId}*${row.divId}*${row.teacherId}*${row.id}"></i>
           </span>`;
         }
       }
@@ -301,92 +290,9 @@ showtablerecord(data:any) {
     if ((e.target as HTMLElement).classList.contains('edit-button')) {
       e.preventDefault();
       const id = (e.target as HTMLElement).getAttribute('data-id');
-      this.editTeacherSubjectData(id);
+      this.editClassTeacherData(id);
     }
   });
 }
 
-  // public showtablerecord(data:any) {
-  //   this.datatable = {
-  //     data: {
-  //       type: 'local',
-  //       source: this.subjects,
-  //       pageSize: 10
-  //     },
-  //     layout: {
-  //       theme: 'default',
-  //       class: '',
-  //       scroll: false,
-  //       height: 450,
-  //       footer: false
-  //     },
-  //     sortable: true,
-  //     pagination: true,
-  //     columns: [
-  //       {
-  //         field: 'id',
-  //         title: 'Sr.No.'
-  //       },
-  //       {
-  //         field: 'subName',
-  //         title: 'Subject Name'
-  //       },
-  //       {
-  //         field: 'active',
-  //         title: 'Status',
-  //         template: (row: any) => {
-  //           const status = {
-  //             true: { title: 'Active', class: 'm-badge--success' },
-  //             false: { title: 'Inactive', class: 'm-badge--danger' }
-  //           };
-  //           return `<span class="m-badge ${status[row.active].class} m-badge--wide">${status[row.active].title}</span>`;
-  //         }
-  //       },
-  //       {
-  //         field: 'createdAt',
-  //         width: 110,
-  //         title: 'Actions',
-  //         sortable: false,
-  //         overflow: 'visible',
-  //         template: (row: any) => {
-  //           return `<span class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
-  //             <i class="edit-button la la-edit" data-id="${row.id}*${row.subName}"></i>
-  //           </span>`;
-  //         }
-  //       }
-  //     ]
-  //   };
-
-  //   const query = this.datatable.data;
-
-  //   // Attach event listeners using Angular's Renderer2
-  //   const mFormSearch = document.getElementById('m_form_search') as HTMLInputElement;
-  //   const mFormStatus = document.getElementById('m_form_status') as HTMLSelectElement;
-  //   const mFormType = document.getElementById('m_form_type') as HTMLSelectElement;
-
-  //   mFormSearch.addEventListener('keyup', (event) => {
-  //     this.datatable.search((event.target as HTMLInputElement).value.toLowerCase());
-  //   });
-  //   mFormSearch.value = query.generalSearch || '';
-
-  //   mFormStatus.addEventListener('change', () => {
-  //     this.datatable.search(mFormStatus.value, 'Status');
-  //   });
-  //   mFormStatus.value = query.Status || '';
-
-  //   mFormType.addEventListener('change', () => {
-  //     this.datatable.search(mFormType.value, 'Type');
-  //   });
-  //   mFormType.value = query.Type || '';
-
-  //   // Use Angular's Renderer2 for better event handling
-  //   const editButtons = document.querySelectorAll('.edit-button');
-  //   editButtons.forEach((button) => {
-  //     button.addEventListener('click', (event) => {
-  //       event.preventDefault();
-  //       const id = event.target.getAttribute('data-id');
-  //       this.editTeacherSubjectData(id);
-  //     });
-  //   });
-  // }
 }

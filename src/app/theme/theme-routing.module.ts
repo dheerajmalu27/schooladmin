@@ -90,6 +90,10 @@ const routes: Routes = [
         path: "class",
         loadChildren: () => import('./pages/default/components/class-subject-test/class-subject-test.module').then(x => x.ClassSubjectTestModule)
       },
+       {
+        path: "class-teacher",
+        loadChildren: () => import('./pages/default/components/class-teacher/class-teacher.module').then(x => x.ClassTeacherModule)
+      },
       {
         path: "teacher-subject",
         loadChildren: () => import('./pages/default/components/teacher-subject/teacher-subject.module').then(x => x.TeacherSubjectModule)

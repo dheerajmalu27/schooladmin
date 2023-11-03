@@ -48,7 +48,7 @@ export class AttendanceReportComponent implements OnInit, AfterViewInit {
  
   ngAfterViewInit() {
     
-    
+    $("#listTemplate").hide();
   }
   private getClassList() {
 

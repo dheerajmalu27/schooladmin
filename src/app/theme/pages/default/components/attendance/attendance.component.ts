@@ -6,7 +6,8 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, F
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { CommonService } from "../../../../../_services/common-api.service";
-declare let $: any
+declare let $: any;
+declare var toastr: any;
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./attendance.html",
@@ -157,9 +158,11 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
       this.datatable.destroy();
       this.getAttendanceList();
       this.listTemplate();
+      toastr.success('Record has been added successfully...!');
     },
     (err) => {
      console.log(err);
+     toastr.error('Something went wrong...!');
     //  localStorage.clear();
     });
   }
@@ -175,8 +178,10 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
       this.datatable.destroy();
       this.getAttendanceList();
       this.listTemplate();
+      toastr.success('Record has been updated successfully...!');
     },
     (err) => {
+      toastr.error('Something went wrong...!');
      console.log(err);
     //  localStorage.clear();
     });

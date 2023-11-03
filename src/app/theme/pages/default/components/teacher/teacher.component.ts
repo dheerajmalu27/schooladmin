@@ -7,6 +7,7 @@ import { ScriptLoaderService } from '../../../../../_services/script-loader.serv
 // import * as $ from 'jquery';
 import {BaseService} from '../../../../../_services/base.service';
 declare let $: any;
+declare var toastr: any;
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./teacher.html",
@@ -234,9 +235,10 @@ export class TeacherComponent implements OnInit, AfterViewInit {
     this.baseservice.put('teacher/'+data.id,data).subscribe((data:any) => {
       this.getTeacherList();
       this.listTemplate();
+      toastr.success('Record has been updated successfully...!');
     },
     (err) => {
-    
+      toastr.error('Something went wrong...!');
     //  localStorage.clear();
     });
     }else{
@@ -245,9 +247,10 @@ export class TeacherComponent implements OnInit, AfterViewInit {
     this.baseservice.post('teacher',data).subscribe((data:any) => { 
       this.getTeacherList();
       this.listTemplate();
+      toastr.success('Record has been added successfully...!');
     },
     (err) => {
-    
+      toastr.error('Something went wrong...!');
     //  localStorage.clear();
     });
     }

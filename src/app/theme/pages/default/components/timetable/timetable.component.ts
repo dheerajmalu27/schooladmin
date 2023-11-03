@@ -7,15 +7,10 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 // import dayGridPlugin from '@fullcalendar/daygrid';
 import { BaseService } from '../../../../../_services/base.service';
 import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
-
-//  declare let $: any;
 declare var moment: any;
 declare var mApp: any;
-// import { CalendarOptions } from '@fullcalendar/core';
-
-declare let $: any
-
-
+declare let $: any;
+declare var toastr: any;
 import * as _ from 'lodash';
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -154,9 +149,11 @@ this.getTimeTableList();
       // this.datatable.destroy();
       // this.getTimeTableList();
       // this.listTemplate();
+      toastr.success('Record has been deleted successfully...!');
     },
     (err) => {
     console.log(err);
+    toastr.error('Something went wrong...!');
     //  localStorage.clear();
     });
   }
@@ -447,9 +444,11 @@ let postdata=(resultArray);
       this.datatable.destroy();
       this.getTimeTableList();
       this.listTemplate();
+      toastr.success('Record has been added/updated successfully...!');
     },
     (err) => {
      console.log(err);
+     toastr.error('Something went wrong...!');
     //  localStorage.clear();
     });
   }

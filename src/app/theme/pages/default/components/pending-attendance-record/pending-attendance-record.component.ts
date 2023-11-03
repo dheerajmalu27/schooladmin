@@ -5,6 +5,7 @@ import { BaseService } from '../../../../../_services/base.service';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
+declare var toastr: any;
 // import { BOOL_TYPE } from '@angular/compiler/src/output/output_ast';
 declare let $: any
 @Component({
@@ -69,6 +70,7 @@ export class PendingAttendanceRecordComponent implements OnInit, AfterViewInit {
       this.showtablerecord(data);
     },
     (err) => {
+      
     //  localStorage.clear();
     });
   }
@@ -89,7 +91,8 @@ export class PendingAttendanceRecordComponent implements OnInit, AfterViewInit {
         this.studentData = data;    
       },
         (err) => {
-          console.log(err);        
+          console.log(err);  
+          toastr.error('Something went wrong...!');      
         });
     }
   }
@@ -104,9 +107,11 @@ export class PendingAttendanceRecordComponent implements OnInit, AfterViewInit {
     this.baseservice.post('bulkattendance',postdata).subscribe((data:any) => { 
       this.datatable.destroy();
       this.listTemplate();
+      toastr.success('Record has been added/updated successfully...!');
     },
     (err) => {
      console.log(err);
+     toastr.error('Something went wrong...!');
     //  localStorage.clear();
     });
   }

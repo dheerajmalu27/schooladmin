@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { jsPDF } from 'jspdf'; 
 import html2canvas from 'html2canvas'; 
-declare let $: any
+declare let $: any;
+declare var toastr: any;
 import { CommonService } from "../../../../../_services/common-api.service";
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -123,9 +124,11 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
       this.datatable.destroy();
       this.getTestmarksList();
       this.listTemplate();
+      toastr.success('Record has been added successfully...!');
     },
     (err) => {
      console.log(err);
+     toastr.error('Something went wrong...!');
     //  localStorage.clear();
     });
   }
@@ -139,9 +142,11 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
       this.datatable.destroy();
       this.getTestmarksList();
       this.listTemplate();
+      toastr.success('Record has been updated successfully...!');
     },
     (err) => {
      console.log(err);
+     toastr.error('Something went wrong...!');
     //  localStorage.clear();
     });
   }

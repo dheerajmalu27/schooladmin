@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { BaseService } from '../../../../../_services/base.service';
 
 declare let $: any;
-
+declare var toastr: any;
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./subject.html",
@@ -67,8 +67,10 @@ export class SubjectComponent implements OnInit, AfterViewInit {
       this.datatable.destroy();
       this.getSubjectList();
       this.listTemplate();
+      toastr.success('Record has been added successfully...!');
     },
     (err) => { 
+      toastr.error('Something went wrong...!');
     //  localStorage.clear();
     });
   }
@@ -77,9 +79,10 @@ export class SubjectComponent implements OnInit, AfterViewInit {
       this.datatable.destroy();
       this.getSubjectList();
       this.listTemplate();
+      toastr.success('Record has been updated successfully...!');
     },
     (err) => {
-    
+      toastr.error('Something went wrong...!');
     //  localStorage.clear();
     });
   }

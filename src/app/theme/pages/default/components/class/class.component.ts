@@ -5,7 +5,7 @@ import {ReactiveFormsModule,FormsModule,FormGroup,FormControl,Validators,FormBui
 import {BaseService} from '../../../../../_services/base.service';
 import { Router } from '@angular/router';
 declare let $: any
-
+declare var toastr: any;
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./class.html",
@@ -67,9 +67,10 @@ export class ClassComponent implements OnInit, AfterViewInit {
       this.datatable.destroy();
       this.getClassList();
       this.listTemplate();
+      toastr.success('Record has been added/updated successfully...!');
     },
     (err) => {
-    
+      toastr.error('Something went wrong...!');
     //  localStorage.clear();
     });
   }
