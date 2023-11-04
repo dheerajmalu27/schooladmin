@@ -87,130 +87,65 @@
 		</div>
 
 	</div>
-	<div class="row" id="contentToConvert">
-		<div class="col-xl-12 col-lg-12">
-			<div class="m-portlet m-portlet--full-height">
-				<div class="m-portlet__body">
-					<div class="row">
-						<div class="col-xl-12 col-lg-12">
-							<div class="m-widget5">
-								<div class="m-widget5__item" style="margin-bottom: 1px;padding-bottom:1px;">
-									<div class="m-widget5__pic">
-										<img class="m-widget7__img" src="./assets/app/media/img//products/product6.jpg"
-											alt="">
-									</div>
-									<div class="m-widget5__content">
-										<h4 class="m-widget5__title">
-											Moolji Jetha College, Jalgaon
-										</h4>
-										<span class="m-widget5__info">
-											At Post:pimpri kh, Tal-Dharangaon, Dist:-Jalgaon, Pincode:- 425001
-										</span>
 
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="m-portlet__body-separator"></div>
-					<div class="row">
-						<div class="col-xl-12 col-lg-12">
-							<div class="m-widget5">
-								<div class="m-widget5__item">
-									<div class="m-widget5__pic">
-										<img class="m-widget7__img" src="./assets/app/media/img//products/product6.jpg"
-											alt="">
-									</div>
-									<div class="m-widget5__content">
-										<h4 class="m-widget5__title">
-											Student Name: Dheeraj Malu
-										</h4>
-										<span class="m-widget5__info">
-											Roll No: 11
-										</span>
-										<span class="m-widget5__info">
-											Class-Div: 1-A
-										</span>
-										<span class="m-widget5__info">
-											Test Name: test 1
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<table class="table">
-							<thead class="thead-default">
-								<tr>
-									<th>
-										Sr.No
-									</th>
-									<th>
-										Subject Name
-									</th>
-
-									<th>
-										Marks/Total
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">
-										1
-									</th>
-									<td>
-										English
-									</td>
-
-									<td>
-										90/100
-									</td>
-								</tr>
-								<tr>
-									<th scope="row">
-										2
-									</th>
-									<td>
-										Marathi
-									</td>
-									<td>
-										99/100
-									</td>
-
-								</tr>
-
-							</tbody>
-						</table>
-
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
 </div>
-<div class="m-content">
-	<div class="row" *ngFor="let student of testResultData">
-		<div class="col-xl-4">
+
+<div class="m-content" id="contentToConvert" style="display: none;
+    height: 650px;
+    overflow-y: scroll;
+    background-color: #fefefe;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    width: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+<div id="contentData">
+	<div class="row" *ngFor="let student of testResultData" style="    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;">
+		<div class="col-xl-12">
 			<!--begin:: Widgets/Latest Updates-->
 			<div class="m-portlet m-portlet--full-height m-portlet--fit">
 				<div class="m-portlet__head">
-					<div class="m-portlet__head-caption">
-						<div class="m-portlet__head-title">
-							<h3 class="m-portlet__head-text">
+					<div class="m-portlet__head-caption"
+						style="text-align: center;padding: 20px;text-transform: capitalize;">
+
+
+
+						<h3 class="m-portlet__head-text" style="color: #36a3f7 !important;">
+							Balkavi Thombare Vidyalaya
+
+						</h3>
+						<h5 style="color: #36a3f7 !important;">Dharangaon,Maharashtra-425105</h5>
+						<div class="row" style="font-size: 1rem;font-weight: 500;margin-bottom: 0;">
+							<div class="col-xl-3">
 								<p>Student ID: {{ student.studentId }}</p>
+							</div>
+							<div class="col-xl-6">
 								<p>Student Name: {{ student.studentName }}</p>
+							</div>
+							<div class="col-xl-3">
 								<p>Roll No: {{ student.rollNo }}</p>
-							</h3>
+							</div>
+
+							<div class="col-xl-3">
+								<p>Percentage: {{ student.percentage }}</p>
+							</div>
+							<div class="col-xl-6">
+								<p>Rank: {{ student.rank }}</p>
+							</div>
+
 						</div>
+
+
 					</div>
-					
+
 				</div>
-				<div class="m-portlet__body">
+				<div class="m-portlet__body" >
 					<div class="m-widget4 m-widget4--chart-bottom" style="min-height: 350px">
-					
+
 						<div class="m-widget4__item" *ngFor="let subject of student.subjectData;let i = index">
 							<div class="m-widget4__ext">
 								<a href="#" class="m-widget4__icon m--font-brand">
@@ -230,15 +165,44 @@
 								</span>
 							</div>
 						</div>
-<!-- 						
+						<!-- 						
 						<div class="m-widget4__chart m-portlet-fit--sides m--margin-top-20 m-portlet-fit--bottom1"
 							style="height:120px;">
 							<canvas id="m_chart_latest_updates"></canvas>
 						</div> -->
+						<div class="m-widget4__chart m-portlet-fit--sides m--margin-top-20 m-portlet-fit--bottom1"
+							style="height:120px;">
+							<canvas id="m_chart_latest_updates"></canvas>
+						</div>
+						<div class="m-widget4__item">
+							<div class="m-widget4__ext">
+								<a href="#" class="m-widget4__icon m--font-brand">
+
+								</a>
+							</div>
+							<div class="m-widget4__info">
+								<span class="m-widget4__text">
+									Get Total Marks
+								</span>
+							</div>
+							<div class="m-widget4__ext">
+								<span class="m-widget4__stats m--font-info">
+									<span class="m-widget4__number m--font-accent">
+										{{ student.sumGetMarks }}/{{ student.sumTotalMarks }}
+									</span>
+								</span>
+							</div>
+						</div>
 					</div>
+
+
+
 				</div>
 			</div>
 			<!--end:: Widgets/Latest Updates-->
 		</div>
 	</div>
+</div>	
+	<div class="m-widget7__button" style="text-align: center;padding: 80px;"><a href="#" (click)="generateFile()" role="button"
+			class="m-btn m-btn--pill btn btn-danger" ng-reflect-href="#"> Generate PDF </a></div>
 </div>

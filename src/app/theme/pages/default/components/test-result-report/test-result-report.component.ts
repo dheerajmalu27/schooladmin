@@ -47,6 +47,7 @@ this.getTestClassList();
       if(data.reportlist!=null && data.reportlist!=''){
         this.testResultData=data.reportlist;
         // this.genratefile();
+        $("#contentToConvert").show();
             }
     },
     (err) => {
@@ -75,14 +76,38 @@ this.getTestClassList();
    //  localStorage.clear();
    });   
  }
-private genratefile(){
-  const data = document.getElementById('contentToConvert');
+ public generateFile() {
+  const data = document.getElementById('contentData');
+
+  if (!data) {
+    console.error('Element #contentToConvert not found!');
+    return; // exit the function if the element wasn't found
+  }
+  data.style.background = 'white';
+
+  // Determine the dimensions of the content
+  let contentWidth = data.offsetWidth-150;
+  const contentHeight = data.offsetHeight;
+
+  // Create a PDF with the same dimensions as the content
+  const pdf = new jsPDF('p', 'mm', [contentWidth, contentHeight]);
+  // const pdf = new jsPDF('p', 'mm', 'a4');
+  // Convert the content to a canvas
+  html2canvas(data, { scale: 2, logging: false, }).then((canvas) => {
+    const contentDataURL = canvas.toDataURL('image/png');
+    pdf.addImage(contentDataURL, 'PNG', 0, 0, contentWidth, contentHeight);
+    pdf.save('MYPdf.pdf'); // Generated PDF
+  });
+}
+
+public genratefile(){
+  const data = document.getElementById('pdfgeneratehtml');
     
   if (!data) {
       console.error('Element #contentToConvert not found!');
       return; // exit the function if the element wasn't found
   }
-  html2canvas(data).then(canvas => { 
+  html2canvas(data, { scale: 2 }).then((canvas) => { 
   // Few necessary setting options 
   var imgWidth = 208; 
   var pageHeight = 295; 

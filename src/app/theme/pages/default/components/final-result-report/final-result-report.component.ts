@@ -81,7 +81,7 @@ private genratefile(){
         console.error('Element #contentToConvert not found!');
         return; // exit the function if the element wasn't found
     } 
-  html2canvas(data).then(canvas => { 
+  html2canvas(data, { scale: 2 }).then((canvas) => { 
   // Few necessary setting options 
   var imgWidth = 208; 
   var pageHeight = 295; 
