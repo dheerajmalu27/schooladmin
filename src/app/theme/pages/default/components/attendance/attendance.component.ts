@@ -6,6 +6,7 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, F
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { CommonService } from "../../../../../_services/common-api.service";
+import { appVariables } from '../../../../../app.constants';
 declare let $: any;
 declare var toastr: any;
 @Component({
@@ -14,6 +15,7 @@ declare var toastr: any;
   encapsulation: ViewEncapsulation.None,
 })
 export class AttendanceComponent implements OnInit, AfterViewInit {
+  imageUrlPath=appVariables.apiImageUrl;
   attendancePending: any = null;
   datatable: any ;
   SrNo: any = 1;
@@ -150,7 +152,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
     
     var newArrData = _.map(data, function(o) {
       o.attendanceResult=JSON.parse(o.attendanceResult);
-      return _.omit(o, ['studentName', 'className','divName','rollNo']); });
+      return _.omit(o, ['studentName', 'className','divName','rollNo',"profileImage"]); });
   
     let postdata=(newArrData);
     console.log(postdata);

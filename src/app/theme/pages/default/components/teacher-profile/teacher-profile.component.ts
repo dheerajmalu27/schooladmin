@@ -12,14 +12,17 @@ import * as _ from 'lodash';
 import {BaseService} from '../../../../../_services/base.service';
 import { jsPDF } from 'jspdf'; 
 import html2canvas from 'html2canvas'; 
+import { appVariables } from '../../../../../app.constants';
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./teacher-profile.html",
   encapsulation: ViewEncapsulation.None,
 })
 export class TeacherProfileComponent implements OnInit, AfterViewInit {
+  imageUrlPath=appVariables.apiImageUrl;
   // calendarOptions: Options;
   // @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
+  showButton = false;
   private datatable:any;
   public test_date: any;
   private chart: any;
@@ -65,20 +68,54 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
     pdf.save('MYPdf.pdf'); // Generated PDF  
     }); 
   }
+ 
+
+  
   private getTeacherData(newid:any, newAmCharts:any) {
     this.baseservice.get('teacherprofile/' + newid).subscribe((data:any) => {
      
       this.teacherData = data;
+      
+      for(let i=0;i<this.teacherData.classtestresult.length;i++){
+
+        if (this.teacherData.classtestresult[i].result > 80) {
+          this.teacherData.classtestresult[i].color ="#875692";
+        } else if (this.teacherData.classtestresult[i].result <= 80 && this.teacherData.classtestresult[i].result > 60) {
+          this.teacherData.classtestresult[i].color = "#67b7dc"; // blue
+        } else if (this.teacherData.classtestresult[i].result <= 60 && this.teacherData.classtestresult[i].result > 35) {
+          this.teacherData.classtestresult[i].color ="#f38400"; // orange
+        } else {
+          this.teacherData.classtestresult[i].color ="#dc6967"; // red
+        }
        
+      }
+     
+     
       this.openSubjectList(data);
       this.teacherInfo = this.teacherData.info[0];
       if(this.teacherData.classtestresult.length>0)
      { this.teacherTestChart = _.meanBy(this.teacherData.classtestresult, 'result').toFixed(2);
     }
     if(this.teacherData.monthlyattendance.length>0){
+
+
+      for(let i=0;i<this.teacherData.monthlyattendance.length;i++){
+
+        if (this.teacherData.monthlyattendance[i].result > 80) {
+          this.teacherData.monthlyattendance[i].color ="#875692";
+        } else if (this.teacherData.monthlyattendance[i].result <= 80 && this.teacherData.monthlyattendance[i].result > 60) {
+          this.teacherData.monthlyattendance[i].color = "#67b7dc"; // blue
+        } else if (this.teacherData.monthlyattendance[i].result <= 60 && this.teacherData.monthlyattendance[i].result > 35) {
+          this.teacherData.monthlyattendance[i].color ="#f38400"; // orange
+        } else {
+          this.teacherData.monthlyattendance[i].color ="#dc6967"; // red
+        }
+       
+      }
       this.teacherData.monthlyattendance = _.each(this.teacherData.monthlyattendance, item => item.result = parseFloat(item.result));
       this.teacherAttendChart = _.meanBy(this.teacherData.monthlyattendance, 'result').toFixed(2);
   }
+  
       newAmCharts.makeChart("m_amcharts_1", {
         "type": "serial",
         "theme": "light",
@@ -96,7 +133,8 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
           "fillAlphas": 0.8,
           "lineAlpha": 0.2,
           "type": "column",
-          "valueField": "result"
+          "valueField": "result",
+          "colorField": "color"
         }],
         "chartCursor": {
           "categoryBalloonEnabled": false,
@@ -111,12 +149,12 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
           "tickLength": 100
         },
         "export": {
-          "enabled": true
+          "enabled": false
         }
 
       });
 
-
+      $('a[title="JavaScript charts"]').hide();
       newAmCharts.makeChart("m_amcharts_2", {
         "type": "serial",
         "theme": "light",
@@ -134,7 +172,8 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
           "fillAlphas": 0.8,
           "lineAlpha": 0.2,
           "type": "column",
-          "valueField": "result"
+          "valueField": "result",
+          "colorField": "color"
         }],
         "chartCursor": {
           "categoryBalloonEnabled": false,
@@ -149,11 +188,11 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
           "tickLength": 20
         },
         "export": {
-          "enabled": true
+          "enabled": false
         }
 
       });
-
+      $('a[title="JavaScript charts"]').hide();
       var result = _.groupBy(this.teacherData.testmarks, "classSubName");
       var i = 2;
       var resultArray: Array<any> = [];
@@ -170,8 +209,27 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
 
 
         var tmpdata = _.map(value, function(object) {
-          return _.pick(object, ['testName', 'avgRecord']);
+
+        
+            let color="#0000FF";
+            if (object.avgRecord > 80) {
+              color = "#875692"; // green#
+            } else if (object.avgRecord <= 80 && object.avgRecord > 60) {
+              color ="#67b7dc"; // blue
+            } else if (object.avgRecord <= 60 && object.avgRecord > 35) {
+              color ="#f38400"; // orange
+            } else {
+              color ="#dc6967"; // red
+            }
+           
+          
+          return {
+            testName: object.testName,
+            avgRecord: object.avgRecord.toFixed(2), // Format 'avgRecord' to 2 decimal places
+            color:color
+          };
         });
+        
         console.log(tmpdata);
         setTimeout(() => {
           i++;
@@ -186,11 +244,12 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
             }],
             "graphs": [{
               "balloonText": "[[category]]: <b>[[value]]</b>",
-              "fillColorsField": "color",
+              "fillColorsField": "color", // Specify the field that contains the color information in your data
               "fillAlphas": 1,
               "lineAlpha": 0.1,
               "type": "column",
-              "valueField": "avgRecord"
+              "valueField": "avgRecord",
+              "colorField": "color" // Specify the field that contains the color information in your data
             }],
             "depth3D": 20,
             "angle": 30,
@@ -205,10 +264,11 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
               "labelRotation": 90
             },
             "export": {
-              "enabled": true
+              "enabled": false
             }
-
+            
           });
+          $('a[title="JavaScript charts"]').hide();
         }, 1000);
       });
     },
@@ -217,9 +277,11 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
     });
   }
    openOverview() {
+    this.showButton = false;
     $('#m_user_profile_tab_3').hide();
   }
    openCalender() {
+    this.showButton = true;
     $('#m_user_profile_tab_3').hide();   
     var result = this.teacherData.timetable;
     const earliestEvent = result.reduce((prev:any, current:any) => {
@@ -265,12 +327,12 @@ if(value.dow=="Monday"){
       header: {
         // left: 'prev,next today',
         center: 'Teacher Schedule',
-        right: 'agendaWeek,agendaDay,listWeek'
+        right: 'agendaDay,listWeek'
       },
       minTime: `${startHour}:${startMinute}:00`,
       maxTime: `${endHour + 1}:${endMinute}:00`,
       columnFormat: 'dddd',
-      defaultView: 'agendaWeek',
+      defaultView: 'listWeek',
       hiddenDays: [ 0 ] ,
       // defaultDate: '2018-01-12',
       navLinks: true, // can click day/week names to navigate views
@@ -367,6 +429,7 @@ if(value.dow=="Monday"){
 
   public showSubjectList(){
     $('#m_user_profile_tab_3').show();
+    this.showButton = false;
   }
 
 }

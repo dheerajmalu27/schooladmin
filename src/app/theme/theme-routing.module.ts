@@ -115,14 +115,32 @@ const routes: Routes = [
         path: "final-result-report",
         loadChildren: () => import('./pages/default/components/final-result-report/final-result-report.module').then(x => x.finalResultReportModule)
       },
-
+      {
+        path: "leaving-certificate",
+        loadChildren: () => import('./pages/default/components/leaving-certificate/leaving-certificate.module').then(x => x.leavingCertificateModule)
+      },
+      {
+        path: "library-books",
+        loadChildren: () => import('./pages/default/components/books/books.module').then(x => x.BooksModule)
+      },
+      {
+        path: "books-allocation",
+        loadChildren: () => import('./pages/default/components/books-allocation/books-allocation.module').then(x => x.BooksAllocationModule)
+      },
+      {
+        path: "homework",
+        loadChildren: () => import('./pages/default/components/homework/homework.module').then(x => x.HomeworkModule)
+      },
       // bus track Section
       {
         path: "bus-track",
         loadChildren: () => import('./pages/default/components/bus-track/bus-track.module').then(x => x.BusTrackModule)
       },
      
-     
+      {
+        path: "school-setting",
+        loadChildren: () => import('./pages/default/components/school-setting/school-setting.module').then(x => x.SchoolSettingModule)
+      },
      
       {
         path: "index",

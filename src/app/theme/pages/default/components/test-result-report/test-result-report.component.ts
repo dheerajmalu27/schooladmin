@@ -16,6 +16,7 @@ export class testResultReportComponent implements OnInit, AfterViewInit {
    myArray= [];
   classData:any =null;
   testResultData:any;
+  schoolProfileData:any;
   
   constructor(private _script: ScriptLoaderService,private baseservice: BaseService
     , private router: Router) {
@@ -65,6 +66,13 @@ this.getTestClassList();
  
   } 
   private getTestClassList() {
+    this.baseservice.get('schoolprofile').subscribe((data:any) => {
+     this.schoolProfileData=data.schoolprofile[0];
+     
+   },
+   (err) => {
+   //  localStorage.clear();
+   });
     this.baseservice.get('testclassreportlist').subscribe((data:any) => {
       if(data.testreportclasslist!=null && data.testreportclasslist!=''){
         this.classData=_.groupBy(data.testreportclasslist,ct => ct.testId);
@@ -76,6 +84,16 @@ this.getTestClassList();
    //  localStorage.clear();
    });   
  }
+ public printDiv(divId: string): void {
+  const printContents = document.getElementById(divId)?.innerHTML;
+  const originalContents = document.body.innerHTML;
+
+  document.body.innerHTML = printContents || '';
+
+  window.print();
+
+  document.body.innerHTML = originalContents;
+}
  public generateFile() {
   const data = document.getElementById('contentData');
 

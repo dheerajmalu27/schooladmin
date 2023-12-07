@@ -22,6 +22,8 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
     mLayout.initHeader();
+   
+  
 
   }
  logout(){
@@ -30,5 +32,10 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
   this._authService.logout();
   this._router.navigate(['/login']);
  }
+ openMenu(){
+  console.log("test1")
+mLayout.initAside();
+
+}
 
 }

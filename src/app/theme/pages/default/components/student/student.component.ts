@@ -114,7 +114,8 @@ private commonservice: CommonService,private _script: ScriptLoaderService, priva
       firstName: studentData.firstName,
       middleName: studentData.middleName,
       lastName: studentData.lastName,
-      image: studentData.profileImage,
+      // image: studentData.profileImage,
+      image: "",
       dob: studentData.dateOfBirth,
       classId: studentData.classId,
       divId: studentData.divId,
@@ -248,11 +249,7 @@ selectFile(event: any) {
 public addStudentSubmitForm(data:any){
   const formData: FormData = new FormData();
 
-    formData.append('stateId', $('.state_select2_drop_down').val() as string);
-    formData.append('cityId', $('.city_select2_drop_down').val() as string);
-    formData.append('divId', $('.division_select2_drop_down').val() as string);
-    formData.append('classId', $('.class_select2_drop_down').val() as string);
-    formData.append('dateOfBirth', $("#m_datepickerSet").val() as string);
+   
     
     data.stateId=$('.state_select2_drop_down').val();
     data.cityId=$('.city_select2_drop_down').val();
@@ -260,12 +257,29 @@ public addStudentSubmitForm(data:any){
     data.classId=$('.class_select2_drop_down').val();
     data.dob=$("#m_datepickerSet").val();
 
-    if (this.selectedFiles && this.selectedFiles.length > 0) {
-        formData.append('image', this.selectedFiles[0]);
+    const fileInput = document.getElementById('imageInput') as HTMLInputElement | null;
+  
+  
+    for (const key of Object.keys(data)) {
+      formData.append(key, data[key]);
+    }
+
+    // if (this.selectedFiles && this.selectedFiles.length > 0) {
+    //     formData.append('image', this.selectedFiles[0]);
+    // }
+    formData.set('stateId', $('.state_select2_drop_down').val() as string);
+    formData.set('cityId', $('.city_select2_drop_down').val() as string);
+    formData.set('divId', $('.division_select2_drop_down').val() as string);
+    formData.set('classId', $('.class_select2_drop_down').val() as string);
+    formData.set('dateOfBirth', $("#m_datepickerSet").val() as string);
+    if (fileInput && fileInput.files) {
+      if (fileInput.files.length > 0) {
+        formData.set('image', fileInput.files[0]);
+      }
     }
 if(data.id!=''&& data.id!=undefined && data.id!=null)  {
-data.image=this.selectedFiles;
-this.baseservice.put('student/'+data.id,data).subscribe((data:any) => {
+// data.image=this.selectedFiles;
+this.baseservice.put('student/'+data.id,formData).subscribe((data:any) => {
   this.getStudentList();
   this.listTemplate();
   toastr.success('Record has been updated successfully...!');
@@ -280,7 +294,7 @@ this.baseservice.put('student/'+data.id,data).subscribe((data:any) => {
 delete data.id;
 console.log(formData);
 console.log(data);
-this.baseservice.post('student',data).subscribe((data:any) => { 
+this.baseservice.post('student',formData).subscribe((data:any) => { 
   this.getStudentList();
   this.listTemplate();
   toastr.success('Record has been added successfully...!');
@@ -342,8 +356,12 @@ public refreshDataTable(newData: any): void {
         field: "firstName",
         title: "Student Name",
         template: function (row:any) {
-         
+         if(row.profileImage!=null && row.profileImage!='' && row.profileImage!='null'){
+          return '<span (click)="detailProfile('+row.id+')" style="cursor: pointer;"><span class="m-topbar__userpic"><img src="'+appVariables.apiImageUrl+row.profileImage+'" width="40" height="40" alt="" class="m--img-rounded m--marginless m--img-centered"></span><span (click)="detailProfile('+row.id+')" style="cursor: pointer;"  class="teacherFn" data-id="'+row.id+'">   '+row.firstName+' '+row.lastName+'</span></span>';
+         }else{
           return '<span (click)="detailProfile('+row.id+')" style="cursor: pointer;"  class="teacherFn" data-id="'+row.id+'">'+row.firstName+' '+row.lastName+'</span>';
+         }
+         
         },
       }, {
         field: "className",

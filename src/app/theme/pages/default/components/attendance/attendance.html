@@ -150,6 +150,12 @@
                         {{Data.rollNo}}
                       </th>
                       <td>
+                        <span *ngIf="Data.profileImage != null && Data.profileImage != 'null'"  style="cursor: pointer;">
+                          <span class="m-topbar__userpic">
+                            <img src="{{ imageUrlPath }}{{Data.profileImage}}" width="40" height="40" alt="" class="m--img-rounded m--marginless m--img-centered">
+                          </span>
+                        </span>
+                        
                         {{Data.studentName}}
                       </td>
                       <td>
@@ -284,6 +290,11 @@
                             {{Data.AttendanceStudent.rollNo}}
                           </th>
                           <td>
+                            <span *ngIf="Data.AttendanceStudent.profileImage != null && Data.AttendanceStudent.profileImage != 'null'"  style="cursor: pointer;">
+                              <span class="m-topbar__userpic">
+                                <img src="{{ imageUrlPath }}{{Data.AttendanceStudent.profileImage}}" width="40" height="40" alt="" class="m--img-rounded m--marginless m--img-centered">
+                              </span>
+                            </span>
                             {{Data.AttendanceStudent.firstName}} {{Data.AttendanceStudent.lastName}}
                           </td>
                           <td>
@@ -441,6 +452,11 @@
           {{Data.AttendanceStudent.rollNo}}
         </td>
         <td>
+          <span style="cursor: pointer;">
+            <span class="m-topbar__userpic">
+              <img src="{{ imageUrlPath }}{{Data.AttendanceStudent.profileImage}}" width="40" height="40" alt="" class="m--img-rounded m--marginless m--img-centered">
+            </span>
+          </span>
           {{Data.AttendanceStudent.firstName}} {{Data.AttendanceStudent.lastName}}
         </td>
         <td>

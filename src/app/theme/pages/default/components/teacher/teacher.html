@@ -41,7 +41,7 @@
               </div>
             </div>
           </div>
-           <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" [formGroup]="addTeacherForm"  (ngSubmit)="addTeacherSubmitForm(addTeacherForm.value)">
+           <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" [formGroup]="addTeacherForm"  (ngSubmit)="addTeacherSubmitForm(addTeacherForm.value)"  enctype="multipart/form-data">
             <div class="m-portlet__body">
               <div class="form-group m-form__group row">
                 <div class="col-lg-4" [ngClass]="{'has-danger':!addTeacherForm.controls['firstName'].valid && addTeacherForm.controls['firstName'].touched}">
@@ -80,7 +80,7 @@
                     Teacher Image:
                   </label>
                   <div>
-                    <input class="form-control" type="file" (change)="selectFile($event)" formControlName="image">
+                    <input class="form-control" type="file" (change)="selectFile($event)" formControlName="image" id="imageInput">
                   </div>
                 </div>
                 <div class="col-lg-4">

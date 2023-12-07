@@ -21,8 +21,9 @@
 						</div>
 						<div class="m-card-profile__pic">
 							<div class="m-card-profile__pic-wrapper">
-								<img src="./assets/app/media/img/users/user4.jpg" alt=""/>
-							</div>
+								<img *ngIf="studentInfo['profileImage'] !== null && studentInfo['profileImage'] !== 'null'" [src]="imageUrlPath + studentInfo['profileImage']" alt="">
+								<img *ngIf="studentInfo['profileImage'] === null || studentInfo['profileImage'] === 'null'" src="./assets/app/media/img/users/user4.jpg" alt="">
+							  </div>
 						</div>
 						<div class="m-card-profile__details">
 							<span class="m-card-profile__name">
@@ -215,7 +216,7 @@
 								<div class="m-widget15">
 									<div class="m-widget15__items">
 										<div class="row">
-									<div class="col-6">
+									<div class="col-md-6">
 										<div class="m-widget15__item">
 															<span class="m-widget15__stats">
 																{{studentAttendChart}}%
@@ -230,7 +231,7 @@
 														</div>
 									   <div id="m_amcharts_1" style="height: 150px;"></div>
 									</div>
-									<div class="col-6">
+									<div class="col-md-6">
 										<div class="m-widget15__item">
 															<span class="m-widget15__stats">
 																{{studentTestChart}}%
@@ -263,7 +264,7 @@
 								<div class="m-widget15">
 									<div class="m-widget15__items">
 										<div class="row" >
-									<div class="col-4" *ngFor="let sub of studentSubjectChart; let i = index">
+									<div class="col-md-4" *ngFor="let sub of studentSubjectChart; let i = index">
 										<div class="m-widget15__item">
 															<span class="m-widget15__stats">
 																{{sub.subjectAvg}}%

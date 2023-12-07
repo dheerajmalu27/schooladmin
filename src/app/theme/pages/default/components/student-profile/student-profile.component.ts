@@ -6,13 +6,14 @@ import { AmChartsService } from '@amcharts/amcharts3-angular'; // Note: Check fo
 import { ActivatedRoute } from '@angular/router';
 import { BaseService } from '../../../../../_services/base.service';
 import * as _ from 'lodash';
-
+import { appVariables } from '../../../../../app.constants';
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./student-profile.html",
   encapsulation: ViewEncapsulation.None,
 })
 export class StudentProfileComponent implements OnInit, AfterViewInit {
+  imageUrlPath=appVariables.apiImageUrl;
   private chart: any;
   public studentData: any = {};
   public studentSubjectChart: Array<any> = [];
@@ -95,7 +96,7 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
           "tickLength": 100
         },
         "export": {
-          "enabled": true
+          "enabled": false
         }
       });
 
@@ -131,10 +132,10 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
           "tickLength": 20
         },
         "export": {
-          "enabled": true
+          "enabled": false
         }
       });
-      var result = _.groupBy(this.studentData.testmarks, "subName");
+      var result = _.groupBy(this.studentData.testmarks, "testName");
       var i = 2;
       var resultArray: Array<any> = [];
       _.forOwn(result, function(value, key) {
@@ -147,7 +148,10 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
       this.studentSubjectChart = resultArray;
       _.forOwn(result, function(value, key) {
         var tmpdata = _.map(value, function(object) {
-          return _.pick(object, ['testName', 'totalAvg']);
+          return {
+            subName: object.subName,
+            totalAvg: object.totalAvg.toFixed(2) // Format 'totalAvg' to 2 decimal places
+          };
         });
         setTimeout(() => {
           i++;
@@ -175,17 +179,22 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
               "cursorAlpha": 0,
               "zoomable": false
             },
-            "categoryField": "testName",
+            "categoryField": "subName",
             "categoryAxis": {
               "gridPosition": "start",
               "labelRotation": 90
             },
             "export": {
-              "enabled": true
+              "enabled": false
             }
           });
+          $('a[title="JavaScript charts"]').hide();
         }, 1000);
       });
+      // var titleToHide = 'JavaScript charts';
+      
+      // Find all <a> elements with the specified title attribute
+      $('a[title="JavaScript charts"]').hide();
     },
     (err) => {
     //  localStorage.clear();

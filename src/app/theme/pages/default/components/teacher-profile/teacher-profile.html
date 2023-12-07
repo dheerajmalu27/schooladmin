@@ -21,8 +21,9 @@
 						</div>
 						<div class="m-card-profile__pic">
 							<div class="m-card-profile__pic-wrapper">
-								<img src="./assets/app/media/img/users/user4.jpg" alt="" />
-							</div>
+								<img *ngIf="teacherInfo['profileImage'] !== null && teacherInfo['profileImage'] !== 'null'" [src]="imageUrlPath + teacherInfo['profileImage']" alt="">
+								<img *ngIf="teacherInfo['profileImage'] === null || teacherInfo['profileImage'] === 'null'" src="./assets/app/media/img/users/user4.jpg" alt="">
+							  </div>
 						</div>
 						<div class="m-card-profile__details">
 							<span class="m-card-profile__name">
@@ -32,7 +33,7 @@
 								TE- {{teacherInfo['id']}}
 							</a><br>
 							<a class="m-card-profile__email m-link">
-								<b>Qualification:</b> B.Ed.
+								<b>Qualification:</b> {{teacherInfo['qualification']}}
 							</a>
 						</div>
 					</div>
@@ -57,7 +58,7 @@
 								<div class="col">
 
 									<span class="m-widget1__desc">
-										<b>Address:</b> {{teacherInfo['address']}}-{{teacherInfo['pincode']}}
+										<b>Address:</b> {{teacherInfo['address']}}-Pincode:{{teacherInfo['pincode']}}
 									</span>
 								</div>
 
@@ -80,6 +81,39 @@
 
 									<span class="m-widget1__desc">
 										<b>Mob No:</b> {{teacherInfo['mobileNumberSecond']}}
+									</span>
+								</div>
+
+							</div>
+						</div>
+						<div class="m-widget1__item">
+							<div class="row m-row--no-padding align-items-center">
+								<div class="col">
+
+									<span class="m-widget1__desc">
+										<b>Experience:</b> {{teacherInfo['experience']}}
+									</span>
+								</div>
+
+							</div>
+						</div>
+						<div class="m-widget1__item">
+							<div class="row m-row--no-padding align-items-center">
+								<div class="col">
+
+									<span class="m-widget1__desc">
+										<b>Joining Date:</b> {{teacherInfo['joiningDate']}}
+									</span>
+								</div>
+
+							</div>
+						</div>
+						<div class="m-widget1__item">
+							<div class="row m-row--no-padding align-items-center">
+								<div class="col">
+
+									<span class="m-widget1__desc">
+										<b>Blood Group:</b> {{teacherInfo['bloodGroup']}}
 									</span>
 								</div>
 
@@ -213,7 +247,7 @@
 							<div class="m-widget15">
 								<div class="m-widget15__items">
 									<div class="row">
-										<div class="col-6">
+										<div class="col-md-6">
 											<div class="m-widget15__item">
 												<span class="m-widget15__stats">
 													{{teacherAttendChart}}%
@@ -230,7 +264,7 @@
 											</div>
 											<div id="m_amcharts_1" style="height: 150px;"></div>
 										</div>
-										<div class="col-6">
+										<div class="col-md-6">
 											<div class="m-widget15__item">
 												<span class="m-widget15__stats">
 													{{teacherTestChart}}%
@@ -261,7 +295,7 @@
 							<div class="m-widget15">
 								<div class="m-widget15__items">
 									<div class="row">
-										<div class="col-4" *ngFor="let sub of teacherSubjectChart; let i = index">
+										<div class="col-md-4" *ngFor="let sub of teacherSubjectChart; let i = index">
 											<div class="m-widget15__item">
 												<span class="m-widget15__stats">
 													{{sub.subjectAvg}}%
@@ -292,7 +326,7 @@
 					</div>
 					<div class="tab-pane active" id="m_user_profile_tab_2">
 						<div class="m-portlet__body">
-							<div class="">
+							<div  *ngIf="showButton">
 
 								<a (click)="genratefile()" href="#"
 									class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" style="
@@ -308,10 +342,8 @@
 								<div class="m-separator m-separator--dashed d-xl-none"></div>
 							</div>
 							<div id="m_calendar"></div>
-							<!-- <div *ngIf="calendarOptions">
-												<ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (eventDrop)="updateEvent($event.detail)"
-													(eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)"></ng-fullcalendar>
-											</div> -->
+							
+							
 						</div>
 					</div>
 					<div class="tab-pane active" id="m_user_profile_tab_3" style="display:none">

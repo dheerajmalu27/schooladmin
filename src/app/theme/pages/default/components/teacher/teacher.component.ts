@@ -108,7 +108,23 @@ export class TeacherComponent implements OnInit, AfterViewInit {
     this.getStateList();
     // this.getClassList();
     // this.getDivisionList();
-    
+    $('#m_datepickerSet').datepicker({
+      format: "dd/mm/yyyy",
+      todayHighlight: true,
+      templates: {
+        leftArrow: '<i class="la la-angle-left"></i>',
+        rightArrow: '<i class="la la-angle-right"></i>'
+      }
+      
+    });
+    var temp = this;
+    $('#m_datepickerSet').on('change', () => {
+      let value = $('#m_datepickerSet').val();
+      console.log(value);
+      this.addTeacherForm.controls['dob'].setValue(value);
+  });
+  
+  
     $("#listTemplate").hide();
     $("#addTemplate").show();
     this.addTeacherForm.setValue({
@@ -116,7 +132,8 @@ export class TeacherComponent implements OnInit, AfterViewInit {
       firstName: teacherData.firstName,
       middleName: teacherData.middleName,
       lastName: teacherData.lastName,
-      image: teacherData.profileImage,
+      // image: teacherData.profileImage,
+      image: '',
       dob: teacherData.dateOfBirth,
       qualification: teacherData.qualification,
       experience: teacherData.experience,
@@ -220,19 +237,39 @@ export class TeacherComponent implements OnInit, AfterViewInit {
       }
     }
     public addTeacherSubmitForm(data:any){
+
       data.stateId=$('.state_select2_drop_down').val();
       data.cityId=$('.city_select2_drop_down').val();
-      // data.divId=$('.division_select2_drop_down').val();
-      // data.classId=$('.class_select2_drop_down').val();
-      data.dateOfBirth=$("#m_datepickerSet").val();
-      data.joiningDate=$("#m_datepickerSet1").val();
+      const fileInput = document.getElementById('imageInput') as HTMLInputElement | null;
+    
+      const formData: FormData = new FormData();
+
+      for (const key of Object.keys(data)) {
+        formData.append(key, data[key]);
+      }
+      formData.set('stateId', data.stateId);
+      formData.set('cityId', data.cityId);
+      formData.set('dateOfBirth', data.dob);
+      formData.set('joiningDate', data.joiningDate);
+      if (fileInput && fileInput.files) {
+        if (fileInput.files.length > 0) {
+          formData.append('image', fileInput.files[0]);
+        }
+      }
+    
+
+
+      // data.stateId=$('.state_select2_drop_down').val();
+      // data.cityId=$('.city_select2_drop_down').val();
+      // data.dateOfBirth=$("#m_datepickerSet").val();
+      // data.joiningDate=$("#m_datepickerSet1").val();
     
       
       // const formData: FormData = new FormData(data);
     
     if(data.id!=''&& data.id!=undefined && data.id!=null)  {
     // data.image=this.selectedFiles;
-    this.baseservice.put('teacher/'+data.id,data).subscribe((data:any) => {
+    this.baseservice.put('teacher/'+data.id,formData).subscribe((data:any) => {
       this.getTeacherList();
       this.listTemplate();
       toastr.success('Record has been updated successfully...!');

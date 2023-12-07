@@ -14,7 +14,7 @@ export class AuthenticationService {
 
   login(email: string, password: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
-    return this.http.post<any>('http://localhost:3000/api/users/login', { email, password }, { headers: headers })
+    return this.http.post<any>('http://192.168.1.6:3000/api/users/login', { email, password }, { headers: headers })
       .pipe(
         tap((userData: any) => {
           // login successful if there's a jwt token in the response

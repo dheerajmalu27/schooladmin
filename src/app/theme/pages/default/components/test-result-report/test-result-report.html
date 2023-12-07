@@ -98,111 +98,123 @@
     padding: 20px;
     border: 1px solid #888;
     border-radius: 5px;
-    width: 50%;
+   
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
-<div id="contentData">
-	<div class="row" *ngFor="let student of testResultData" style="    display: flex;
+	<div id="contentData">
+		<div class="row" *ngFor="let student of testResultData" style="    display: flex;
     flex-wrap: wrap;
     margin-right: -15px;
     margin-left: -15px;">
-		<div class="col-xl-12">
-			<!--begin:: Widgets/Latest Updates-->
-			<div class="m-portlet m-portlet--full-height m-portlet--fit">
-				<div class="m-portlet__head">
-					<div class="m-portlet__head-caption"
-						style="text-align: center;padding: 20px;text-transform: capitalize;">
+			<div class="col-12">
+				<!--begin:: Widgets/Latest Updates-->
+				<div class="m-portlet m-portlet--full-height m-portlet--fit">
+					<div class="m-portlet__head">
+						<div class="m-portlet__head-caption"
+							style="text-align: center;padding: 20px;text-transform: capitalize;">
 
 
 
-						<h3 class="m-portlet__head-text" style="color: #36a3f7 !important;">
-							Balkavi Thombare Vidyalaya
+							<h3 class="m-portlet__head-text" style="color: #36a3f7 !important;">
+								{{schoolProfileData.schoolName}}
 
-						</h3>
-						<h5 style="color: #36a3f7 !important;">Dharangaon,Maharashtra-425105</h5>
-						<div class="row" style="font-size: 1rem;font-weight: 500;margin-bottom: 0;">
-							<div class="col-xl-3">
-								<p>Student ID: {{ student.studentId }}</p>
+							</h3>
+							<h5 style="color: #36a3f7 !important;">{{schoolProfileData.schoolAddress}}</h5>
+							<h6 style="color: #36a3f7 !important;">School Reg No:{{schoolProfileData.regNo}}</h6>
+
+							<div class="row" style="font-size: 1rem;font-weight: 500;margin-bottom: 0;">
+								<div class="col-3">
+									<p>Student ID: {{ student.studentId }}</p>
+								</div>
+								<div class="col-6">
+									<p>Student Name: {{ student.studentName }}</p>
+								</div>
+								<div class="col-3">
+									<p>Roll No: {{ student.rollNo }}</p>
+								</div>
+
+
+
 							</div>
-							<div class="col-xl-6">
-								<p>Student Name: {{ student.studentName }}</p>
-							</div>
-							<div class="col-xl-3">
-								<p>Roll No: {{ student.rollNo }}</p>
-							</div>
 
-							<div class="col-xl-3">
-								<p>Percentage: {{ student.percentage }}</p>
-							</div>
-							<div class="col-xl-6">
-								<p>Rank: {{ student.rank }}</p>
+							<div class="row" style="font-size: 1rem;font-weight: 500;margin-bottom: 0;">
+
+
+								<div class="col-3">
+									<p>Percentage: {{ student.percentage }}</p>
+								</div>
+								<div class="col-6">
+									<p>Rank: {{ student.rank }}</p>
+								</div>
+								<div class="col-3">
+									<p>Test Name: {{ student.testName }}</p>
+								</div>
 							</div>
 
 						</div>
-
 
 					</div>
+					<div class="m-portlet__body">
+						<div class="m-widget4 m-widget4--chart-bottom" style="min-height: 350px">
 
-				</div>
-				<div class="m-portlet__body" >
-					<div class="m-widget4 m-widget4--chart-bottom" style="min-height: 350px">
-
-						<div class="m-widget4__item" *ngFor="let subject of student.subjectData;let i = index">
-							<div class="m-widget4__ext">
-								<a href="#" class="m-widget4__icon m--font-brand">
-									{{i+1}}
-								</a>
-							</div>
-							<div class="m-widget4__info">
-								<span class="m-widget4__text">
-									{{ subject.subName }}
-								</span>
-							</div>
-							<div class="m-widget4__ext">
-								<span class="m-widget4__stats m--font-info">
-									<span class="m-widget4__number m--font-accent">
-										{{ subject.getMarks }}/{{ subject.totalMarks }}
+							<div class="m-widget4__item" *ngFor="let subject of student.subjectData;let i = index">
+								<div class="m-widget4__ext">
+									<a href="#" class="m-widget4__icon m--font-brand">
+										{{i+1}}
+									</a>
+								</div>
+								<div class="m-widget4__info">
+									<span class="m-widget4__text">
+										{{ subject.subName }}
 									</span>
-								</span>
+								</div>
+								<div class="m-widget4__ext">
+									<span class="m-widget4__stats m--font-info">
+										<span class="m-widget4__number m--font-accent">
+											{{ subject.getMarks }}/{{ subject.totalMarks }}
+										</span>
+									</span>
+								</div>
 							</div>
-						</div>
-						<!-- 						
+							<!-- 						
 						<div class="m-widget4__chart m-portlet-fit--sides m--margin-top-20 m-portlet-fit--bottom1"
 							style="height:120px;">
 							<canvas id="m_chart_latest_updates"></canvas>
 						</div> -->
-						<div class="m-widget4__chart m-portlet-fit--sides m--margin-top-20 m-portlet-fit--bottom1"
-							style="height:120px;">
-							<canvas id="m_chart_latest_updates"></canvas>
-						</div>
-						<div class="m-widget4__item">
-							<div class="m-widget4__ext">
-								<a href="#" class="m-widget4__icon m--font-brand">
+							<div class="m-widget4__chart m-portlet-fit--sides m--margin-top-20 m-portlet-fit--bottom1"
+								style="height:120px;">
+								<canvas id="m_chart_latest_updates"></canvas>
+							</div>
+							<div class="m-widget4__item">
+								<div class="m-widget4__ext">
+									<a href="#" class="m-widget4__icon m--font-brand">
 
-								</a>
-							</div>
-							<div class="m-widget4__info">
-								<span class="m-widget4__text">
-									Get Total Marks
-								</span>
-							</div>
-							<div class="m-widget4__ext">
-								<span class="m-widget4__stats m--font-info">
-									<span class="m-widget4__number m--font-accent">
-										{{ student.sumGetMarks }}/{{ student.sumTotalMarks }}
+									</a>
+								</div>
+								<div class="m-widget4__info">
+									<span class="m-widget4__text">
+										Get Total Marks
 									</span>
-								</span>
+								</div>
+								<div class="m-widget4__ext">
+									<span class="m-widget4__stats m--font-info">
+										<span class="m-widget4__number m--font-accent">
+											{{ student.sumGetMarks }}/{{ student.sumTotalMarks }}
+										</span>
+									</span>
+								</div>
 							</div>
 						</div>
+
+
+
 					</div>
-
-
-
 				</div>
+				<!--end:: Widgets/Latest Updates-->
 			</div>
-			<!--end:: Widgets/Latest Updates-->
 		</div>
 	</div>
-</div>	
-	<div class="m-widget7__button" style="text-align: center;padding: 80px;"><a href="#" (click)="generateFile()" role="button"
-			class="m-btn m-btn--pill btn btn-danger" ng-reflect-href="#"> Generate PDF </a></div>
+	<div class="m-widget7__button" style="text-align: center;padding: 80px;">
+		<a href="#" (click)="generateFile()" role="button" class="m-btn m-btn--pill btn btn-danger" ng-reflect-href="#"> Generate PDF </a>
+		<button class="m-btn m-btn--pill btn btn-danger" (click)="printDiv('contentData')">Print Result</button>
+	</div>
 </div>
