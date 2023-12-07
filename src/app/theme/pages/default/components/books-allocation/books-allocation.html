@@ -1,0 +1,309 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        Books Allocation
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a href="#" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          -
+        </li>
+        <li class="m-nav__item">
+          <a href="" class="m-nav__link">
+            <span class="m-nav__link-text">
+              Forms
+            </span>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          -
+        </li>
+        <li class="m-nav__item">
+          <a href="" class="m-nav__link">
+            <span class="m-nav__link-text">
+              Add Books Allocation
+            </span>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          -
+        </li>
+        <li class="m-nav__item">
+          <a href="" class="m-nav__link">
+            <span class="m-nav__link-text">
+              Default Forms
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content" id="addTemplate" style="display: none;">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <!--begin::Portlet-->
+      <div class="m-portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <span class="m-portlet__head-icon m--hide">
+                <i class="la la-gear"></i>
+              </span>
+              <h3 class="m-portlet__head-text">
+                Add Books Allocation
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+          [formGroup]="addBooksAllocationForm" (ngSubmit)="addBooksAllocationSubmitForm(addBooksAllocationForm.value)">
+          <div class="m-portlet__body">
+            <div class="form-group m-form__group row"
+              [ngClass]="{'has-danger':!addBooksAllocationForm.controls['studentId'].valid && addBooksAllocationForm.controls['studentId'].touched}">
+              <label class="col-lg-2 col-form-label">Select Student:</label>
+              <div class="col-lg-6">
+                <div class='input-group date'>
+                  <select class="form-control m-select2 student_select2_drop_down" id="m_select2_1"
+                    formControlName="studentId">
+                  </select>
+
+                </div>
+                <span
+                  *ngIf="addBooksAllocationForm.controls['studentId'].hasError('required') && addBooksAllocationForm.controls['studentId'].touched"
+                  class="m--font-danger">You must include student Name.</span>
+              </div>
+            </div>
+            <div class="form-group m-form__group row"
+              [ngClass]="{'has-danger':!addBooksAllocationForm.controls['bookId'].valid && addBooksAllocationForm.controls['bookId'].touched}">
+              <label class="col-lg-2 col-form-label">Select book:</label>
+              <div class="col-lg-6">
+                <div class='input-group date'>
+                  <select class="form-control m-select2 books_select2_drop_down" id="m_select2_2"
+                    formControlName="bookId">
+                  </select>
+
+                </div>
+                <span
+                  *ngIf="addBooksAllocationForm.controls['bookId'].hasError('required') && addBooksAllocationForm.controls['bookId'].touched"
+                  class="m--font-danger">You must include book Name.</span>
+              </div>
+            </div>
+            <div class="form-group m-form__group row">
+              <label class="col-lg-2 col-form-label">Select Date of Allocation:</label>
+              <div class="col-lg-6">
+                <div class='input-group date'>
+                  <div class='input-group date'>
+                    <input type='text' id='m_datepickerSet' autocomplete="off" class="form-control m-input"
+                      formControlName="borrowDate" name="borrowDate" placeholder="Select date">
+                    <span class="input-group-addon">
+                      <i class="la la-calendar-check-o"></i>
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions--solid">
+              <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-6">
+                  <button type="submit" class="btn btn-brand" [disabled]="!addBooksAllocationForm.valid">Submit</button>
+
+                  <button type="button" (click)="listTemplate()" class="btn btn-secondary">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </form>
+        <!--end::Form-->
+      </div>
+      <!--end::Portlet-->
+    </div>
+  </div>
+</div>
+<div class="m-content" id="editTemplate" style="display: none;">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <!--begin::Portlet-->
+      <div class="m-portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <span class="m-portlet__head-icon m--hide">
+                <i class="la la-gear"></i>
+              </span>
+              <h3 class="m-portlet__head-text">
+                Edit BooksAllocation
+              </h3>
+            </div>
+          </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+          [formGroup]="editBooksAllocationForm"
+          (ngSubmit)="editBooksAllocationSubmitForm(editBooksAllocationForm.value)">
+          <div class="m-portlet__body">
+            <div class="form-group m-form__group row"
+            [ngClass]="{'has-danger':!editBooksAllocationForm.controls['studentId'].valid && editBooksAllocationForm.controls['studentId'].touched}">
+            <label class="col-lg-2 col-form-label">Select Student:</label>
+            <div class="col-lg-6">
+              <div class='input-group date'>
+                <select class="form-control m-select2 edit_student_select2_drop_down" id="m_select2_3"
+                  formControlName="studentId">
+                </select>
+
+              </div>
+              <span
+                *ngIf="editBooksAllocationForm.controls['studentId'].hasError('required') && editBooksAllocationForm.controls['studentId'].touched"
+                class="m--font-danger">You must include student Name.</span>
+            </div>
+          </div>
+          <div class="form-group m-form__group row"
+            [ngClass]="{'has-danger':!editBooksAllocationForm.controls['bookId'].valid && editBooksAllocationForm.controls['bookId'].touched}">
+            <label class="col-lg-2 col-form-label">Select book:</label>
+            <div class="col-lg-6">
+              <div class='input-group date'>
+                <select class="form-control m-select2 edit_books_select2_drop_down" id="m_select2_4"
+                  formControlName="bookId">
+                </select>
+
+              </div>
+              <span
+                *ngIf="editBooksAllocationForm.controls['bookId'].hasError('required') && editBooksAllocationForm.controls['bookId'].touched"
+                class="m--font-danger">You must include book Name.</span>
+            </div>
+          </div>
+          <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">Select Date of Allocation:</label>
+            <div class="col-lg-6">
+              <div class='input-group date'>
+                <div class='input-group date'>
+                  <input type='text' id='m_datepickerSet1' [disabled]="true"  autocomplete="off" class="form-control m-input"
+                    formControlName="borrowDate" name="borrowDate" placeholder="Select date">
+                  <span class="input-group-addon">
+                    <i class="la la-calendar-check-o"></i>
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">Select Date of Return:</label>
+            <div class="col-lg-6">
+              <div class='input-group date'>
+                <div class='input-group date'>
+                  <input type='text' id='m_datepickerSet2' autocomplete="off" class="form-control m-input"
+                    formControlName="returnDate" name="returnDate" placeholder="Select date">
+                  <span class="input-group-addon">
+                    <i class="la la-calendar-check-o"></i>
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+
+
+
+
+          </div>
+          <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions--solid">
+              <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-6">
+                  <button type="submit" class="btn btn-brand"
+                    [disabled]="!editBooksAllocationForm.valid">Submit</button>
+
+                  <button type="button" (click)="listTemplate()" class="btn btn-secondary">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!--end::Form-->
+        <!--end::Form-->
+      </div>
+      <!--end::Portlet-->
+    </div>
+  </div>
+</div>
+<div class="m-content" id="listTemplate">
+  <div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+      <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+          <h3 class="m-portlet__head-text">
+            Books Allocation List
+          </h3>
+        </div>
+      </div>
+
+    </div>
+    <div class="m-portlet__body">
+      <!--begin: Search Form -->
+      <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+        <div class="row align-items-center">
+          <div class="col-xl-8 order-2 order-xl-1">
+            <div class="form-group m-form__group row align-items-center">
+              <div class="col-md-4">
+                <div class="m-input-icon m-input-icon--left">
+                  <input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
+                    id="m_form_search">
+                  <span class="m-input-icon__icon m-input-icon__icon--left">
+                    <span>
+                      <i class="la la-search"></i>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+            <a (click)="addTemplate()" href="#"
+              class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+              <span>
+                <i class="flaticon-add"></i>
+                <span>
+                  Book Allocation
+                </span>
+              </span>
+            </a>
+            <div class="m-separator m-separator--dashed d-xl-none"></div>
+          </div>
+        </div>
+      </div>
+      <!--end: Search Form -->
+      <!--begin: Datatable -->
+      <div class="m_datatable" id="local_data"></div>
+      <!--end: Datatable -->
+    </div>
+  </div>
+</div>
