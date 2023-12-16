@@ -28,12 +28,61 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     this.dailySales();
+    this.datepicker();
     this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
       'assets/demo/default/custom/components/datatables/base/html-table.js');
 
   
   }
 
+  public datepicker() {
+    if ($('#m_dashboard_daterangepicker').length === 0) {
+        return;
+    }
+
+    var picker = $('#m_dashboard_daterangepicker');
+    var start = new Date();
+    var end = new Date();
+
+    function cb(start:any, end:any, label:any) {
+        var title = '';
+        var range = '';
+
+        if ((end - start) < 100) {
+            title = 'Today:';
+            range = formatDate(start, 'MMM D');
+        } else if (label == 'Yesterday') {
+            title = 'Yesterday:';
+            range = formatDate(start, 'MMM D');
+        } else {
+            range = formatDate(start, 'MMM D') + ' - ' + formatDate(end, 'MMM D');
+        }
+
+        picker.find('.m-subheader__daterange-date').html(range);
+        picker.find('.m-subheader__daterange-title').html(title);
+    }
+
+    function formatDate(date:any, format:any) {
+        var options = { month: 'short', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    }
+
+    picker.daterangepicker({
+        startDate: start,
+        endDate: end,
+        opens: 'left',
+        ranges: {
+            'Today': [new Date(), new Date()],
+            'Yesterday': [new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1))],
+            'Last 7 Days': [new Date(new Date().setDate(new Date().getDate() - 6)), new Date()],
+            'Last 30 Days': [new Date(new Date().setDate(new Date().getDate() - 29)), new Date()],
+            'This Month': [new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)],
+            'Last Month': [new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), new Date(new Date().getFullYear(), new Date().getMonth(), 0)]
+        }
+    }, cb);
+
+    cb(start, end, '');
+}
 
 
     // Daily Sales chart based on Chartjs plugin (http://www.chartjs.org/)

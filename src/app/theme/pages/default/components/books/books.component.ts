@@ -119,9 +119,18 @@ export class BooksComponent implements OnInit, AfterViewInit {
     this.activebookval=excludeData.active;
     this.editTemplate();
   }
+  public refreshDataTable(newData: any): void {
+    // Destroy existing datatable
+    
+      if (this.datatable) {
+        this.datatable.destroy();  // Destroy existing datatable instance
+        this.showtablerecord(newData); // Reinitialize datatable with new data
+    }else{
+      this.showtablerecord(newData);
+    }
+  }
   addBooksSubmitForm(data: any){
     this.baseservice.post('books',data).subscribe((result:any) => { 
-      this.datatable.destroy();
       this.getBooksList();
       this.listTemplate();
       toastr.success('Record has been added successfully...!');
@@ -133,7 +142,6 @@ export class BooksComponent implements OnInit, AfterViewInit {
   }
   editBooksSubmitForm(data: any){
     this.baseservice.put('books/'+data.bookId,data).subscribe((result:any) => { 
-      this.datatable.destroy();
       this.getBooksList();
       this.listTemplate();
       toastr.success('Record has been updated successfully...!');
@@ -146,7 +154,7 @@ export class BooksComponent implements OnInit, AfterViewInit {
   private getBooksList() {
     this.baseservice.get('books').subscribe((data:any) => {
       this.bookData = data.books;
-      this.showtablerecord(data);
+      this.refreshDataTable(data);
     },
     (err) => {
     //  localStorage.clear();

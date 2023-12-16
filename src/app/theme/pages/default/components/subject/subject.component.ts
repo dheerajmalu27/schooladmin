@@ -62,9 +62,22 @@ export class SubjectComponent implements OnInit, AfterViewInit {
     this.editSubjectForm.controls['subName'].setValue(excludeData[1]);
     this.editTemplate();
   }
+  public refreshDataTable(newData: any): void {
+    // Destroy existing datatable
+    
+      if (this.datatable) {
+        this.datatable.destroy();  // Destroy existing datatable instance
+        this.showtablerecord(newData); // Reinitialize datatable with new data
+    }else{
+      this.showtablerecord(newData);
+    }
+  
+    // Show new data in datatable
+   
+  }
   addSubjectSubmitForm(data: any){
     this.baseservice.post('subject',data).subscribe((result:any) => { 
-      this.datatable.destroy();
+     
       this.getSubjectList();
       this.listTemplate();
       toastr.success('Record has been added successfully...!');
@@ -76,7 +89,7 @@ export class SubjectComponent implements OnInit, AfterViewInit {
   }
   editSubjectSubmitForm(data: any){
     this.baseservice.put('subject/'+data.id,data).subscribe((result:any) => { 
-      this.datatable.destroy();
+     
       this.getSubjectList();
       this.listTemplate();
       toastr.success('Record has been updated successfully...!');
@@ -90,7 +103,7 @@ private getSubjectList() {
     this.baseservice.get('subject').subscribe((data: any) => {
       console.log(data);
         this.subjectData = data.subject;
-        this.showtablerecord(data);
+        this.refreshDataTable(data);
     },
     (err) => {
         // Handle the error here. You might want to do something more than just clearing local storage.

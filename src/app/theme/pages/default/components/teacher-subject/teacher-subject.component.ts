@@ -128,6 +128,16 @@ export class TeacherSubjectComponent implements OnInit, AfterViewInit {
    
    
   }
+  public refreshDataTable(newData: any): void {
+    // Destroy existing datatable
+    
+      if (this.datatable) {
+        this.datatable.destroy();  // Destroy existing datatable instance
+        this.showtablerecord(newData); // Reinitialize datatable with new data
+    }else{
+      this.showtablerecord(newData);
+    }
+  }
   addTeacherSubjectSubmitForm(data: any){
     console.log(data);
 
@@ -138,7 +148,7 @@ export class TeacherSubjectComponent implements OnInit, AfterViewInit {
     data.teacherId = $('.teacher_select2_drop_down').val();
      if (data.classId!= '' && data.divId!= '' && data.subId!= '' && data.teacherId!= '') {
       this.baseservice.post('teachersubject',data).subscribe((result:any) => { 
-        this.datatable.destroy();
+       
         this.getTeacherSubjectList();
         this.listTemplate();
         toastr.success('Record has been added successfully...!');
@@ -157,7 +167,7 @@ export class TeacherSubjectComponent implements OnInit, AfterViewInit {
     data.teacherId = $('.editteacher_select2_drop_down').val();
     if (data.classId!= '' && data.divId!= '' && data.subId!= '' && data.teacherId!= '') {
     this.baseservice.post('updateteachersubject',data).subscribe((result:any) => { 
-      this.datatable.destroy();
+     
       this.getTeacherSubjectList();
       this.listTemplate();
       toastr.success('Record has been updated successfully...!');
@@ -172,7 +182,7 @@ private getTeacherSubjectList() {
     this.baseservice.get('teachersubjectlist').subscribe((data: any) => {
       console.log(data);
         this.subjectData = data.subjectteacherlist;
-        this.showtablerecord(data);
+        this.refreshDataTable(data);
     },
     (err) => {
         // Handle the error here. You might want to do something more than just clearing local storage.

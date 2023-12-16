@@ -164,7 +164,7 @@ export class PendingAttendanceRecordComponent implements OnInit, AfterViewInit {
           field: 'active',
           title: 'Status',
           template: (row: any) => {
-            return '<span class="m-badge m-badge-brand m-badge-wide"> Pending </span>';
+            return '<span class="m-badge m-badge--danger m-badge--wide"> Pending </span>';
           },
         },
         {

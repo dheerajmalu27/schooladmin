@@ -71,10 +71,19 @@ export class TestComponent implements OnInit, AfterViewInit {
     this.editTestForm.controls['testName'].setValue(excludeData[1]);
     this.editTemplate(data);
   }
-
+  public refreshDataTable(newData: any): void {
+    // Destroy existing datatable
+    
+      if (this.datatable) {
+        this.datatable.destroy();  // Destroy existing datatable instance
+        this.showtablerecord(newData); // Reinitialize datatable with new data
+    }else{
+      this.showtablerecord(newData);
+    }
+  }
   addTestSubmitForm(data: any) {
     this.baseservice.post('test', data).subscribe((result:any) => {
-      this.datatable.destroy();
+     
       this.getTestList();
       this.listTemplate();
     }, (err) => {
@@ -84,7 +93,7 @@ export class TestComponent implements OnInit, AfterViewInit {
 
   editTestSubmitForm(data: any) {
     this.baseservice.put('test/' + data.id, data).subscribe((result:any) => {
-      this.datatable.destroy();
+     
       this.getTestList();
       this.listTemplate();
     }, (err) => {
@@ -95,7 +104,7 @@ export class TestComponent implements OnInit, AfterViewInit {
   private getTestList() {
     this.baseservice.get('test').subscribe((data: any) => {
       this.testData = data.test;
-      this.showtablerecord(data);
+      this.refreshDataTable(data);
     }, (err) => {
       // localStorage.clear();
     });

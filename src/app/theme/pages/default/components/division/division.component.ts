@@ -56,9 +56,19 @@ export class DivisionComponent implements OnInit, AfterViewInit {
   
     
   }
+  public refreshDataTable(newData: any): void {
+    // Destroy existing datatable
+    
+      if (this.datatable) {
+        this.datatable.destroy();  // Destroy existing datatable instance
+        this.showtablerecord(newData); // Reinitialize datatable with new data
+    }else{
+      this.showtablerecord(newData);
+    }
+  }
   addDivisionSubmitForm(data: any){
     this.baseservice.post('division',data).subscribe((result:any) => { 
-      this.datatable.destroy();
+    
       this.getDivisionList();
       this.listTemplate();
       toastr.success('Record has been added successfully...!');
@@ -70,7 +80,7 @@ export class DivisionComponent implements OnInit, AfterViewInit {
   }
   editDivisionSubmitForm(data: any){
     this.baseservice.put('division/'+data.id,data).subscribe((result:any) => { 
-      this.datatable.destroy();
+    
       this.getDivisionList();
       this.listTemplate();
       toastr.success('Record has been updated successfully...!');
@@ -90,7 +100,7 @@ export class DivisionComponent implements OnInit, AfterViewInit {
   private getDivisionList() {
     this.baseservice.get('division').subscribe((data:any) => {
       this.divisionData = data.division;
-      this.showtablerecord(data);
+      this.refreshDataTable(data);
     },
     (err) => {
     //  localStorage.clear();

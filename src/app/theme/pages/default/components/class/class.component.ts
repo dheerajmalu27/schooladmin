@@ -62,9 +62,19 @@ export class ClassComponent implements OnInit, AfterViewInit {
     // this.studentDetail = studentData;
     
   }
+  public refreshDataTable(newData: any): void {
+    // Destroy existing datatable
+    
+      if (this.datatable) {
+        this.datatable.destroy();  // Destroy existing datatable instance
+        this.showtablerecord(newData); // Reinitialize datatable with new data
+    }else{
+      this.showtablerecord(newData);
+    }
+  }
   addClassSubmitForm(data: any){
     this.baseservice.post('class',data).subscribe((result:any) => { 
-      this.datatable.destroy();
+     
       this.getClassList();
       this.listTemplate();
       toastr.success('Record has been added/updated successfully...!');
@@ -77,7 +87,7 @@ export class ClassComponent implements OnInit, AfterViewInit {
   editClassSubmitForm(data: any){
     
     this.baseservice.put('class/'+data.id,data).subscribe((result:any) => { 
-      this.datatable.destroy();
+      
       this.getClassList();
       this.listTemplate();
     },
@@ -89,7 +99,7 @@ export class ClassComponent implements OnInit, AfterViewInit {
   private getClassList() {
     this.baseservice.get('class').subscribe((data:any) => {
       this.classData = data.class;
-      this.showtablerecord(data);
+      this.refreshDataTable(data);
     },
     (err) => {
     //  localStorage.clear();

@@ -2022,7 +2022,7 @@ tbody.collapse.show {
     position: relative;
     z-index: 2;
     flex: 1 1 auto;
-    width: 1%;
+    /* width: 1%; */
     margin-bottom: 0; }
     .input-group .form-control:focus, .input-group .form-control:active, .input-group .form-control:hover {
       z-index: 3; }

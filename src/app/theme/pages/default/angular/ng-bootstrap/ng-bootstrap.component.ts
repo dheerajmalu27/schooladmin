@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
+
 const now = new Date();
 
 @Component({
@@ -26,7 +27,7 @@ export class NgBootstrapComponent implements OnInit {
   public timepickerMeridian = true;
   public checkboxModel = { left: true, middle: false, right: false };
   public backup: Array<IAlert>;
-  public hovered;
+  public hovered:any;
 
   constructor(private formBuilder: FormBuilder,
     private modalService: NgbModal) {
@@ -70,7 +71,7 @@ export class NgBootstrapComponent implements OnInit {
     this.datepickerModel = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
   }
 
-  modalOpen(content) {
+  modalOpen(content:any) {
     this.modalService.open(content).result.then((result) => {
       this.modalClose = `Closed with: ${result}`;
     }, (reason) => {

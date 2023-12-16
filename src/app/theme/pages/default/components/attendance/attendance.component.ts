@@ -157,7 +157,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
     let postdata=(newArrData);
     console.log(postdata);
     this.baseservice.post('bulkattendance',postdata).subscribe((data:any) => { 
-      this.datatable.destroy();
+      
       this.getAttendanceList();
       this.listTemplate();
       toastr.success('Record has been added successfully...!');
@@ -177,7 +177,6 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
     let postdata=(newArrData);
     this.baseservice.post('bulkattendance',postdata).subscribe((data:any) => { 
       
-      this.datatable.destroy();
       this.getAttendanceList();
       this.listTemplate();
       toastr.success('Record has been updated successfully...!');
@@ -268,9 +267,9 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
 
       }, {
         field: "totalPresent",
-        title: "Status",
+        title: "Present / Total",
         template: function (row:any) {
-          return row.totalPresent.toString() + "/" + row.total.toString();
+          return row.totalPresent.toString() + " / " + row.total.toString();
 
         },
       }, {

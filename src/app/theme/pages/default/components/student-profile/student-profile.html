@@ -3,10 +3,10 @@
 	<div class="d-flex align-items-center">
 		<div class="mr-auto">
 			<h3 class="m-subheader__title">
-				My Profile
+				Student Profile
 			</h3>
 		</div>
-		
+
 	</div>
 </div>
 <!-- END: Subheader -->
@@ -21,15 +21,17 @@
 						</div>
 						<div class="m-card-profile__pic">
 							<div class="m-card-profile__pic-wrapper">
-								<img *ngIf="studentInfo['profileImage'] !== null && studentInfo['profileImage'] !== 'null'" [src]="imageUrlPath + studentInfo['profileImage']" alt="">
-								<img *ngIf="studentInfo['profileImage'] === null || studentInfo['profileImage'] === 'null'" src="./assets/app/media/img/users/user4.jpg" alt="">
-							  </div>
+								<img *ngIf="studentInfo['profileImage'] !== null && studentInfo['profileImage'] !== 'null'"
+									[src]="imageUrlPath + studentInfo['profileImage']" alt="">
+								<img *ngIf="studentInfo['profileImage'] === null || studentInfo['profileImage'] === 'null'"
+									src="./assets/app/media/img/users/user4.jpg" alt="">
+							</div>
 						</div>
 						<div class="m-card-profile__details">
 							<span class="m-card-profile__name">
 								{{studentInfo['firstName']}} {{studentInfo['lastName']}}
 							</span>
-							<a  class="m-card-profile__email m-link">
+							<a class="m-card-profile__email m-link">
 								ST- {{studentInfo['id']}}
 							</a><br>
 							<a class="m-card-profile__email m-link">
@@ -37,47 +39,47 @@
 							</a>
 						</div>
 					</div>
-					
+
 					<div class="m-portlet__body-separator"></div>
 					<div class="m-widget1 m-widget1--paddingless">
 						<div class="m-widget1__item">
 							<div class="row m-row--no-padding align-items-center">
 								<div class="col">
-									
+
 									<span class="m-widget1__desc">
 										<b>DOB:</b> {{studentInfo['dateOfBirth']}}
 									</span>
 								</div>
-								
+
 							</div>
 						</div>
 						<div class="m-widget1__item">
 							<div class="row m-row--no-padding align-items-center">
 								<div class="col">
-									
+
 									<span class="m-widget1__desc">
 										<b>Class Teacher:</b> Rakesh Patil
 									</span>
 								</div>
-								
+
 							</div>
 						</div>
-						
+
 						<div class="m-widget1__item">
 							<div class="row m-row--no-padding align-items-center">
 								<div class="col">
-									
+
 									<span class="m-widget1__desc">
 										<b>Address:</b> {{studentInfo['address']}}
 									</span>
 								</div>
-								
+
 							</div>
 						</div>
 						<div class="m-widget1__item">
 							<div class="row m-row--no-padding align-items-center">
 								<div class="col">
-									
+
 									<span class="m-widget1__desc">
 										<b>Father Name:</b> {{studentInfo['fatherName']}}({{studentInfo['fatherQual']}})
 									</span>
@@ -85,13 +87,13 @@
 										<b>Mob No:</b> {{studentInfo['parentNumber']}}
 									</span>
 								</div>
-								
+
 							</div>
 						</div>
 						<div class="m-widget1__item">
 							<div class="row m-row--no-padding align-items-center">
 								<div class="col">
-									
+
 									<span class="m-widget1__desc">
 										<b>Mother Name:</b> {{studentInfo['motherName']}}({{studentInfo['motherQual']}})
 									</span>
@@ -99,7 +101,7 @@
 										<b>Mob No:</b> {{studentInfo['parentNumberSecond']}}
 									</span>
 								</div>
-								
+
 							</div>
 						</div>
 					</div>
@@ -110,30 +112,41 @@
 			<div class="m-portlet m-portlet--full-height m-portlet--tabs">
 				<div class="m-portlet__head">
 					<div class="m-portlet__head-tools">
-						<ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left m-tabs-line--primary" role="tablist">
-							<li class="nav-item m-tabs__item">
-								<a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab_1" role="tab">
+						<ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left m-tabs-line--primary"
+							role="tablist">
+							<li class="nav-item m-tabs__item" (click)="openOverview()">
+								<a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab_1"
+									role="tab">
 									<i class="flaticon-share m--hide"></i>
 									Overview
 								</a>
 							</li>
 							<li class="nav-item m-tabs__item">
-								<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_2" role="tab">
-									Messages
+								<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_2"
+									role="tab">
+									Fees Details
 								</a>
 							</li>
-							
+							<li class="nav-item m-tabs__item" (click)="showHomeworkList()">
+								<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_3"
+									role="tab">
+									Home Work
+								</a>
+							</li>
 						</ul>
 					</div>
 					<div class="m-portlet__head-tools">
 						<ul class="m-portlet__nav">
 							<li class="m-portlet__nav-item m-portlet__nav-item--last">
-								<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover" aria-expanded="true">
-									<a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+								<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+									data-dropdown-toggle="hover" aria-expanded="true">
+									<a href="#"
+										class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
 										<i class="la la-gear"></i>
 									</a>
 									<div class="m-dropdown__wrapper">
-										<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+										<span
+											class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
 										<div class="m-dropdown__inner">
 											<div class="m-dropdown__body">
 												<div class="m-dropdown__content">
@@ -159,7 +172,7 @@
 																</span>
 															</a>
 														</li>
-														
+
 														<li class="m-nav__section">
 															<span class="m-nav__section-text">
 																Useful Links
@@ -183,7 +196,8 @@
 														</li>
 														<li class="m-nav__separator m-nav__separator--fit m--hide"></li>
 														<li class="m-nav__item m--hide">
-															<a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
+															<a href="#"
+																class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
 																Submit
 															</a>
 														</li>
@@ -199,108 +213,147 @@
 				</div>
 				<div class="tab-content">
 					<div class="tab-pane active" id="m_user_profile_tab_1">
-						
-							<div class="m-portlet__body">
-								<div class="form-group m-form__group m--margin-top-10 m--hide">
-									<div class="alert m-alert m-alert--default" role="alert">
-										The example form below demonstrates common HTML form elements that receive updated styles from Bootstrap with additional classes.
-									</div>
+
+						<div class="m-portlet__body">
+							<div class="form-group m-form__group m--margin-top-10 m--hide">
+								<div class="alert m-alert m-alert--default" role="alert">
+									The example form below demonstrates common HTML form elements that receive updated
+									styles from Bootstrap with additional classes.
 								</div>
-								<div class="form-group m-form__group row">
-									<div class="col-12 ml-auto">
-										<h3 class="m-form__section">
-											1. Current Report
-										</h3>
-									</div>
-								</div>
-								<div class="m-widget15">
-									<div class="m-widget15__items">
-										<div class="row">
-									<div class="col-md-6">
-										<div class="m-widget15__item">
-															<span class="m-widget15__stats">
-																{{studentAttendChart}}%
-															</span>
-															<span class="m-widget15__text m-widget15__stats">
-																Attendance
-															</span>
-															<div class="m--space-10"></div>
-															<div class="progress m-progress--sm">
-																<div class="progress-bar bg-success" role="progressbar" [style.width.%]="studentAttendChart" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-															</div>
-														</div>
-									   <div id="m_amcharts_1" style="height: 150px;"></div>
-									</div>
-									<div class="col-md-6">
-										<div class="m-widget15__item">
-															<span class="m-widget15__stats">
-																{{studentTestChart}}%
-															</span>
-															<span class="m-widget15__text m-widget15__stats">
-																Test
-															</span>
-															<div class="m--space-10"></div>
-															<div class="progress m-progress--sm">
-																<div class="progress-bar bg-success" role="progressbar" [style.width.%]="studentTestChart" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-															</div>
-														</div>
-									   <div id="m_amcharts_2" style="height: 150px;"></div>
-									</div>
-									
-										</div>
-									</div>
-								</div>
-								
-								
-								
-								<div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
-								<div class="form-group m-form__group row">
-									<div class="col-12 ml-auto">
-										<h3 class="m-form__section">
-											2. Details Report
-										</h3>
-									</div>
-								</div>
-								<div class="m-widget15">
-									<div class="m-widget15__items">
-										<div class="row" >
-									<div class="col-md-4" *ngFor="let sub of studentSubjectChart; let i = index">
-										<div class="m-widget15__item">
-															<span class="m-widget15__stats">
-																{{sub.subjectAvg}}%
-															</span>
-															<span class="m-widget15__text m-widget15__stats">
-																{{sub.subjectTitle}}
-															</span>
-															<div class="m--space-10"></div>
-															<div class="progress m-progress--sm">
-																<div class="progress-bar bg-success" role="progressbar" [style.width.%]="sub.subjectAvg" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-															</div>
-														</div>
-									   <div id="m_amcharts_{{i+3}}" style="height: 150px;"></div>
-									</div>
-								
-									
-										</div>
-									</div>
-								</div>
-								
-								
-								
-								<div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
-								<div class="form-group m-form__group row">
-									<div class="col-12 ml-auto">
-										<h3 class="m-form__section">
-											3. Other Details 
-										</h3>
-									</div>
-								</div>
-								
 							</div>
-							
+							<div class="form-group m-form__group row">
+								<div class="col-12 ml-auto">
+									<h3 class="m-form__section">
+										1. Attendance and Test Report
+									</h3>
+								</div>
+							</div>
+							<div class="m-widget15">
+								<div class="m-widget15__items">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="m-widget15__item">
+												<span class="m-widget15__stats">
+													{{studentAttendChart}}%
+												</span>
+												<span class="m-widget15__text m-widget15__stats">
+													Attendance
+												</span>
+												<div class="m--space-10"></div>
+												<div class="progress m-progress--sm">
+													<div class="progress-bar bg-success" role="progressbar"
+														[style.width.%]="studentAttendChart" aria-valuenow="25"
+														aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+											<div id="m_amcharts_1" style="height: 150px;"></div>
+										</div>
+										<div class="col-md-6">
+											<div class="m-widget15__item">
+												<span class="m-widget15__stats">
+													{{studentTestChart}}%
+												</span>
+												<span class="m-widget15__text m-widget15__stats">
+													Test
+												</span>
+												<div class="m--space-10"></div>
+												<div class="progress m-progress--sm">
+													<div class="progress-bar bg-success" role="progressbar"
+														[style.width.%]="studentTestChart" aria-valuenow="25"
+														aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+											<div id="m_amcharts_2" style="height: 150px;"></div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
+							<div class="form-group m-form__group row">
+								<div class="col-12 ml-auto">
+									<h3 class="m-form__section">
+										2. Test Detail Report
+									</h3>
+								</div>
+							</div>
+							<div class="m-widget15">
+								<div class="m-widget15__items">
+									<div class="row">
+										<div class="col-md-4" *ngFor="let sub of studentSubjectChart; let i = index">
+											<div class="m-widget15__item">
+												<span class="m-widget15__stats">
+													{{sub.subjectAvg}}%
+												</span>
+												<span class="m-widget15__text m-widget15__stats">
+													{{sub.subjectTitle}}
+												</span>
+												<div class="m--space-10"></div>
+												<div class="progress m-progress--sm">
+													<div class="progress-bar bg-success" role="progressbar"
+														[style.width.%]="sub.subjectAvg" aria-valuenow="25"
+														aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+											<div id="m_amcharts_{{i+3}}" style="height: 150px;"></div>
+										</div>
+
+
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
+							<div class="form-group m-form__group row">
+								<div class="col-12 ml-auto">
+									<h3 class="m-form__section">
+										3. Previous Year Details
+									</h3>
+									<div class="m-widget15">
+										<div class="m-widget15__items">
+											<div class="row">
+												<div class="col-md-4"
+													*ngFor="let fn of studentFinalResult; let j = index">
+													<div class="m-widget15__item">
+														<span class="m-widget15__stats">
+															{{fn.totalAvg}}%
+														</span>
+														<span class="m-widget15__text m-widget15__stats">
+															Final-Result-{{fn.className}}-{{fn.divName}}-{{fn.resultYear}}
+														</span>
+														<div class="m--space-10"></div>
+														<div class="progress m-progress--sm">
+															<div class="progress-bar bg-success" role="progressbar"
+																[style.width.%]="fn.totalAvg" aria-valuenow="25"
+																aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</div>
+													<div id="m_amcharts_final_{{j+1}}" style="height: 150px;"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
 					</div>
-					<div class="tab-pane active" id="m_user_profile_tab_2">
-						
+					<div class="tab-pane active" id="m_user_profile_tab_2" style="display:none">
+
+					</div>
+					<div class="tab-pane active" id="m_user_profile_tab_3" style="display:none">
+						<div class="m-portlet__body">
+							<!--begin: Datatable -->
+							<div class="m_datatable" id="local_data"></div>
+							<!--end: Datatable -->
+						</div>
+
 					</div>
 				</div>
 			</div>

@@ -17,7 +17,7 @@ export class testResultReportComponent implements OnInit, AfterViewInit {
   classData:any =null;
   testResultData:any;
   schoolProfileData:any;
-  
+  pdfFileName:any;
   constructor(private _script: ScriptLoaderService,private baseservice: BaseService
     , private router: Router) {
     
@@ -39,16 +39,17 @@ this.getTestClassList();
       return 'btn m-btn--pill m-btn--air btn-warning';
     }
   }
-  public generatePDF(str:string) 
+  public generatePDF(str:string,str1:string) 
   { 
-	// let str='1-1-1';
+    this.pdfFileName=str1+'-Result';
     let res = str.split("-");
     let postdata={"testId":res[0],"classId":res[1],"divId":res[2] };
     this.baseservice.get('gettestclassdivisionreportlist?testId='+res[0]+'&classId=' + res[1] + '&divId=' + res[2]).subscribe((data:any) => { 
       if(data.reportlist!=null && data.reportlist!=''){
         this.testResultData=data.reportlist;
         // this.genratefile();
-        $("#contentToConvert").show();
+        this.showModelPopup();
+        // $("#contentToConvert").show();
             }
     },
     (err) => {
@@ -95,8 +96,10 @@ this.getTestClassList();
   document.body.innerHTML = originalContents;
 }
  public generateFile() {
-  const data = document.getElementById('contentData');
 
+  const data = document.getElementById('contentData');
+  console.log(data);
+  
   if (!data) {
     console.error('Element #contentToConvert not found!');
     return; // exit the function if the element wasn't found
@@ -114,7 +117,7 @@ this.getTestClassList();
   html2canvas(data, { scale: 2, logging: false, }).then((canvas) => {
     const contentDataURL = canvas.toDataURL('image/png');
     pdf.addImage(contentDataURL, 'PNG', 0, 0, contentWidth, contentHeight);
-    pdf.save('MYPdf.pdf'); // Generated PDF
+    pdf.save(this.pdfFileName); // Generated PDF
   });
 }
 
@@ -136,10 +139,22 @@ public genratefile(){
   let pdf =new jsPDF('p', 'mm', 'a4');//new jspdf('p', 'mm', 'a4'); // A4 size page of PDF 
   var position = 0; 
   pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight) 
-  pdf.save('MYPdf.pdf'); // Generated PDF  
+  pdf.save(this.pdfFileName); // Generated PDF  
   }); 
 }
   ngAfterViewInit() {  
 
-  }  
+  } 
+  public showModelPopup(){
+  
+    $("#myModel").addClass("modal fade show");
+    $("#myModel").show();
+    $("#myModel .modal-open").show();
+   
+  }
+  public hideModelPopup(){
+    $("#myModel").removeClass("modal fade show");
+    $("#myModel").hide();
+    $("#myModel .modal-open").hide();
+  } 
 }

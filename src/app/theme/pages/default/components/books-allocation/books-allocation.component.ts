@@ -159,6 +159,16 @@ export class BooksAllocationComponent implements OnInit, AfterViewInit {
     },
     1000);
   }
+  public refreshDataTable(newData: any): void {
+    // Destroy existing datatable
+    
+      if (this.datatable) {
+        this.datatable.destroy();  // Destroy existing datatable instance
+        this.showtablerecord(newData); // Reinitialize datatable with new data
+    }else{
+      this.showtablerecord(newData);
+    }
+  }
   addBooksAllocationSubmitForm(data: any){
     console.log(data);
     data.bookId = $('.books_select2_drop_down').val();
@@ -166,7 +176,7 @@ export class BooksAllocationComponent implements OnInit, AfterViewInit {
     data.borrowDate = $("#m_datepickerSet").val();
     if(data.bookId!=null && data.bookId && data.borrowDate){
       this.baseservice.post('borrowedbooks',data).subscribe((result:any) => { 
-        this.datatable.destroy();
+       
         this.getBooksAllocationList();
         this.listTemplate();
         toastr.success('Record has been added successfully...!');
@@ -187,7 +197,7 @@ export class BooksAllocationComponent implements OnInit, AfterViewInit {
     console.log(data);
     if(data.borrowId!=null && data.bookId!=null && data.bookId!=null && data.borrowDate!=null && data.returnDate!=null){
       this.baseservice.put('borrowedbooks/'+data.borrowId,data).subscribe((result:any) => { 
-        this.datatable.destroy();
+    
         this.getBooksAllocationList();
         this.listTemplate();
         toastr.success('Record has been updated successfully...!');
@@ -202,7 +212,7 @@ export class BooksAllocationComponent implements OnInit, AfterViewInit {
   private getBooksAllocationList() {
     this.baseservice.get('borrowedbooks').subscribe((data:any) => {
       this.borrowedBooksData = data.borrowedbooks;
-      this.showtablerecord(data);
+      this.refreshDataTable(data);
     },
     (err) => {
     //  localStorage.clear();

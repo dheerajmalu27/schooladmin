@@ -113,6 +113,16 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
       });
 
   }
+  public refreshDataTable(newData: any): void {
+    // Destroy existing datatable
+    
+      if (this.datatable) {
+        this.datatable.destroy();  // Destroy existing datatable instance
+        this.showtablerecord(newData); // Reinitialize datatable with new data
+    }else{
+      this.showtablerecord(newData);
+    }
+  }
   addStudentTestmarksSumitForm(data:any){
     console.log(data);
     var newArrData = _.map(data, function(o) {
@@ -121,7 +131,7 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
     
      let postdata=(newArrData);
     this.baseservice.post('bulktestmarks',postdata).subscribe((data:any) => { 
-      this.datatable.destroy();
+     
       this.getTestmarksList();
       this.listTemplate();
       toastr.success('Record has been added successfully...!');
@@ -139,7 +149,7 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
       return _.omit(o, ['TestmarksStudent', 'TestmarksClass','TestmarksDivision','TestmarksSubject','TestmarksTeacher','createdAt','updatedAt']); });
     let postdata=(newArrData);
     this.baseservice.post('bulktestmarks',postdata).subscribe((data:any) => {     
-      this.datatable.destroy();
+     
       this.getTestmarksList();
       this.listTemplate();
       toastr.success('Record has been updated successfully...!');
@@ -208,7 +218,7 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
   private getTestmarksList() {
     this.baseservice.get('gettestmarkslist').subscribe((data:any) => {
       this.studentData = data;
-      this.showtablerecord(data);
+      this.refreshDataTable(data);
     },
     (err) => {
     //  localStorage.clear();
@@ -264,9 +274,9 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
       },
       {
         field: "average",
-        title: "Average-Total", 
+        title: "Average / Total", 
         template: function (row:any) {
-          return row.average+'-'+row.totalMarks;
+          return row.average.toFixed(2)+' / '+row.totalMarks;
         }, 
       },
       

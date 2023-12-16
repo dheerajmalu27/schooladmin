@@ -117,7 +117,19 @@ $('.summernote').on('summernote.change', (we: any, contents: any, $editable: any
     }, 1000);
     
   }
- 
+  public refreshDataTable(newData: any): void {
+    // Destroy existing datatable
+    
+      if (this.datatable) {
+        this.datatable.destroy();  // Destroy existing datatable instance
+        this.showtablerecord(newData); // Reinitialize datatable with new data
+    }else{
+      this.showtablerecord(newData);
+    }
+  
+    // Show new data in datatable
+   
+  }
   private editHomeworkData(data:any){
     this.addHomeworkForm.reset();
     let excludeData: any = this.homeworkData.find((homework: any) => homework.id == data);
@@ -136,7 +148,7 @@ $('.summernote').on('summernote.change', (we: any, contents: any, $editable: any
   if(data.classId!='' && data.deadline!='' && data.description!='' && data.divId!=''&& data.subId!='' && data.title!=''){
     if(data.id!=null && data.id!=''){
       this.baseservice.put('homework/'+data.id,data).subscribe((result:any) => { 
-        this.datatable.destroy();
+      
         this.getHomeworkList();
         this.listTemplate();
         toastr.success('Record has been added successfully...!');
@@ -147,7 +159,7 @@ $('.summernote').on('summernote.change', (we: any, contents: any, $editable: any
       });
     }else{
       this.baseservice.post('homework',data).subscribe((result:any) => { 
-        this.datatable.destroy();
+  
         this.getHomeworkList();
         this.listTemplate();
         toastr.success('Record has been added successfully...!');
@@ -163,7 +175,7 @@ $('.summernote').on('summernote.change', (we: any, contents: any, $editable: any
   }
   editHomeworkSubmitForm(data: any){
     this.baseservice.put('homework/'+data.homeworkId,data).subscribe((result:any) => { 
-      this.datatable.destroy();
+
       this.getHomeworkList();
       this.listTemplate();
       toastr.success('Record has been updated successfully...!');
@@ -176,7 +188,7 @@ $('.summernote').on('summernote.change', (we: any, contents: any, $editable: any
   private getHomeworkList() {
     this.baseservice.get('homework').subscribe((data:any) => {
       this.homeworkData = data.homework;
-      this.showtablerecord(data);
+      this.refreshDataTable(data);
     },
     (err) => {
     //  localStorage.clear();
@@ -314,6 +326,10 @@ $('.summernote').on('summernote.change', (we: any, contents: any, $editable: any
         title: "Description",
         
       }, {
+        field: "deadline",
+        title: "Deadline",
+        
+      }, {
         field: "createdAt",
         width: 110,
         title: "Actions",
@@ -360,94 +376,4 @@ $('.summernote').on('summernote.change', (we: any, contents: any, $editable: any
       }
     });
   }
-
-  // public showtablerecord(data:any){
- 
-     
-  //     var iValue=0;           
-  //      this.datatable = $('.m_datatable').mDatatable({
-        
-  //        data: {
-  //          type: 'local',
-  //          source: data.homework,
-  //          pageSize: 10
-  //        },
-   
-  //        // layout definition
-  //        layout: {
-  //          theme: 'default', // datatable theme
-  //          class: '', // custom wrapper class
-  //          scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
-  //          height: 450, // datatable's body's fixed height
-  //          footer: false // display/hide footer
-  //        },
-   
-  //        // column sorting
-  //        sortable: true,
-   
-  //        pagination: true,
-   
-  //        // inline and bactch editing(cooming soon)
-  //        // editable: false,
-   
-  //        // columns definition
-  //        columns: [{
-  //          field: "id",
-  //          title: "Sr.No.",
-  //          template: function () {
-  //           return iValue=iValue+1;
-  //         }
-  //        }, {
-  //          field: "holidayDate",
-  //          title: "Date",
-           
-  //        }, {
-  //          field: "active",
-  //          title: "Status",
-  //          // callback function support for column rendering
-  //          template: function (row:any) {
-  //            var status = {
-  //              true: {'title': 'Active', 'class': ' m-badge--success'},
-  //              false: {'title': 'Inactive', 'class': ' m-badge--danger'}
-               
-  //            };
-  //            return '<span class="m-badge ' + status[row.active].class + ' m-badge--wide">' + status[row.active].title + '</span>';
-  //          }
-  //        }, {
-  //          field: "createdAt",
-  //          width: 110,
-  //          title: "Actions",
-  //          sortable: false,
-  //          overflow: 'visible',
-  //          template: function (row:any) {
-  //           return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.id + '*'+row.holidayDate+'"></i></span>';
-  //          }
-  //        }]
-  //      });
-   
-  //      var query = this.datatable.getDataSourceQuery();
-   
-  //      $('#m_form_search').on('keyup', function (e) {
-  //        this.datatable.search($(this).val().toLowerCase());
-  //      }).val(query.generalSearch);
-   
-  //      $('#m_form_status').on('change', function () {
-  //        this.datatable.search($(this).val(), 'Status');
-  //      }).val(typeof query.Status !== 'undefined' ? query.Status : '');
-   
-  //      $('#m_form_type').on('change', function () {
-  //        this.datatable.search($(this).val(), 'Type');
-  //      }).val(typeof query.Type !== 'undefined' ? query.Type : '');
-   
-  //      $('#m_form_status, #m_form_type').selectpicker();
-  //      $('.m_datatable').on('click', '.edit-button', (e) => {
-  //       e.preventDefault();
-  //       var id = $(e.target).attr('data-id');
-  //       this.editHomeworkData(id);
-  //       //  this.getStudentData(id);
-  //       //this.router.navigate(['/student/profile/', id]); 
-  //     });
-  //  }
-
-   
 }

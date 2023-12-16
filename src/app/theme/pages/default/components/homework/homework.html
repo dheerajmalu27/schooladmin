@@ -17,7 +17,7 @@
         <li class="m-nav__item">
           <a href="" class="m-nav__link">
             <span class="m-nav__link-text">
-              Forms
+              Home
             </span>
           </a>
         </li>
@@ -85,7 +85,7 @@
                 <div class='input-group date'>
                   <select class="form-control m-select2 division_select2_drop_down" id="m_select2_2"
                     formControlName="divId">
-                    <option [ngValue]="null" >Select a division</option>
+                    <option [ngValue]="null">Select a division</option>
                   </select>
 
                 </div>
@@ -142,11 +142,11 @@
               <label class="col-lg-2 col-form-label">Homework Deadline:</label>
               <div class="col-lg-6">
                 <div class='input-group date'>
-                   <input type='text' id='m_datepickerSet' autocomplete="off" class="form-control m-input"
-                      formControlName="deadline" name="deadline" placeholder="Select date">
-                    <span class="input-group-addon">
-                      <i class="la la-calendar-check-o"></i>
-                    </span>
+                  <input type='text' id='m_datepickerSet' autocomplete="off" class="form-control m-input"
+                    formControlName="deadline" name="deadline" placeholder="Select date">
+                  <span class="input-group-addon">
+                    <i class="la la-calendar-check-o"></i>
+                  </span>
                 </div>
                 <span
                   *ngIf="addHomeworkForm.controls['deadline'].hasError('required') && addHomeworkForm.controls['deadline'].touched"

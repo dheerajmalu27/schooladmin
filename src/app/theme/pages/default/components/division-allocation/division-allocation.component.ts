@@ -8,10 +8,10 @@ declare let $: any
 declare var toastr: any;
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
-  templateUrl: "./class-subject-test.html",
+  templateUrl: "./division-allocation.html",
   encapsulation: ViewEncapsulation.None,
 })
-export class classSubjectTestComponent implements OnInit, AfterViewInit {
+export class divisionAllocationComponent implements OnInit, AfterViewInit {
   datatable:any;
   showTemplate:any;
   classData:any;
@@ -89,6 +89,24 @@ export class classSubjectTestComponent implements OnInit, AfterViewInit {
     } else {
       console.log("Record not found.");
     }
+  }
+  allocateDivisionByClass(id:any){
+   
+    if(id!=''&& id!=null){
+      this.baseservice.get('allocatstudentsbyclass/'+id).subscribe((data:any) => {
+        this.getSubjectClassTestList();
+      // this.addStudentData = data;
+        this.listTemplate();
+        toastr.success('Division Allocated successfully...!');
+      },
+        (err) => {
+          console.log(err);
+          toastr.error('Something went wrong...!');
+          //  localStorage.clear();
+        });
+    }
+
+   
   }
   addClassSubmitForm(data:any){
 
@@ -272,30 +290,31 @@ private getSubjectList(editSubjectData: any, editOptionalSubjectData: any) {
           field: "divisionNames",
           title: "Division Names",
           
-        }, {
-          field: "subjectNames",
-          title: "Subject Name",
-          
-        }, {
-          field: "testNames",
-          title: "Test Name",
-          
-        }, {
-          field: "optionalSubjectNames",
-          title: "Optional Subjects",
         },{
           field: "totalSeats",
           title: "Total Seats",
+        },{
+          field: "admissionCount",
+          title: "Admission Count",
+        },{
+          field: "availableSeats",
+          title: "Available Seats",
         }, {
           field: "createdAt",
           width: 110,
-          title: "Actions",
+          title: "Division Allocation",
           sortable: false,
           overflow: 'visible',
           template: function (row:any) {
-            return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.id+'"></i></span>';
+            if(row.admissionCount==row.allocatedCount){
+              return '';
+            }else{
+              return '<span class="btn m-btn  m-btn--icon m-badge m-badge--danger m-badge--wide allocate-button" data-id="' + row.id+'"> Allocate </span>';
+            }
+           
   
           }
+          
         }]
       });
   
@@ -332,6 +351,12 @@ private getSubjectList(editSubjectData: any, editOptionalSubjectData: any) {
           const id = (e.target as HTMLElement).getAttribute('data-id');
           this.getClassData(id);
         }
+        if ((e.target as HTMLElement).classList.contains('allocate-button')) {
+          e.preventDefault();
+          const id = (e.target as HTMLElement).getAttribute('data-id');
+          this.allocateDivisionByClass(id);
+        }
+        
         // if ((e.target as HTMLElement).classList.contains('teacherFn')) {
         //   e.preventDefault();
         //   const id = (e.target as HTMLElement).getAttribute('data-id');
