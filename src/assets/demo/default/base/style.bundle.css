@@ -17225,7 +17225,8 @@ body.m-portlet--fullscreen {
   -webkit-box-shadow: 0px 1px 15px 1px rgba(113, 106, 202, 0.08);
   -moz-box-shadow: 0px 1px 15px 1px rgba(113, 106, 202, 0.08);
   box-shadow: 0px 1px 15px 1px rgba(113, 106, 202, 0.08);
-  background-color: #ffffff; }
+  background-color: #ffffff;
+  border-radius: 15px;}
   .m-portlet .m-portlet__head {
     border-bottom: 1px solid #ebedf2; }
     .m-portlet .m-portlet__head .m-portlet__head-icon {

@@ -1,7 +1,7 @@
 import { Component,Renderer2,ElementRef, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { Helpers } from '../../../../../helpers';
 import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
-
+import { AmChartsService } from '@amcharts/amcharts3-angular';
 import {BaseService} from '../../../../../_services/base.service';
 import { Router } from '@angular/router';
 declare let $: any
@@ -18,10 +18,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   dashboardData:any=null;
   datatable: any ;
   datatable1: any ;
-
+  newsEventData:any;
+  todayabsentstudentlistlength=true;
+  todayattendancependinglistlength=true;
   constructor(private renderer: Renderer2, 
-    private elRef: ElementRef, private _script: ScriptLoaderService,private baseservice: BaseService, private router: Router) {
-    this.getDashboardData();
+    private elRef: ElementRef, private _script: ScriptLoaderService,private baseservice: BaseService,private AmCharts: AmChartsService, private router: Router) {
+    this.getDashboardData(this.AmCharts);
   }
   ngOnInit() {
 
@@ -58,8 +60,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             range = formatDate(start, 'MMM D') + ' - ' + formatDate(end, 'MMM D');
         }
 
-        picker.find('.m-subheader__daterange-date').html(range);
-        picker.find('.m-subheader__daterange-title').html(title);
+       picker.find('.m-subheader__daterange-date').html(range);
+       picker.find('.m-subheader__daterange-title').html(title);
     }
 
     function formatDate(date:any, format:any) {
@@ -67,19 +69,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         return date.toLocaleDateString('en-US', options);
     }
 
-    picker.daterangepicker({
-        startDate: start,
-        endDate: end,
-        opens: 'left',
-        ranges: {
-            'Today': [new Date(), new Date()],
-            'Yesterday': [new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1))],
-            'Last 7 Days': [new Date(new Date().setDate(new Date().getDate() - 6)), new Date()],
-            'Last 30 Days': [new Date(new Date().setDate(new Date().getDate() - 29)), new Date()],
-            'This Month': [new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)],
-            'Last Month': [new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), new Date(new Date().getFullYear(), new Date().getMonth(), 0)]
-        }
-    }, cb);
+    // picker.daterangepicker({
+    //     startDate: start,
+    //     endDate: end,
+    //     // opens: 'left',
+    //     // ranges: {
+    //     //     'Today': [new Date(), new Date()],
+    //     //     'Yesterday': [new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1))],
+    //     //     'Last 7 Days': [new Date(new Date().setDate(new Date().getDate() - 6)), new Date()],
+    //     //     'Last 30 Days': [new Date(new Date().setDate(new Date().getDate() - 29)), new Date()],
+    //     //     'This Month': [new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)],
+    //     //     'Last Month': [new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), new Date(new Date().getFullYear(), new Date().getMonth(), 0)]
+    //     // }
+    // }, cb);
 
     cb(start, end, '');
 }
@@ -155,14 +157,175 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
 
  
+ public redirectToRoute(route: string) {
+  this.router.navigate([route]);
+}
+  private getDashboardData(newAmCharts:any) {
+   
 
-  private getDashboardData() {
+
     this.baseservice.get('dashboard').subscribe(
       (data: any) => {
         this.dashboardData = data.dashboarddata[0];
+        if(data.todayattendancependinglist.length>0){
+          this.todayattendancependinglistlength=true;
         this.showpendingattendancelist(data.todayattendancependinglist);
-        this.showabsentstudentlist(data.todayabsentstudentlist);
+        }else{
+          this.todayattendancependinglistlength=false;
+        }
+        if(data.todayabsentstudentlist.length>0){
+          this.todayabsentstudentlistlength=true;
+          this.showabsentstudentlist(data.todayabsentstudentlist);
+        }else{
+          this.todayabsentstudentlistlength=false;
+        }
+        this.newsEventData=data.newseventlist
         $("#dashboard-data").show();
+        const redirectToRoute = this.redirectToRoute.bind(this);
+        //weekly attendance
+        if(data.weeklyattendancelist && data.weeklyattendancelist.length>0){
+         
+          newAmCharts.makeChart("m_amcharts_1", {
+            "type": "serial",
+            "theme": "light",
+            "dataProvider": data.weeklyattendancelist,
+            "valueAxes": [{
+                "gridColor": "#FFFFFF",
+                "gridAlpha": 0.2,
+                "dashLength": 0
+            }],
+            "gridAboveGraphs": true,
+            "startDuration": 1,
+            "graphs": [{
+                "balloonText": "[[category]]: <b>[[value]]</b>",
+                "fillAlphas": 0.8,
+                "lineAlpha": 0.2,
+                "type": "column",
+                "valueField": "presentPercentage",
+                "fillColors": "#34bfa3" //#34bfa3 
+            }],
+            "chartCursor": {
+                "categoryBalloonEnabled": false,
+                "cursorAlpha": 0,
+                "zoomable": false
+            },
+            "categoryField": "dayOfWeek",
+            "categoryAxis": {
+                "gridPosition": "start",
+                "gridAlpha": 0,
+                "tickPosition": "start",
+                "tickLength": 20
+            },
+            // "export": {
+            //     "enabled": true
+            // }
+            "listeners": [{
+              "event": "clickGraphItem",
+              "method": function(event:any) {
+                // console.log(event);
+                  // Assuming you want to redirect to a route named 'dashboard'
+                  redirectToRoute('attendance');
+              },
+              "scope": this // Ensure the scope of 'this' refers to your component
+          }]
+          });
+        }
+       //
+       if(data.feesdetaillist && data.feesdetaillist.length>0){
+        newAmCharts.makeChart("m_amcharts_12", {
+          "type": "pie",
+          "theme": "light",
+          "depth3D": 10,
+          "radius": "32%", 
+          "dataProvider": [{
+              "title": "Paid Fees",
+              "seats": data.feesdetaillist[0].totalPaidFeesSum,
+          }, {
+              "title": "Remaining Fees",
+              "seats": data.feesdetaillist[0].remainingFeesSum
+          }],
+          "valueField": "seats",
+          "titleField": "title",
+          "balloon": {
+            "fixedPosition": true,
+            "textAlign": "left",
+            // "maxWidth": 300,
+            "offsetX": 10,
+            "offsetY": 0,
+            // "horizontalPadding": 15,
+            "verticalPadding": 10,
+            "animationDuration": 0,
+            "borderThickness": 1,
+            "cornerRadius": 5,
+            "fillAlpha": 1,
+            "showBullet": true,
+            "bullet": "round",
+            "bulletSize": 4,
+            "shadowAlpha": 0,
+            "text": "[[title]]<br/><b>Value: [[value]]</b> ([[percents]]%)"
+        },
+        // "labelText": "[[text]]",
+        "colors": ["#34bfa3", "#f4516c" ] // Custom colors for the slices
+          // "export": {
+          //     "enabled": true
+          // }
+        }); 
+       }
+       
+        // class wise seat availability
+        if(data.seatavailibility && data.seatavailibility.length>0)
+      newAmCharts.makeChart("m_amcharts_4", {
+        "theme": "light",
+        "type": "serial",
+        "dataProvider": data.seatavailibility,
+        "valueAxes": [{
+            "stackType": "3d",
+            // "unit": "%",
+            "position": "left",
+           
+        }],
+        "startDuration": 1,
+        "graphs": [{
+            "balloonText": "Class <b>[[className]]</b> Available Seats: <b>[[value]]</b>",
+            "fillAlphas": 0.9,
+            "lineAlpha": 0.2,
+            "title": "Available Seats",
+            "type": "column",
+            "valueField": "availableSeats",
+            "fillColors": "#9b90e2" //#34bfa3 
+        }, {
+            "balloonText": "Class <b>[[className]]</b> Total Seats: <b>[[value]]</b>",
+            "fillAlphas": 0.9,
+            "lineAlpha": 0.2,
+            "title": "Total Seats",
+            "type": "column",
+            "valueField": "totalSeats",
+            "fillColors": "#716aca" //#67b7dc
+        }],
+        "plotAreaFillAlphas": 0.1,
+        "depth3D": 40,
+        "angle": 20,
+        "categoryField": "className",
+        "categoryAxis": {
+            "gridPosition": "start"
+        },
+        // "export": {
+        //     "enabled": true
+        // }
+        "listeners": [{
+          "event": "clickGraphItem",
+          "method": function(event:any) {
+            // console.log(event);
+              // Assuming you want to redirect to a route named 'dashboard'
+              redirectToRoute('admission');
+          },
+          "scope": this // Ensure the scope of 'this' refers to your component
+      }]
+    });
+    
+        setTimeout(() => {
+        $('a[title="JavaScript charts"]').hide();
+      }, 1000);
       },
       (err) => {
         console.log(err);

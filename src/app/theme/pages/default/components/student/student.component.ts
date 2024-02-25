@@ -5,7 +5,7 @@ import { CommonService } from '../../../../../_services/common-api.service';
 import {ReactiveFormsModule,FormsModule,FormGroup,FormControl,Validators,FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
 import {BaseService} from '../../../../../_services/base.service';
-import { appVariables } from '../../../../../app.constants';
+import { environment } from 'src/environments/environment';
 import * as _ from 'lodash';
 declare let $: any;
 declare var toastr: any;
@@ -357,7 +357,7 @@ public refreshDataTable(newData: any): void {
         title: "Student Name",
         template: function (row:any) {
          if(row.profileImage!=null && row.profileImage!='' && row.profileImage!='null'){
-          return '<span (click)="detailProfile('+row.id+')" style="cursor: pointer;"><span class="m-topbar__userpic"><img src="'+appVariables.apiImageUrl+row.profileImage+'" width="40" height="40" alt="" class="m--img-rounded m--marginless m--img-centered"></span><span (click)="detailProfile('+row.id+')" style="cursor: pointer;"  class="teacherFn" data-id="'+row.id+'">   '+row.firstName+' '+row.lastName+'</span></span>';
+          return '<span (click)="detailProfile('+row.id+')" style="cursor: pointer;"><span class="m-topbar__userpic"><img src="'+environment.apiImageUrl+row.profileImage+'" width="40" height="40" alt="" class="m--img-rounded m--marginless m--img-centered"></span><span (click)="detailProfile('+row.id+')" style="cursor: pointer;"  class="teacherFn" data-id="'+row.id+'">   '+row.firstName+' '+row.lastName+'</span></span>';
          }else{
           return '<span (click)="detailProfile('+row.id+')" style="cursor: pointer;"  class="teacherFn" data-id="'+row.id+'">'+row.firstName+' '+row.lastName+'</span>';
          }

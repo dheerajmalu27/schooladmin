@@ -5,21 +5,21 @@ declare let $: any
 import 'fullcalendar';
 // import { CalendarComponent } from 'ng-fullcalendar';
 // import { Options } from 'fullcalendar';
-import { HttpClient } from '@angular/common/http';
 import { AmChartsService } from '@amcharts/amcharts3-angular';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import {BaseService} from '../../../../../_services/base.service';
 import { jsPDF } from 'jspdf'; 
 import html2canvas from 'html2canvas'; 
-import { appVariables } from '../../../../../app.constants';
+
+import { environment } from 'src/environments/environment';
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./teacher-profile.html",
   encapsulation: ViewEncapsulation.None,
 })
 export class TeacherProfileComponent implements OnInit, AfterViewInit {
-  imageUrlPath=appVariables.apiImageUrl;
+  imageUrlPath=environment.apiImageUrl;
   // calendarOptions: Options;
   // @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
   showButton = false;
@@ -229,8 +229,6 @@ export class TeacherProfileComponent implements OnInit, AfterViewInit {
             color:color
           };
         });
-        
-        console.log(tmpdata);
         setTimeout(() => {
           i++;
           newAmCharts.makeChart("m_amcharts_" + i, {

@@ -3,8 +3,7 @@ import { HttpHeaders, HttpClient, HttpErrorResponse, HttpRequest } from '@angula
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { appVariables } from '../app.constants';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,9 +19,9 @@ export class HttpService {
     let tokenizedReq;
 
     if (typeof url === 'string') {
-      const token = localStorage.getItem(appVariables.accessTokenLocalStorage);
+      const token = localStorage.getItem(environment.accessTokenLocalStorage);
       // const headersConfig = {
-      //   'Content-Type': appVariables.defaultContentTypeHeader,
+      //   'Content-Type': environment.defaultContentTypeHeader,
       //   'Authorization': token
       // };
       let headersConfig = {
@@ -41,17 +40,17 @@ export class HttpService {
   }
 
   private createRequestOptions(request: HttpRequest<any>): HttpRequest<any> {
-    const token: any = localStorage.getItem(appVariables.accessTokenLocalStorage);
+    const token: any = localStorage.getItem(environment.accessTokenLocalStorage);
     
     // const headersConfig = {
     //   'Authorization': token
     // };
     let headersConfig: { [key: string]: string } = { 'Authorization': token };  // or however you initialize it
 
-    if (appVariables.addContentTypeHeader && typeof appVariables.addContentTypeHeader === 'string') {
-      headersConfig['Content-Type'] = appVariables.addContentTypeHeader;
+    if (environment.addContentTypeHeader && typeof environment.addContentTypeHeader === 'string') {
+      headersConfig['Content-Type'] = environment.addContentTypeHeader;
     } else {
-      headersConfig['Content-Type'] = request.headers.get('Content-Type') || appVariables.defaultContentTypeHeader;
+      headersConfig['Content-Type'] = request.headers.get('Content-Type') || environment.defaultContentTypeHeader;
     }
 
     return request.clone({
@@ -66,9 +65,9 @@ export class HttpService {
       }
       if (error.status === 401 || error.status === 403) {
         console.log(error);
-        localStorage.removeItem(appVariables.userLocalStorage);
-        localStorage.removeItem(appVariables.accessTokenLocalStorage);
-        this.router.navigate([appVariables.loginPageUrl]);
+        localStorage.removeItem(environment.userLocalStorage);
+        localStorage.removeItem(environment.accessTokenLocalStorage);
+        this.router.navigate([environment.loginPageUrl]);
       }
 
       return throwError(error);

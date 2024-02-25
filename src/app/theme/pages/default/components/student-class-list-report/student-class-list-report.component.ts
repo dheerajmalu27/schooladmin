@@ -4,6 +4,7 @@ import { ScriptLoaderService } from '../../../../../_services/script-loader.serv
 import {BaseService} from '../../../../../_services/base.service';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';;
 declare let $: any
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -139,7 +140,7 @@ const keyObjects = keys.map(key => ({
 }));
 
 
-
+let i = 1;
 console.log(keyObjects);
     this.datatable = $(this.elRef.nativeElement.querySelector('.m_datatable')).mDatatable({
       // datasource definition
@@ -168,7 +169,43 @@ console.log(keyObjects);
 
       
       // columns definition
-      columns:keyObjects
+      // columns:keyObjects
+      columns: [{
+        field: "",
+        title: "Sr.No.",
+        textAlign: 'center',
+        sortable:false,
+        template: function (row:any) {
+          return i++;
+        },
+      }, {
+        field: "rollNo",
+        title: "Roll No",
+        },
+        {
+          field: "fullName",
+          title: "Student Name",
+          template: function (row:any) {
+           if(row.profileImage!=null && row.profileImage!='' && row.profileImage!='null'){
+            return '<span (click)="detailProfile('+row.id+')" style="cursor: pointer;"><span class="m-topbar__userpic"><img src="'+environment.apiImageUrl+row.profileImage+'" width="40" height="40" alt="" class="m--img-rounded m--marginless m--img-centered"></span><span (click)="detailProfile('+row.id+')" style="cursor: pointer;"  class="teacherFn" data-id="'+row.id+'">   '+row.fullName+'</span></span>';
+           }else{
+            return '<span (click)="detailProfile('+row.id+')" style="cursor: pointer;"  class="teacherFn" data-id="'+row.id+'">'+row.fullName+'</span>';
+           }
+           
+          },
+      }, {
+        field: "id",
+        title: "Student Id",
+       
+      }, {
+        field: "className",
+        title: "Class Name ",
+        
+      }, {
+        field: "divName",
+        title: "Division Name",
+       
+      }]
     });
   
     const query = this.datatable.getDataSourceQuery();
@@ -204,6 +241,11 @@ console.log(keyObjects);
         const id = (e.target as HTMLElement).getAttribute('data-id');
         // this.editDivisionData(id);
       }
+    });
+    $(this.elRef.nativeElement.querySelector('.m_datatable')).on('click', '.teacherFn', (e:any) => {
+      e.preventDefault();
+      const id = $(e.target).attr('data-id');
+      this.router.navigate(['/student/profile/', id]);
     });
   }
   

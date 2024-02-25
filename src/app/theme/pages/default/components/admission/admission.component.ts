@@ -5,7 +5,7 @@ import { CommonService } from '../../../../../_services/common-api.service';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BaseService } from '../../../../../_services/base.service';
-import { appVariables } from '../../../../../app.constants';
+import { environment } from 'src/environments/environment';
 import * as _ from 'lodash';
 import { el } from '@fullcalendar/core/internal-common';
 declare let $: any;
@@ -659,7 +659,7 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
           title: "Student Name",
           template: function (row: any) {
             if (row.profileImage != null && row.profileImage != '' && row.profileImage != 'null') {
-              return '<span (click)="detailProfile(' + row.id + ')" style="cursor: pointer;"><span class="m-topbar__userpic"><img src="' + appVariables.apiImageUrl + row.profileImage + '" width="40" height="40" alt="" class="m--img-rounded m--marginless m--img-centered"></span><span (click)="detailProfile(' + row.id + ')" style="cursor: pointer;"  class="teacherFn" data-id="' + row.id + '">   ' + row.firstName + ' ' + row.lastName + '</span></span>';
+              return '<span (click)="detailProfile(' + row.id + ')" style="cursor: pointer;"><span class="m-topbar__userpic"><img src="' + environment.apiImageUrl + row.profileImage + '" width="40" height="40" alt="" class="m--img-rounded m--marginless m--img-centered"></span><span (click)="detailProfile(' + row.id + ')" style="cursor: pointer;"  class="teacherFn" data-id="' + row.id + '">   ' + row.firstName + ' ' + row.lastName + '</span></span>';
             } else {
               return '<span (click)="detailProfile(' + row.id + ')" style="cursor: pointer;"  class="teacherFn" data-id="' + row.id + '">' + row.firstName + ' ' + row.lastName + '</span>';
             }
@@ -689,7 +689,7 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
           title: "Actions",
 
           template: function (row: any) {
-            return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.id + '"></i></span><span  class="btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" > <i class="delete-button fa fa-times-circle-o" data-id="' + row.id + '"></i></span>';
+            return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.id + '"></i></span><span  class="btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" > <i class="delete-button fa fa-trash-o" data-id="' + row.id + '"></i></span>';
 
           }
         }]

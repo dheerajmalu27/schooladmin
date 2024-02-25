@@ -143,6 +143,22 @@ $('.summernote').on('summernote.change', (we: any, contents: any, $editable: any
     $('.summernote').summernote('code', this.addHomeworkForm.controls['description'].value);
     this.editTemplate();
   }
+
+  private deleteHomeworkData(id:any){
+    const confirmation = window.confirm('Are you sure you want to delete this record?');
+  if (!confirmation) {
+    return; // Do nothing if the user cancels the confirmation
+  }
+    this.baseservice.delete(<string>('homework/' + id)).subscribe((data: any) => {
+      this.getHomeworkList();
+        this.listTemplate();
+        toastr.success('Record deleted successfully...!');
+    },
+      (err) => {
+        toastr.error('Something went wrong...!');
+      });
+
+  }
   addHomeworkSubmitForm(data: any){
     console.log(data);
   if(data.classId!='' && data.deadline!='' && data.description!='' && data.divId!=''&& data.subId!='' && data.title!=''){
@@ -336,7 +352,7 @@ $('.summernote').on('summernote.change', (we: any, contents: any, $editable: any
         sortable: false,
         overflow: 'visible',
         template: function (row:any) {
-         return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.id +'"></i></span>';
+         return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.id +'"></i></span><span class="btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"><i class="delete-button fa fa-trash-o" data-id="' + row.id + '"></i></span>';
         }
       }]
     });
@@ -373,6 +389,11 @@ $('.summernote').on('summernote.change', (we: any, contents: any, $editable: any
         e.preventDefault();
         const id = (e.target as HTMLElement).getAttribute('data-id');
         this.editHomeworkData(id);
+      }
+      if ((e.target as HTMLElement).classList.contains('delete-button')) {
+        e.preventDefault();
+        const id = (e.target as HTMLElement).getAttribute('data-id');
+        this.deleteHomeworkData(id);
       }
     });
   }

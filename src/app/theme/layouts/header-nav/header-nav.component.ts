@@ -30,10 +30,15 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
   Helpers.setLoading(true);
   // reset login status
   this._authService.logout();
-  this._router.navigate(['/login']);
+  const currentUrl = this._router.url;
+
+  // Encode the current URL to include it as the returnUrl parameter
+  const returnUrl = (currentUrl);
+  // Navigate to the login route with the returnUrl parameter
+  this._router.navigate(['/login'], { queryParams: { returnUrl: returnUrl } });
  }
  openMenu(){
-  console.log("test1")
+ 
 mLayout.initAside();
 
 }

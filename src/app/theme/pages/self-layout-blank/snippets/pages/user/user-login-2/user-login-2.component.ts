@@ -31,11 +31,12 @@ export class UserLogin2Component implements OnInit {
   }
 
   ngOnInit() {
+    this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/dashboard';
     this.model.remember = true;
     // get return url from route parameters or default to '/'
     // this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
     // this._router.navigate([this.returnUrl]);
-console.log("test");
+// console.log("test");
     // this._script.load('body', 'assets/vendors/base/vendors.bundle.js', 'assets/demo/default/base/scripts.bundle.js')
     //   .then(() => {
     //     Helpers.setLoading(false);
@@ -48,7 +49,8 @@ console.log("test");
     this._authService.login(this.model.email, this.model.password)
       .subscribe(
       data => {
-        this._router.navigate(['/dashboard']);
+        this._router.navigateByUrl(this.returnUrl);
+        // this._router.navigate(['/dashboard']);
       },
       error => {
         this.showAlert('alertSignin');

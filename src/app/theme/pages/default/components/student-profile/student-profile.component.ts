@@ -1,20 +1,20 @@
 import { Component, OnInit, ViewEncapsulation,ElementRef, Renderer2, AfterViewInit } from '@angular/core';
 import { Helpers } from '../../../../../helpers';
-import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
+
 import { HttpClient, HttpHeaders } from "@angular/common/http"; // Updated HTTP client
 import { AmChartsService } from '@amcharts/amcharts3-angular'; // Note: Check for AmCharts 4 Angular support
 import { ActivatedRoute } from '@angular/router';
 import { BaseService } from '../../../../../_services/base.service';
 declare let $: any;
 import * as _ from 'lodash';
-import { appVariables } from '../../../../../app.constants';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./student-profile.html",
   encapsulation: ViewEncapsulation.None,
 })
 export class StudentProfileComponent implements OnInit, AfterViewInit {
-  imageUrlPath=appVariables.apiImageUrl;
+  imageUrlPath=environment.apiImageUrl;
   private chart: any;
   public studentData: any = {};
   public studentSubjectChart: Array<any> = [];
@@ -22,6 +22,7 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
   public studentTestChart: any;
   public studentFinalResult:any;
   public studentInfo: any = {};
+  public setChartColor='#85C5E3';
   public id: any;
   private datatable:any;
   constructor(
@@ -60,15 +61,26 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
         'Content-Type': 'application/json',
         'authorization': auth ? auth : ''
     });
+    Helpers.setLoading(true);
    this.baseservice.get('studentprofile/'+ newid).subscribe((data) => {   
-      this.studentData = data;
+    Helpers.setLoading(false);
+    this.studentData = data;
       console.log(this.studentData);
       this.openHomeworkList(data);
       this.studentInfo = this.studentData.info;
       this.studentTestChart = _.meanBy(this.studentData.testresult, 'result').toFixed(2);
+      this.studentData.testresult = this.studentData.testresult.map((item: any) => ({
+        ...item,
+        color: this.studentInfo.gender != 1 ? '#FB6B90' : '#85C5E3'
+    }));
+      this.studentData.monthlyattendance = this.studentData.monthlyattendance.map((item: any) => ({
+        ...item,
+        color: this.studentInfo.gender != 1 ? '#FB6B90' : '#85C5E3'
+    }));
       this.studentData.monthlyattendance = _.each(this.studentData.monthlyattendance, item => item.result = parseFloat(item.result));
       this.studentAttendChart = _.meanBy(this.studentData.monthlyattendance, 'result').toFixed(2);
       this.studentFinalResult=this.studentData.finalresult;
+     
       newAmCharts.makeChart("m_amcharts_1", {
         "type": "serial",
         "theme": "light",
@@ -86,7 +98,8 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
           "fillAlphas": 0.8,
           "lineAlpha": 0.2,
           "type": "column",
-          "valueField": "result"
+          "valueField": "result",
+          "colorField": "color"
         }],
         "chartCursor": {
           "categoryBalloonEnabled": false,
@@ -123,7 +136,8 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
           "fillAlphas": 0.8,
           "lineAlpha": 0.2,
           "type": "column",
-          "valueField": "result"
+          "valueField": "result",
+          "colorField": "color"
         }],
         "chartCursor": {
           "categoryBalloonEnabled": false,
@@ -157,11 +171,12 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
           });
       });
       this.studentSubjectChart = resultArray;
-      _.forOwn(result, function(value, key) {
-        var tmpdata = _.map(value, function(object) {
+      _.forOwn(result, (value, key) => {
+        var tmpdata = _.map(value, (object) => { // Use arrow function here
           return {
             subName: object.subName,
-            totalAvg: object.totalAvg.toFixed(2) // Format 'totalAvg' to 2 decimal places
+            totalAvg: object.totalAvg.toFixed(2), // Format 'totalAvg' to 2 decimal places
+            color: this.studentInfo.gender != 1 ? '#FB6B90' : '#85C5E3'
           };
         });
         setTimeout(() => {
@@ -181,7 +196,8 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
               "fillAlphas": 1,
               "lineAlpha": 0.1,
               "type": "column",
-              "valueField": "totalAvg"
+              "valueField": "totalAvg",
+              "colorField": "color"
             }],
             "depth3D": 20,
             "angle": 30,
@@ -197,7 +213,8 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
             },
             "export": {
               "enabled": false
-            }
+            },
+           
           });
           $('a[title="JavaScript charts"]').hide();
         }, 1000);
@@ -210,7 +227,8 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
         resultDataObject = _.omit(resultDataObject, 'Total');
         const data = _.map(resultDataObject, (marks: string, subName: string) => ({
           subName,
-          totalAvg: parseFloat(marks.split('/')[0])
+          totalAvg: parseFloat(marks.split('/')[0]),
+          color: this.studentInfo.gender != 1 ? '#FB6B90' : '#85C5E3'
         }));
       
         setTimeout(() => {
@@ -230,7 +248,8 @@ export class StudentProfileComponent implements OnInit, AfterViewInit {
               "fillAlphas": 1,
               "lineAlpha": 0.1,
               "type": "column",
-              "valueField": "totalAvg"
+              "valueField": "totalAvg",
+              "colorField": "color"
             }],
             "depth3D": 20,
             "angle": 30,

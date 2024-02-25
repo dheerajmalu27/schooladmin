@@ -186,7 +186,23 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
       console.log(err);        
     });
     }
-   
+    private deleteTestMarksStudentData(data:any){
+      let excludeData  = data.split('*');
+      const confirmation = window.confirm('Are you sure you want to delete this record?');
+    if (!confirmation) {
+      return; // Do nothing if the user cancels the confirmation
+    }
+  
+      this.baseservice.delete(<string>('testmarks/' + excludeData[0] + '/' + excludeData[1]+'/'+excludeData[2]+'/'+excludeData[3])).subscribe((data: any) => {
+        this.getTestmarksList();
+          this.listTemplate();
+          toastr.success('Record deleted successfully...!');
+      },
+        (err) => {
+          toastr.error('Something went wrong...!');
+        });
+  
+    }
   setMarksVal(data:any,maxvalue:any){
     if(data.value>maxvalue){
       data.value=0;
@@ -284,7 +300,7 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
         field: "subId",
         title: "Actions",
         template: function (row:any) {
-          return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="'+row.classId+ '*'+row.divId+'*'+row.testId+'*'+row.subId+'"></i></span><span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="export-excel fa fa-file-excel-o" data-id="'+row.classId+ '*'+row.divId+'*'+row.testId+'*'+row.subId+'"  data-filename="'+row.testName+ '-'+row.subName+'-'+row.className+'-'+row.divName+'"></i></span><span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" >';
+          return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="'+row.classId+ '*'+row.divId+'*'+row.testId+'*'+row.subId+'"></i></span><span class="btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"><i class="delete-button fa fa-trash-o" data-id="'+row.classId+ '*'+row.divId+'*'+row.testId+'*'+row.subId+'"></i></span><span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="export-excel fa fa-file-excel-o" data-id="'+row.classId+ '*'+row.divId+'*'+row.testId+'*'+row.subId+'"  data-filename="'+row.testName+ '-'+row.subName+'-'+row.className+'-'+row.divName+'"></i></span><span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" >';
          
          
         }
@@ -328,7 +344,11 @@ export class TestMarksComponent implements OnInit, AfterViewInit {
             e.preventDefault();
             const id = e.target.getAttribute('data-id');
             this.getTestMarksStudentData(id,'');
-        } else if (e.target && e.target.classList.contains('export-excel')) {
+        }else if (e.target && e.target.classList.contains('delete-button')) {
+          e.preventDefault();
+          const id = e.target.getAttribute('data-id');
+          this.deleteTestMarksStudentData(id);
+      } else if (e.target && e.target.classList.contains('export-excel')) {
             e.preventDefault();
             const id = e.target.getAttribute('data-id');
             

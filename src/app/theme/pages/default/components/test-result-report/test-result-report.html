@@ -1,11 +1,11 @@
 <!-- BEGIN: Subheader -->
 <div class="m-subheader">
-	<div class="d-flex align-items-center">
-		<div class="mr-auto">
-			<h3 class="m-subheader__title m-subheader__title--separator">
-				Test Report
-			</h3>
-			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        Test Report
+      </h3>
+      <!-- <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
 				<li class="m-nav__item m-nav__item--home">
 					<a href="#" class="m-nav__link m-nav__link--icon">
 						<i class="m-nav__link-icon la la-home"></i>
@@ -32,184 +32,246 @@
 					</a>
 				</li>
 
-			</ul>
-		</div>
-		<div>
-			<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-				data-dropdown-toggle="hover" aria-expanded="true">
-				<a href="#"
-					class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
-					<i class="la la-plus m--hide"></i>
-					<i class="la la-ellipsis-h"></i>
-				</a>
-			</div>
-		</div>
-	</div>
+			</ul> -->
+    </div>
+    <div>
+      <div
+        class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+        data-dropdown-toggle="hover"
+        aria-expanded="true"
+      >
+        <a
+          href="#"
+          class="m-portlet__nav-link btn btn-lg btn-secondary m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill m-dropdown__toggle"
+        >
+          <i class="la la-plus m--hide"></i>
+          <i class="la la-ellipsis-h"></i>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- END: Subheader -->
 <div class="m-content">
-	<div class="row">
-		<div *ngFor="let item of classData; let i = index" class="col-lg-6">
-
-			<!--begin::Portlet-->
-			<div class="m-portlet m-portlet--tabs">
-				<div class="m-portlet__head">
-					<div class="m-portlet__head-caption">
-						<div class="m-portlet__head-title">
-							<h3 class="m-portlet__head-text">
-								{{item[0].testName}}
-							</h3>
-						</div>
-					</div>
-				</div>
-				<div class="m-portlet__body">
-					<!--begin::Section-->
-					<div class="m-section">
-						<div class="m-section__content">
-
-							<div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
-								<div class="m-demo__preview m-demo__preview--btn">
-									<button type="button"
-										(click)="generatePDF(data.testId+'-'+data.classId+'-'+data.divId,item[0].testName+'-'+data.className+'-'+data.divName)"
-										*ngFor="let data of item;let j = index" [ngClass]="buttonsetcolor(j)">
-										{{data.className}}-{{data.divName}}
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--end::Section-->
-
-				</div>
-			</div>
-			<!--end::Portlet-->
-
-		</div>
-
-	</div>
-
+  <div class="row">
+    <div *ngFor="let item of classData; let i = index" class="col-lg-6">
+      <!--begin::Portlet-->
+      <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <h3 class="m-portlet__head-text">{{item[0].testName}}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="m-portlet__body">
+          <!--begin::Section-->
+          <div class="m-section">
+            <div class="m-section__content">
+              <div
+                class="m-demo"
+                data-code-preview="true"
+                data-code-html="true"
+                data-code-js="false"
+              >
+                <div class="m-demo__preview m-demo__preview--btn">
+                  <button
+                    type="button"
+                    (click)="generatePDF(data.testId+'-'+data.classId+'-'+data.divId,item[0].testName+'-'+data.className+'-'+data.divName)"
+                    *ngFor="let data of item;let j = index"
+                    [ngClass]="buttonsetcolor(j)"
+                  >
+                    {{data.className}}-{{data.divName}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--end::Section-->
+        </div>
+      </div>
+      <!--end::Portlet-->
+    </div>
+  </div>
 </div>
 
+<table
+  id="exportTable"
+  *ngIf="transformedReportList && transformedReportList.length > 0"
+  style="display: none"
+>
+  <thead>
+    <tr>
+      <th *ngFor="let key of transformedReportListKey">{{ key }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of transformedReportList">
+      <td *ngFor="let key of transformedReportListKey">{{ item[key] }}</td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="d-block" id="myModel" style="display: none;">
-	<div class="modal-open" style="display: none;">
-		<div class="modal-content" style="overflow-y: scroll;height: 100vh;" >
-			<div class="modal-header">
-				<h4 class="modal-title">{{ pdfFileName | uppercase }}</h4><button type="button" aria-label="Close" class="close"
-					(click)="hideModelPopup()"><span aria-hidden="true">×</span></button>
-			</div>
-			<div class="modal-body" id="contentData" >
-				<div class="row" *ngFor="let student of testResultData" >
-						<div class="col-12">
-							<!--begin:: Widgets/Latest Updates-->
-							<div class="m-portlet m-portlet--full-height m-portlet--fit">
-								<div class="m-portlet__head">
-									<div class="m-portlet__head-caption"
-										style="text-align: center;padding: 20px;text-transform: capitalize;">
-			
-			
-			
-										<h3 class="m-portlet__head-text" style="color: #36a3f7 !important;">
-											{{schoolProfileData.schoolName}}
-			
-										</h3>
-										<h5 style="color: #36a3f7 !important;">{{schoolProfileData.schoolAddress}}</h5>
-										<h6 style="color: #36a3f7 !important;">School Reg No:{{schoolProfileData.regNo}}</h6>
-			
-										<div class="row" style="font-size: 1rem;font-weight: 500;margin-bottom: 0;">
-											<div class="col-3">
-												<p>Student ID: {{ student.studentId }}</p>
-											</div>
-											<div class="col-6">
-												<p>Student Name: {{ student.studentName }}</p>
-											</div>
-											<div class="col-3">
-												<p>Roll No: {{ student.rollNo }}</p>
-											</div>
-			
-			
-			
-										</div>
-			
-										<div class="row" style="font-size: 1rem;font-weight: 500;margin-bottom: 0;">
-			
-			
-											<div class="col-3">
-												<p>Percentage: {{ student.percentage }}</p>
-											</div>
-											<div class="col-6">
-												<p>Rank: {{ student.rank }}</p>
-											</div>
-											<div class="col-3">
-												<p>Test Name: {{ student.testName }}</p>
-											</div>
-										</div>
-			
-									</div>
-			
-								</div>
-								<div class="m-portlet__body">
-									<div class="m-widget4 m-widget4--chart-bottom" style="min-height: 350px">
-			
-										<div class="m-widget4__item" *ngFor="let subject of student.subjectData;let i = index">
-											<div class="m-widget4__ext">
-												<a href="#" class="m-widget4__icon m--font-brand">
-													{{i+1}}
-												</a>
-											</div>
-											<div class="m-widget4__info">
-												<span class="m-widget4__text">
-													{{ subject.subName }}
-												</span>
-											</div>
-											<div class="m-widget4__ext">
-												<span class="m-widget4__stats m--font-info">
-													<span class="m-widget4__number m--font-accent">
-														{{ subject.getMarks }}/{{ subject.totalMarks }}
-													</span>
-												</span>
-											</div>
-										</div>
-										<!-- 						
+<div class="d-block" id="myModel" style="display: none">
+  <div class="modal-open" style="display: none">
+    <div class="modal-content" style="overflow-y: scroll; height: 100vh">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ pdfFileName | uppercase }}</h4>
+        <button
+          type="button"
+          aria-label="Close"
+          class="close"
+          (click)="hideModelPopup()"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body" id="contentData">
+        <div class="row" *ngFor="let student of testResultData">
+          <div class="col-12">
+            <!--begin:: Widgets/Latest Updates-->
+            <div class="m-portlet m-portlet--full-height m-portlet--fit">
+              <div class="m-portlet__head">
+                <div
+                  class="m-portlet__head-caption"
+                  style="
+                    text-align: center;
+                    padding: 20px;
+                    text-transform: capitalize;
+                  "
+                >
+                  <h3
+                    class="m-portlet__head-text"
+                    style="color: #36a3f7 !important"
+                  >
+                    {{schoolProfileData.schoolName}}
+                  </h3>
+                  <h5 style="color: #36a3f7 !important">
+                    {{schoolProfileData.schoolAddress}}
+                  </h5>
+                  <h6 style="color: #36a3f7 !important">
+                    School Reg No:{{schoolProfileData.regNo}}
+                  </h6>
+
+                  <div
+                    class="row"
+                    style="font-size: 1rem; font-weight: 500; margin-bottom: 0"
+                  >
+                    <div class="col-3">
+                      <p>Student ID: {{ student.studentId }}</p>
+                    </div>
+                    <div class="col-6">
+                      <p>Student Name: {{ student.studentName }}</p>
+                    </div>
+                    <div class="col-3">
+                      <p>Roll No: {{ student.rollNo }}</p>
+                    </div>
+                  </div>
+
+                  <div
+                    class="row"
+                    style="font-size: 1rem; font-weight: 500; margin-bottom: 0"
+                  >
+                    <div class="col-3">
+                      <p>Percentage: {{ student.percentage }}</p>
+                    </div>
+                    <div class="col-6">
+                      <p>Rank: {{ student.rank }}</p>
+                    </div>
+                    <div class="col-3">
+                      <p>Test Name: {{ student.testName }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="m-portlet__body">
+                <div
+                  class="m-widget4 m-widget4--chart-bottom"
+                  style="min-height: 350px"
+                >
+                  <div
+                    class="m-widget4__item"
+                    *ngFor="let subject of student.subjectData;let i = index"
+                  >
+                    <div class="m-widget4__ext">
+                      <a href="#" class="m-widget4__icon m--font-brand">
+                        {{i+1}}
+                      </a>
+                    </div>
+                    <div class="m-widget4__info">
+                      <span class="m-widget4__text">
+                        {{ subject.subName }}
+                      </span>
+                    </div>
+                    <div class="m-widget4__ext">
+                      <span class="m-widget4__stats m--font-info">
+                        <span class="m-widget4__number m--font-accent">
+                          {{ subject.getMarks }}/{{ subject.totalMarks }}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                  <!-- 						
 									<div class="m-widget4__chart m-portlet-fit--sides m--margin-top-20 m-portlet-fit--bottom1"
 										style="height:120px;">
 										<canvas id="m_chart_latest_updates"></canvas>
 									</div> -->
-										<div class="m-widget4__chart m-portlet-fit--sides m--margin-top-20 m-portlet-fit--bottom1"
-											style="height:120px;">
-											<canvas id="m_chart_latest_updates"></canvas>
-										</div>
-										<div class="m-widget4__item">
-											<div class="m-widget4__ext">
-												<a href="#" class="m-widget4__icon m--font-brand">
-			
-												</a>
-											</div>
-											<div class="m-widget4__info">
-												<span class="m-widget4__text">
-													Get Total Marks
-												</span>
-											</div>
-											<div class="m-widget4__ext">
-												<span class="m-widget4__stats m--font-info">
-													<span class="m-widget4__number m--font-accent">
-														{{ student.sumGetMarks }}/{{ student.sumTotalMarks }}
-													</span>
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-			
-						</div>
-					</div>
-			</div>
-			<div class="modal-footer" style="padding-top: 100px;">
-				<button type="button" class="btn btn-primary" (click)="generateFile()">Generate PDF</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal"
-					(click)="printDiv('contentData')">Print</button>
-			</div>
-		</div>
-	</div>
+                  <div
+                    class="m-widget4__chart m-portlet-fit--sides m--margin-top-20 m-portlet-fit--bottom1"
+                    style="height: 120px"
+                  >
+                    <canvas id="m_chart_latest_updates"></canvas>
+                  </div>
+                  <div class="m-widget4__item">
+                    <div class="m-widget4__ext">
+                      <a href="#" class="m-widget4__icon m--font-brand"> </a>
+                    </div>
+                    <div class="m-widget4__info">
+                      <span class="m-widget4__text"> Get Total Marks </span>
+                    </div>
+                    <div class="m-widget4__ext">
+                      <span class="m-widget4__stats m--font-info">
+                        <span class="m-widget4__number m--font-accent">
+                          {{ student.sumGetMarks }}/{{ student.sumTotalMarks }}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="padding-top: 100px">
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="tableToExcel('exportTable')"
+        >
+          <!-- <i class="m-nav__link-icon flaticon-multimedia-2"></i> -->
+          Excel
+        </button>
+        <button type="button" class="btn btn-primary" (click)="generateFile()">
+          PDF
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning"
+          data-dismiss="modal"
+          (click)="printDiv('contentData')"
+        >
+          Print
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="hideModelPopup()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

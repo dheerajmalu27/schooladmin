@@ -141,6 +141,23 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
         //  localStorage.clear();
       });
   }
+  private deleteHoliday(id:any){
+    const confirmation = window.confirm('Are you sure you want to delete this record?');
+  if (!confirmation) {
+    return; // Do nothing if the user cancels the confirmation
+  }
+
+    this.baseservice.delete(<string>('holidays/' + id)).subscribe((data: any) => {
+      this.getHolidaysList();
+        this.listTemplate();
+        toastr.success('Record deleted successfully...!');
+    },
+      (err) => {
+        toastr.error('Something went wrong...!');
+      });
+
+  }
+  
   private getHolidaysList() {
     this.baseservice.get('holidays').subscribe((data: any) => {
       this.holidayData = data.holidays;
@@ -154,7 +171,6 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
   }
 
   showtablerecord(data: any) {
-    var iValue = 0;
     data.holidays.forEach((item: any, index: any) => {
       item.srNo = index + 1;
     });
@@ -209,7 +225,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
         sortable: false,
         overflow: 'visible',
         template: function (row: any) {
-          return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.id + '*' + row.holidayDate + '"></i></span>';
+          return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.id + '*' + row.holidayDate + '"></i></span><span class="btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"><i class="delete-button fa fa-trash-o" data-id="' + row.id + '"></i></span>';
         }
       }]
     });
@@ -246,6 +262,11 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
         e.preventDefault();
         const id = (e.target as HTMLElement).getAttribute('data-id');
         this.editHolidaysData(id);
+      }
+      if ((e.target as HTMLElement).classList.contains('delete-button')) {
+        e.preventDefault();
+        const id = (e.target as HTMLElement).getAttribute('data-id');
+        this.deleteHoliday(id);
       }
     });
   }

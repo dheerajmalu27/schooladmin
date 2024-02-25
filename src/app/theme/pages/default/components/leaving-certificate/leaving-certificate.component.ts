@@ -7,8 +7,12 @@ import { Router } from '@angular/router';
 import {BaseService} from '../../../../../_services/base.service';
 import { appVariables } from '../../../../../app.constants';
 import * as _ from 'lodash';
+import { jsPDF } from 'jspdf';
+
+import html2canvas from 'html2canvas';
 declare let $: any;
 declare var toastr: any;
+declare var moment: any;
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./leaving-certificate.html",
@@ -20,11 +24,12 @@ export class LeavingCertificateComponent implements OnInit, AfterViewInit {
   TitleSet: any = null;
   stateData:any=null;
   cityData:any=null;
-
+  leavingCertificateStudentData:any={};
   studentData:any=null;
   classData:any =null;
   showTemplate: any;
   selectedFiles:any;
+  pdfFileName:any;
   leavingCertificateStudentForm: any;
    addLeavingCertificateForm : any;
   constructor(private elRef: ElementRef, 
@@ -38,36 +43,43 @@ private commonservice: CommonService,private _script: ScriptLoaderService, priva
     this.getLeavingCertificateList();
     this.addLeavingCertificateForm = this.fb.group({
       'id' : new FormControl(),
-      'firstName' : new FormControl('', Validators.required),
-      'middleName' : new FormControl('', Validators.required),
-      'lastName' : new FormControl('', Validators.required),
-      'image': new FormControl(),
-      'dob' : new FormControl(),
-      'className' : new FormControl(),
-      'divName' : new FormControl(),
-      'nationality': new FormControl('', Validators.required),
-      'caste': new FormControl('', Validators.required),
-      'religion': new FormControl('', Validators.required),
-      'address': new FormControl('', Validators.required),
-      'bloodGroup': new FormControl(),
-      'gender' : new FormControl('', Validators.required),
-      'motherName' : new FormControl('', Validators.required),
-      'stateId' : new FormControl(),
-      'cityId' : new FormControl(),
-      'motherProf' : new FormControl('', Validators.required),
-      'parentNumber' : new FormControl('', [
+      'studentId' : new FormControl(),
+      'firstName' : new FormControl({value:'',disabled:true}, Validators.required),
+      'middleName' : new FormControl({value:'',disabled:true}, Validators.required),
+      'lastName' : new FormControl({value:'',disabled:true}, Validators.required),
+      'image': new FormControl({value:'',disabled:true}),
+      'dateOfBirth' : new FormControl({value:'',disabled:true}),
+      'className' : new FormControl({value:'',disabled:true}),
+      'divName' : new FormControl({value:'',disabled:true}),
+      'nationality': new FormControl({value:'',disabled:true}, Validators.required),
+      'caste': new FormControl({value:'',disabled:true}, Validators.required),
+      'religion': new FormControl({value:'',disabled:true}, Validators.required),
+      'address': new FormControl({value:'',disabled:true}, Validators.required),
+      'bloodGroup': new FormControl({value:'',disabled:true}),
+      'gender' : new FormControl({value:'',disabled:true}, Validators.required),
+      'motherName' : new FormControl({value:'',disabled:true}, Validators.required),
+      'stateId' : new FormControl({value:'',disabled:true}),
+      'cityId' : new FormControl({value:'',disabled:true}),
+      'motherProf' : new FormControl({value:'',disabled:true}, Validators.required),
+      'parentNumber' : new FormControl({value:'',disabled:true}, [
         Validators.required,
         Validators.pattern("^[0-9]*$"),
         Validators.minLength(10),
         Validators.maxLength(12),
       ]),
-       'fatherName' : new FormControl('', Validators.required),
-       'fatherProf' : new FormControl('', Validators.required),
-       'parentNumberSecond' : new FormControl('', [
+       'fatherName' : new FormControl({value:'',disabled:true}, Validators.required),
+       'fatherProf' : new FormControl({value:'',disabled:true}, Validators.required),
+       'parentNumberSecond' : new FormControl({value:'',disabled:true}, [
         Validators.required,
         Validators.pattern("^[0-9]*$"),
         Validators.minLength(10),
+        
       ]),
+      'leavingReason': new FormControl(),
+      'generalConduct': new FormControl(),
+      'dateOfCertificate': new FormControl({value:'',disabled:true}),
+      'remark': new FormControl(),
+      'otherData': new FormControl(),
       // 'lastName': [null,  Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(10)])],
     });
     
@@ -76,6 +88,7 @@ private commonservice: CommonService,private _script: ScriptLoaderService, priva
     }
   listTemplate() {
     $("#addTemplate").hide();
+    $("#editTemplate").hide();
     $("#listTemplate").show();
   }
   addTemplate() {
@@ -110,15 +123,16 @@ private commonservice: CommonService,private _script: ScriptLoaderService, priva
     // this.getStudentList();
     $("#listTemplate").hide();
     $("#addTemplate").hide();
-    $("#addTemplate1").show();
+    $("#editTemplate").show();
     this.addLeavingCertificateForm.setValue({
       id: leavingcertificateData.id,
+      studentId: leavingcertificateData.studentId,
       firstName: leavingcertificateData.firstName,
       middleName: leavingcertificateData.middleName,
       lastName: leavingcertificateData.lastName,
       // image: leavingcertificateData.profileImage,
       image: "",
-      dob: leavingcertificateData.dateOfBirth,
+      dateOfBirth: leavingcertificateData.dateOfBirth,
       className: leavingcertificateData.className,
       divName: leavingcertificateData.divName,
       nationality: leavingcertificateData.nationality,
@@ -135,6 +149,12 @@ private commonservice: CommonService,private _script: ScriptLoaderService, priva
       fatherName: leavingcertificateData.fatherName,
       fatherProf: leavingcertificateData.fatherProf,
       parentNumberSecond: leavingcertificateData.parentNumberSecond,
+      leavingReason: '',
+      generalConduct: '',
+      dateOfCertificate:moment().format('YYYY-MM-DD HH:mm:ss'),
+      remark: '',
+      otherData: '',
+
     });
   
    
@@ -152,8 +172,7 @@ private commonservice: CommonService,private _script: ScriptLoaderService, priva
     });
     setTimeout(() => 
     {
-        $(".student_select2_drop_down").val(<string>leavingcertificateData.divName).trigger('change');
-      $(".state_select2_drop_down").val(<string>leavingcertificateData.stateId).trigger('change');
+        $(".state_select2_drop_down").val(<string>leavingcertificateData.stateId).trigger('change');
     },
     2000);
     
@@ -170,7 +189,9 @@ private commonservice: CommonService,private _script: ScriptLoaderService, priva
    console.log(data);
    if(data.studentId!=''){
     this.baseservice.get('studentinfo/'+data.studentId).subscribe((data:any) => {
-      // console.log(data.studentinfo);
+    //  delete(data[0].id);
+    data[0].studentId=data[0].id;
+    data[0].id='';
      this.editTemplate(data[0]);
     //   $("#listTemplate").show();
     },
@@ -191,9 +212,60 @@ private commonservice: CommonService,private _script: ScriptLoaderService, priva
     });
    
   }
+  public showModelPopup(){
+  
+    $("#myModel").addClass("modal fade show");
+    $("#myModel").show();
+    $("#myModel .modal-open").show();
+   
+  }
+  public hideModelPopup(){
+    $("#myModel").removeClass("modal fade show");
+    $("#myModel").hide();
+    $("#myModel .modal-open").hide();
+  } 
+  public printDiv(divId: string): void {
+    const printContents = document.getElementById(divId)?.innerHTML;
+    const originalContents = document.body.innerHTML;
+  
+    document.body.innerHTML = printContents || '';
+  
+    window.print();
+  
+    document.body.innerHTML = originalContents;
+  }
+  public generateFile() {
+
+    const data = document.getElementById('contentData');
+    console.log(data);
+    
+    if (!data) {
+      console.error('Element #contentToConvert not found!');
+      return; // exit the function if the element wasn't found
+    }
+    data.style.background = 'white';
+  
+    // Determine the dimensions of the content
+    let contentWidth = data.offsetWidth-650;
+    const contentHeight = data.offsetHeight;
+  
+    // Create a PDF with the same dimensions as the content
+    const pdf = new jsPDF('p', 'mm', [contentWidth, contentHeight]);
+    // const pdf = new jsPDF('p', 'mm', 'a4');
+    // Convert the content to a canvas
+    html2canvas(data, { scale: 2, logging: false, }).then((canvas) => {
+      const contentDataURL = canvas.toDataURL('image/png');
+      pdf.addImage(contentDataURL, 'PNG', 0, 0, contentWidth, contentHeight);
+      pdf.save(this.pdfFileName); // Generated PDF
+    });
+  }
   private getLeavingCertificateData(Id:any) {
+    this.showModelPopup();
     this.baseservice.get(<string>('leavingcertificates/'+Id)).subscribe((data:any) => { 
-      this.editTemplate(data.leavingcertificates);
+      this.leavingCertificateStudentData=data;
+      this.showModelPopup();
+      toastr.success('Leaving certificate downloaded successfully...!');
+      // this.editTemplate(data.leavingcertificates);
     },
     (err) => {
       //localStorage.clear();
@@ -223,33 +295,19 @@ selectFile(event: any) {
 public addLeavingCertificateSubmitForm(data:any){
   const formData: FormData = new FormData();
 
-   
-    
-    data.stateId=$('.state_select2_drop_down').val();
-    data.cityId=$('.city_select2_drop_down').val();
-    data.divName=$('.student_select2_drop_down').val();
-    data.dob=$("#m_datepickerSet").val();
+  Object.keys(this.addLeavingCertificateForm.controls).forEach(key => {
+    const control = this.addLeavingCertificateForm.controls[key];
 
-    const fileInput = document.getElementById('imageInput') as HTMLInputElement | null;
-  
-  
+    // Check if the control is disabled
+    if (control.disabled) {
+      // Add the key-value pair to the data object
+      data[key] = control.value;
+    }
+  });
     for (const key of Object.keys(data)) {
       formData.append(key, data[key]);
     }
 
-    // if (this.selectedFiles && this.selectedFiles.length > 0) {
-    //     formData.append('image', this.selectedFiles[0]);
-    // }
-    formData.set('stateId', $('.state_select2_drop_down').val() as string);
-    formData.set('cityId', $('.city_select2_drop_down').val() as string);
-    formData.set('divName', $('.student_select2_drop_down').val() as string);
-    formData.set('className', $('.class_select2_drop_down').val() as string);
-    formData.set('dateOfBirth', $("#m_datepickerSet").val() as string);
-    if (fileInput && fileInput.files) {
-      if (fileInput.files.length > 0) {
-        formData.set('image', fileInput.files[0]);
-      }
-    }
 if(data.id!=''&& data.id!=undefined && data.id!=null)  {
 // data.image=this.selectedFiles;
 this.baseservice.put('leavingcertificates/'+data.id,formData).subscribe((data:any) => {
@@ -267,7 +325,7 @@ this.baseservice.put('leavingcertificates/'+data.id,formData).subscribe((data:an
 delete data.id;
 console.log(formData);
 console.log(data);
-this.baseservice.post('leavingcertificates',formData).subscribe((data:any) => { 
+this.baseservice.post('leavingcertificates',data).subscribe((data:any) => { 
   this.getLeavingCertificateList();
   this.listTemplate();
   toastr.success('Record has been added successfully...!');
@@ -326,16 +384,12 @@ public refreshDataTable(newData: any): void {
           return i++;
         },
       }, {
-        field: "studentName",
+        field: "firstName",
         title: "Student Name",
-        // template: function (row:any) {
-        //  if(row.profileImage!=null && row.profileImage!='' && row.profileImage!='null'){
-        //   return '<span (click)="detailProfile('+row.id+')" style="cursor: pointer;"><span class="m-topbar__userpic"><img src="'+appVariables.apiImageUrl+row.profileImage+'" width="40" height="40" alt="" class="m--img-rounded m--marginless m--img-centered"></span><span (click)="detailProfile('+row.id+')" style="cursor: pointer;"  class="teacherFn" data-id="'+row.id+'">   '+row.firstName+' '+row.lastName+'</span></span>';
-        //  }else{
-        //   return '<span (click)="detailProfile('+row.id+')" style="cursor: pointer;"  class="teacherFn" data-id="'+row.id+'">'+row.firstName+' '+row.lastName+'</span>';
-        //  }
+        template: function (row:any) {
          
-        // },
+          return row.firstName+' '+row.lastName;
+        },
       }, {
         field: "className",
         title: "Class-Div",
@@ -348,14 +402,13 @@ public refreshDataTable(newData: any): void {
         title: "Certificate Date",
         template: function (row:any) {
          
-          return row.fatherName;
+          return row.createdAt;
         }
       }, {
-        field: "className",
+        field: "divName",
         title: "Actions",
-       
         template: function (row:any) {
-          return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="'+row.id+'"></i></span>';
+          return '<span class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"> <i class="edit-button la la-edit" data-id="'+row.id+'"></i></span><span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"> <i class="export-pdf fa fa-file-pdf-o" data-id="'+row.id+'"  data-filename="'+row.id+'"></i></span>'; //<span class="btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"><i class="delete-button fa fa-trash-o" data-id="'+row.id+'"></i></span>
           
         }
       }]
@@ -396,6 +449,13 @@ public refreshDataTable(newData: any): void {
         const id = (e.target as HTMLElement).getAttribute('data-id');
         this.getLeavingCertificateData(id);
       }
+      if ((e.target as HTMLElement).classList.contains('export-pdf')) {
+        e.preventDefault();
+        const id = (e.target as HTMLElement).getAttribute('data-id');
+        console.log('tests')
+        this.getLeavingCertificateData(id);
+      }
+     
     });
     }catch(error){
       console.log(error)

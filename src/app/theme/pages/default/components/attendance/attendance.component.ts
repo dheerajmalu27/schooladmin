@@ -6,7 +6,7 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, F
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { CommonService } from "../../../../../_services/common-api.service";
-import { appVariables } from '../../../../../app.constants';
+import { environment } from 'src/environments/environment';
 declare let $: any;
 declare var toastr: any;
 @Component({
@@ -15,7 +15,7 @@ declare var toastr: any;
   encapsulation: ViewEncapsulation.None,
 })
 export class AttendanceComponent implements OnInit, AfterViewInit {
-  imageUrlPath=appVariables.apiImageUrl;
+  imageUrlPath=environment.apiImageUrl;
   attendancePending: any = null;
   datatable: any ;
   SrNo: any = 1;
@@ -81,7 +81,23 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
     $('#m_datepickerSet').on('change', function () {
     });
   }
+  private deleteAttendanceData(data:any){
+    let excludeData  = data.split('*');
+    const confirmation = window.confirm('Are you sure you want to delete this record?');
+  if (!confirmation) {
+    return; // Do nothing if the user cancels the confirmation
+  }
 
+    this.baseservice.delete(<string>('attendance/' + excludeData[0] + '/' + excludeData[1]+'/'+excludeData[2])).subscribe((data: any) => {
+      this.getAttendanceList();
+        this.listTemplate();
+        toastr.success('Record deleted successfully...!');
+    },
+      (err) => {
+        toastr.error('Something went wrong...!');
+      });
+
+  }
   private getAttendanceData(data:any,type:any){
  
     let excludeData  = data.split('*');
@@ -277,7 +293,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
         title: "Action",
 
         template: function (row:any) {
-          return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.classId + '*'+row.divId+'*'+row.selectedDate+'"></i></span><span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="export-excel fa fa-file-excel-o" data-id="'+row.classId+ '*'+row.divId+'*'+row.selectedDate+'"  data-filename="AttendanceList-'+row.selectedDate+'-'+row.className+'-'+row.divName+'"></i></span>';
+          return '<span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="edit-button la la-edit" data-id="' + row.classId + '*'+row.divId+'*'+row.selectedDate+'"></i></span><span class="btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"><i class="delete-button fa fa-trash-o" data-id="' + row.classId + '*'+row.divId+'*'+row.selectedDate+'"></i></span><span  class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" > <i class="export-excel fa fa-file-excel-o" data-id="'+row.classId+ '*'+row.divId+'*'+row.selectedDate+'"  data-filename="AttendanceList-'+row.selectedDate+'-'+row.className+'-'+row.divName+'"></i></span>';
 
         }
       }]
@@ -315,6 +331,11 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
         e.preventDefault();
         const id = (e.target as HTMLElement).getAttribute('data-id');
         this.getAttendanceData(id,'');
+      }
+      if ((e.target as HTMLElement).classList.contains('delete-button')) {
+        e.preventDefault();
+        const id = (e.target as HTMLElement).getAttribute('data-id');
+        this.deleteAttendanceData(id);
       }
       if ((e.target as HTMLElement).classList.contains('teacherFn')) {
         e.preventDefault();

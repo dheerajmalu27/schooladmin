@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas'; 
+import { CommonService } from "../../../../../_services/common-api.service";
 declare let $: any
 declare var toastr: any;
 @Component({
@@ -23,7 +24,9 @@ export class finalResultReportComponent implements OnInit, AfterViewInit {
   schoolProfileData:any;
   finalResultData:any;
   pdfFileName:any;
-  constructor(private elRef: ElementRef, 
+  transformedReportList:any;
+  transformedReportListKey:any;
+  constructor(private elRef: ElementRef,private ComService: CommonService, 
     private renderer: Renderer2,private _script: ScriptLoaderService,private baseservice: BaseService
     , private router: Router){
     this.getFinalResultList();
@@ -41,6 +44,7 @@ export class finalResultReportComponent implements OnInit, AfterViewInit {
     $("#listTemplate").show();
    
   }
+  
   parseResultData(resultData: string): any[] {
     const parsedResultData = JSON.parse(resultData);
 
@@ -109,7 +113,28 @@ export class finalResultReportComponent implements OnInit, AfterViewInit {
     return 0; // Default to 0 if 'Total' is not present
   }
 
+  tableToExcel(table:any,){
+    this.ComService.tableToExcel(table,this.pdfFileName);
+                 }
+
+    transformFinalReportList(reportlist: any[]): any[] {
+    return reportlist.map(item => {
+      let subjectMarks: any = {}; // Initialize subjectMarks as an empty object
+     
   
+      return {
+        studentId: item.studentId,
+        studentName: item.studentName,
+        rollNo: item.rollNo,
+        class:item.className+'-'+item.divName,
+        rank: item.rank,
+        ...JSON.parse(item.resultData),
+        GetMarks: item.getMarks,
+        TotalMarks: item.totalMarks,
+        percentage: item.percentage
+      };
+    });
+  }               
   resultClassDivision(data:any,fileName:any){
    
     if(data!=''&& data!=null){
@@ -119,6 +144,11 @@ export class finalResultReportComponent implements OnInit, AfterViewInit {
       this.finalResultData.forEach((student: any) => {
         student.percentage = this.calculatePercentage(student.resultData);
       });
+      this.transformedReportList=this.transformFinalReportList(this.finalResultData);
+      if (this.transformedReportList.length > 0) {
+        this.transformedReportListKey = Object.keys(this.transformedReportList[0]);
+        console.log(this.transformedReportListKey);
+      }
       this.pdfFileName=fileName;
       this.showModelPopup();
         toastr.success('Final result downloaded successfully...!');

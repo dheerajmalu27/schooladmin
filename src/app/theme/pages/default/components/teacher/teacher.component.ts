@@ -72,7 +72,7 @@ export class TeacherComponent implements OnInit, AfterViewInit {
 }
   addTemplate() {
     
-    this.TitleSet='Add Student';
+    this.TitleSet='Add Teacher';
     this.addTeacherForm.reset();
     $("#addTemplate").show();
     $("#listTemplate").hide();
@@ -103,7 +103,7 @@ export class TeacherComponent implements OnInit, AfterViewInit {
 
   }
   editTemplate(teacherData:any) {
-    this.TitleSet='Edit Student';
+    this.TitleSet='Edit Teacher';
     this.addTeacherForm.reset();
     this.getStateList();
     // this.getClassList();

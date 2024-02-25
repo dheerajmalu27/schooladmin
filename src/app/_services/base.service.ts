@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { ServerResponse } from '../interfaces/server-response.interface';
 import { appVariables } from './../app.constants';
 import { CustomErrorHandlerService } from './custom-error-handler.service';
-
+import { environment } from './../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,7 +20,7 @@ export class BaseService {
 
   get(url: any): Observable<ServerResponse> {
     return this.http
-      .get<ServerResponse>(appVariables.apiUrl + url)
+      .get<ServerResponse>(environment.apiUrl + url)
       .pipe(
         map((res) => this.handleResponse(res)),
         catchError(this.catchAuthError.bind(this))
@@ -33,7 +33,7 @@ export class BaseService {
     options?: HttpHeaders
   ): Observable<ServerResponse> {
     return this.http
-      .post<ServerResponse>(appVariables.apiUrl + url, postBody, {
+      .post<ServerResponse>(environment.apiUrl + url, postBody, {
         headers: options,
       })
       .pipe(
@@ -44,7 +44,7 @@ export class BaseService {
 
   delete(url: any): Observable<ServerResponse> {
     return this.http
-      .delete<ServerResponse>(appVariables.apiUrl + url)
+      .delete<ServerResponse>(environment.apiUrl + url)
       .pipe(
         map((res) => this.handleResponse(res)),
         catchError(this.catchAuthError.bind(this))
@@ -53,7 +53,7 @@ export class BaseService {
 
   put(url: any, putData: any): Observable<ServerResponse> {
     return this.http
-      .put<ServerResponse>(appVariables.apiUrl + url, putData)
+      .put<ServerResponse>(environment.apiUrl + url, putData)
       .pipe(map((res) => this.handleResponse(res)));
   }
 

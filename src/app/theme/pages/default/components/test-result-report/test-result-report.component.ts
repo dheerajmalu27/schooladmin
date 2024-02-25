@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas'; 
+import { CommonService } from "../../../../../_services/common-api.service";
 declare let $: any
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -18,8 +19,10 @@ export class testResultReportComponent implements OnInit, AfterViewInit {
   testResultData:any;
   schoolProfileData:any;
   pdfFileName:any;
+  transformedReportList:any;
+  transformedReportListKey:any;
   constructor(private _script: ScriptLoaderService,private baseservice: BaseService
-    , private router: Router) {
+    ,private ComService: CommonService, private router: Router) {
     
     }
   ngOnInit() {
@@ -47,7 +50,13 @@ this.getTestClassList();
     this.baseservice.get('gettestclassdivisionreportlist?testId='+res[0]+'&classId=' + res[1] + '&divId=' + res[2]).subscribe((data:any) => { 
       if(data.reportlist!=null && data.reportlist!=''){
         this.testResultData=data.reportlist;
-        // this.genratefile();
+        
+        this.transformedReportList=this.transformReportList(data.reportlist);
+        if (this.transformedReportList.length > 0) {
+          this.transformedReportListKey = Object.keys(this.transformedReportList[0]);
+          console.log(this.transformedReportListKey);
+        }
+        
         this.showModelPopup();
         // $("#contentToConvert").show();
             }
@@ -121,6 +130,31 @@ this.getTestClassList();
   });
 }
 
+
+tableToExcel(table:any,){
+  this.ComService.tableToExcel(table,this.pdfFileName);
+               }
+
+transformReportList(reportlist: any[]): any[] {
+  return reportlist.map(item => {
+    let subjectMarks: any = {}; // Initialize subjectMarks as an empty object
+    item.subjectData.forEach((sub:any) => {
+      subjectMarks[sub.subName] = `${sub.getMarks}/${sub.totalMarks}`;
+    });
+
+    return {
+      studentId: item.studentId,
+      studentName: item.studentName,
+      rollNo: item.rollNo,
+      class:item.className+'-'+item.divName,
+      rank: item.rank,
+      ...subjectMarks,
+      GetMarks: item.sumGetMarks,
+      TotalMarks: item.sumTotalMarks,
+      percentage: item.percentage
+    };
+  });
+}
 public genratefile(){
   const data = document.getElementById('pdfgeneratehtml');
     

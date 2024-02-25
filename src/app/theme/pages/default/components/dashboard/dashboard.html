@@ -1,909 +1,373 @@
 <!-- BEGIN: Subheader -->
 <!-- BEGIN: Subheader -->
 <div class="m-subheader">
-	<div class="d-flex align-items-center">
-		<div class="mr-auto">
-			<h3 class="m-subheader__title">
-				Dashboard
-			</h3>
-		</div>
-		<div>
-			<span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
-				<span class="m-subheader__daterange-label">
-					<span class="m-subheader__daterange-title"></span>
-					<span class="m-subheader__daterange-date m--font-brand"></span>
-				</span>
-				<a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
-					<i class="la la-angle-down"></i>
-				</a>
-			</span>
-		</div>
-	</div>
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title">Dashboard</h3>
+    </div>
+    <div>
+      <span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
+        <span class="m-subheader__daterange-label">
+          <span class="m-subheader__daterange-title"></span>
+          <span class="m-subheader__daterange-date m--font-brand"></span>
+        </span>
+        <a
+          href="#"
+          class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill"
+        >
+          <i class="la la-angle-down"></i>
+        </a>
+      </span>
+    </div>
+  </div>
 </div>
 <!-- END: Subheader -->
-<div class="m-content" >
-	<!--begin:: Widgets/Stats-->
-	<!--Begin::Main Portlet-->
-	
-	<!--End::Main Portlet-->
-	
-	<!--Begin::Main Portlet-->
-	<div class="m-portlet" id="dashboard-data" style="display: none;">
-		<div class="m-portlet__body  m-portlet__body--no-padding">
-			<div class="row m-row--no-padding m-row--col-separator-xl">
-				<div class="col-xl-4">
-					<!--begin:: Widgets/Stats2-1 -->
-					<div class="m-widget1">
-						<div class="m-widget1__item">
-							<div class="row m-row--no-padding align-items-center">
-								<div class="col">
-									<h3 class="m-widget1__title">
-										Total Students
-									</h3>
-									
-								</div>
-								<div class="col m--align-right">
-									<span class="m-widget1__number m--font-brand">
-									 	{{dashboardData?.totalstudent}}
-									</span>
-								</div>
-							</div>
-						</div>
-						<div class="m-widget1__item">
-							<div class="row m-row--no-padding align-items-center">
-								<div class="col">
-									<h3 class="m-widget1__title">
-										 Today Absent Students
-									</h3>
-									
-								</div>
-								<div class="col m--align-right">
-									<span class="m-widget1__number m--font-danger">
-											{{dashboardData?.todaytotalabsentstudents}}
-									</span>
-								</div>
-							</div>
-						</div>
-						<div class="m-widget1__item">
-							<div class="row m-row--no-padding align-items-center">
-								<div class="col">
-									<h3 class="m-widget1__title">
-										Present Students
-									</h3>
-									
-								</div>
-								<div class="col m--align-right">
-									<span class="m-widget1__number m--font-success">
-									{{dashboardData?.totalstudent-dashboardData?.todaytotalabsentstudents}}
-									</span>
-								</div>
-							</div>
-						</div>
-						<div class="m-widget1__item">
-							<div class="row m-row--no-padding align-items-center">
-								<div class="col">
-									<h3 class="m-widget1__title">
-										Total Teachers
-									</h3>
-									
-								</div>
-								<div class="col m--align-right">
-									<span class="m-widget1__number m--font-accent">
-											{{dashboardData?.totalteacher}}
-									</span>
-								</div>
-							</div>
-						</div>
-						<div class="m-widget1__item">
-							<div class="row m-row--no-padding align-items-center">
-								<div class="col">
-									<h3 class="m-widget1__title">
-										Absent Teachers
-									</h3>
-									
-								</div>
-								<div class="col m--align-right">
-									<span class="m-widget1__number m--font-info">
-										1
-									</span>
-								</div>
-							</div>
-						</div>
-						<div class="m-widget1__item">
-							<div class="row m-row--no-padding align-items-center">
-								<div class="col">
-									<h3 class="m-widget1__title">
-										Present Teacher
-									</h3>
-									
-								</div>
-								<div class="col m--align-right">
-									<span class="m-widget1__number m--font-warning">
-										99
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--end:: Widgets/Stats2-1 -->
-				</div>
-				<div class="col-xl-4">
-					<!--begin:: Widgets/Daily Sales-->
-					<div class="m-widget14">
-						<div class="m-widget14__header m--margin-bottom-30">
-							<h3 class="m-widget14__title">
-								Weekly Attendance
-							</h3>
-							<span class="m-widget14__desc">
-								Check out each collumn for more details
-							</span>
-						</div>
-						<div class="m-widget14__chart" style="height:120px;">
-							<canvas  id="m_chart_daily_sales"></canvas>
-						</div>
-					</div>
-					<!--end:: Widgets/Daily Sales-->
-				</div>
-				<div class=" col-xl-4">
-					<!--begin:: Widgets/Stats2-3 -->
-					<div class="m-widget1">
-						<div class="m-widget1__item">
-							<div class="row m-row--no-padding align-items-center">
-								<div class="col">
-									<h3 class="m-widget1__title">
-										Total School days
-									</h3>
-									
-								</div>
-								<div class="col m--align-right">
-									<span class="m-widget1__number m--font-success">
-											{{dashboardData?.totalschooldays}}
-									</span>
-								</div>
-							</div>
-						</div>
-						<div class="m-widget1__item">
-							<div class="row m-row--no-padding align-items-center">
-								<div class="col">
-									<h3 class="m-widget1__title">
-										Total holidays
-									</h3>
-									
-								</div>
-								<div class="col m--align-right">
-									<span class="m-widget1__number m--font-danger">
-											{{dashboardData?.totalholidays}}
-									</span>
-								</div>
-							</div>
-						</div>
-						<div class="m-widget1__item">
-							<div class="row m-row--no-padding align-items-center">
-								<div class="col">
-									<h3 class="m-widget1__title">
-										Next holiday
-									</h3>
-									
-								</div>
-								<div class="col m--align-right">
-									<span class="m-widget1__number m--font-primary">
-											{{dashboardData?.nextholiday}}
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--begin:: Widgets/Stats2-3 -->
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--End::Main Portlet-->
-	
-	<!--Begin::Main Portlet-->
-	<div class="row">
-		<div class="col-xl-6">
-			<!--begin:: Widgets/Tasks -->
-			<div class="m-portlet m-portlet--mobile">
-		<div class="m-portlet__head">
-			<div class="m-portlet__head-caption">
-				<div class="m-portlet__head-title">
-					<h3 class="m-portlet__head-text">
-						Pending Attendance List
-					</h3>
-				</div>
-			</div>
-			
-		</div>
-		<div class="m-portlet__body">
-			<!--begin: Search Form -->
-			<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-				<div class="row align-items-center">
-					<div class="col-xl-8 order-2 order-xl-1">
-						<div class="form-group m-form__group row align-items-center">
-							<div class="col-md-6">
-								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." id="m_form_search1">
-									<span class="m-input-icon__icon m-input-icon__icon--left">
-										<span>
-											<i class="la la-search"></i>
-										</span>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-			<!--end: Search Form -->
-			<!--begin: Datatable -->
-			<div class="m_datatable" id="local_data"></div>
-			<!--end: Datatable -->
-		</div>
-	</div>
-			<!--end:: Widgets/Tasks -->
-		</div>
-		<div class="col-xl-6">
-			<!--begin:: Widgets/Support Tickets -->
-			<div class="m-portlet m-portlet--mobile">
-		<div class="m-portlet__head">
-			<div class="m-portlet__head-caption">
-				<div class="m-portlet__head-title">
-					<h3 class="m-portlet__head-text">
-						Absent Student List
-					</h3>
-				</div>
-			</div>
-			
-		</div>
-		<div class="m-portlet__body">
-			<!--begin: Search Form -->
-			<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-				<div class="row align-items-center">
-					<div class="col-xl-8 order-2 order-xl-1">
-						<div class="form-group m-form__group row align-items-center">
-							<div class="col-md-6">
-								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." id="m_form_search">
-									<span class="m-input-icon__icon m-input-icon__icon--left">
-										<span>
-											<i class="la la-search"></i>
-										</span>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-			<!--end: Search Form -->
-			<!--begin: Datatable -->
-			<div class="m_datatable1" id="local_data"></div>
-			<!--end: Datatable -->
-		</div>
-	</div>
-			<!--end:: Widgets/Support Tickets -->
-		</div>
-	</div>
-	<!--End::Main Portlet-->
-	<!--Begin::Main Portlet-->
-	<div class="row">
-			<div class="col-xl-6">
-				<!--begin:: Widgets/Tasks -->
-				<div class="m-portlet m-portlet--full-height">
-					<div class="m-portlet__head">
-						<div class="m-portlet__head-caption">
-							<div class="m-portlet__head-title">
-								<h3 class="m-portlet__head-text">
-									Tasks
-								</h3>
-							</div>
-						</div>
-						<div class="m-portlet__head-tools">
-							<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
-								<li class="nav-item m-tabs__item">
-									<a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_widget2_tab1_content" role="tab">
-										Today
-									</a>
-								</li>
-								<li class="nav-item m-tabs__item">
-									<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget2_tab2_content1" role="tab">
-										Week
-									</a>
-								</li>
-								<li class="nav-item m-tabs__item">
-									<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget2_tab3_content1" role="tab">
-										Month
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="m-portlet__body">
-						<div class="tab-content">
-							<div class="tab-pane active" id="m_widget2_tab1_content">
-								<div class="m-widget2">
-									<div class="m-widget2__item m-widget2__item--primary">
-										<div class="m-widget2__checkbox">
-											<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-												<input type="checkbox">
-												<span></span>
-											</label>
-										</div>
-										<div class="m-widget2__desc">
-											<span class="m-widget2__text">
-												Make Metronic Great  Again.Lorem Ipsum Amet
-											</span>
-											<br>
-											<span class="m-widget2__user-name">
-												<a href="#" class="m-widget2__link">
-													By Bob
-												</a>
-											</span>
-										</div>
-										<div class="m-widget2__actions">
-											<div class="m-widget2__actions-nav">
-												<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover">
-													<a href="#" class="m-dropdown__toggle">
-														<i class="la la-ellipsis-h"></i>
-													</a>
-													<div class="m-dropdown__wrapper">
-														<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-														<div class="m-dropdown__inner">
-															<div class="m-dropdown__body">
-																<div class="m-dropdown__content">
-																	<ul class="m-nav">
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-share"></i>
-																				<span class="m-nav__link-text">
-																					Activity
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-chat-1"></i>
-																				<span class="m-nav__link-text">
-																					Messages
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-info"></i>
-																				<span class="m-nav__link-text">
-																					FAQ
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																				<span class="m-nav__link-text">
-																					Support
-																				</span>
-																			</a>
-																		</li>
-																	</ul>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="m-widget2__item m-widget2__item--warning">
-										<div class="m-widget2__checkbox">
-											<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-												<input type="checkbox">
-												<span></span>
-											</label>
-										</div>
-										<div class="m-widget2__desc">
-											<span class="m-widget2__text">
-												Prepare Docs For Metting On Monday
-											</span>
-											<br>
-											<span class="m-widget2__user-name">
-												<a href="#" class="m-widget2__link">
-													By Sean
-												</a>
-											</span>
-										</div>
-										<div class="m-widget2__actions">
-											<div class="m-widget2__actions-nav">
-												<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover">
-													<a href="#" class="m-dropdown__toggle">
-														<i class="la la-ellipsis-h"></i>
-													</a>
-													<div class="m-dropdown__wrapper">
-														<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-														<div class="m-dropdown__inner">
-															<div class="m-dropdown__body">
-																<div class="m-dropdown__content">
-																	<ul class="m-nav">
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-share"></i>
-																				<span class="m-nav__link-text">
-																					Activity
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-chat-1"></i>
-																				<span class="m-nav__link-text">
-																					Messages
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-info"></i>
-																				<span class="m-nav__link-text">
-																					FAQ
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																				<span class="m-nav__link-text">
-																					Support
-																				</span>
-																			</a>
-																		</li>
-																	</ul>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="m-widget2__item m-widget2__item--brand">
-										<div class="m-widget2__checkbox">
-											<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-												<input type="checkbox">
-												<span></span>
-											</label>
-										</div>
-										<div class="m-widget2__desc">
-											<span class="m-widget2__text">
-												Make Widgets Great Again.Estudiat Communy Elit
-											</span>
-											<br>
-											<span class="m-widget2__user-name">
-												<a href="#" class="m-widget2__link">
-													By Aziko
-												</a>
-											</span>
-										</div>
-										<div class="m-widget2__actions">
-											<div class="m-widget2__actions-nav">
-												<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover">
-													<a href="#" class="m-dropdown__toggle">
-														<i class="la la-ellipsis-h"></i>
-													</a>
-													<div class="m-dropdown__wrapper">
-														<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-														<div class="m-dropdown__inner">
-															<div class="m-dropdown__body">
-																<div class="m-dropdown__content">
-																	<ul class="m-nav">
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-share"></i>
-																				<span class="m-nav__link-text">
-																					Activity
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-chat-1"></i>
-																				<span class="m-nav__link-text">
-																					Messages
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-info"></i>
-																				<span class="m-nav__link-text">
-																					FAQ
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																				<span class="m-nav__link-text">
-																					Support
-																				</span>
-																			</a>
-																		</li>
-																	</ul>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="m-widget2__item m-widget2__item--success">
-										<div class="m-widget2__checkbox">
-											<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-												<input type="checkbox">
-												<span></span>
-											</label>
-										</div>
-										<div class="m-widget2__desc">
-											<span class="m-widget2__text">
-												Make Metronic Great Again.Lorem Ipsum
-											</span>
-											<br>
-											<span class="m-widget2__user-name">
-												<a href="#" class="m-widget2__link">
-													By James
-												</a>
-											</span>
-										</div>
-										<div class="m-widget2__actions">
-											<div class="m-widget2__actions-nav">
-												<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover">
-													<a href="#" class="m-dropdown__toggle">
-														<i class="la la-ellipsis-h"></i>
-													</a>
-													<div class="m-dropdown__wrapper">
-														<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-														<div class="m-dropdown__inner">
-															<div class="m-dropdown__body">
-																<div class="m-dropdown__content">
-																	<ul class="m-nav">
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-share"></i>
-																				<span class="m-nav__link-text">
-																					Activity
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-chat-1"></i>
-																				<span class="m-nav__link-text">
-																					Messages
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-info"></i>
-																				<span class="m-nav__link-text">
-																					FAQ
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																				<span class="m-nav__link-text">
-																					Support
-																				</span>
-																			</a>
-																		</li>
-																	</ul>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="m-widget2__item m-widget2__item--danger">
-										<div class="m-widget2__checkbox">
-											<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-												<input type="checkbox">
-												<span></span>
-											</label>
-										</div>
-										<div class="m-widget2__desc">
-											<span class="m-widget2__text">
-												Completa Financial Report For Emirates Airlines
-											</span>
-											<br>
-											<span class="m-widget2__user-name">
-												<a href="#" class="m-widget2__link">
-													By Bob
-												</a>
-											</span>
-										</div>
-										<div class="m-widget2__actions">
-											<div class="m-widget2__actions-nav">
-												<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover">
-													<a href="#" class="m-dropdown__toggle">
-														<i class="la la-ellipsis-h"></i>
-													</a>
-													<div class="m-dropdown__wrapper">
-														<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-														<div class="m-dropdown__inner">
-															<div class="m-dropdown__body">
-																<div class="m-dropdown__content">
-																	<ul class="m-nav">
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-share"></i>
-																				<span class="m-nav__link-text">
-																					Activity
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-chat-1"></i>
-																				<span class="m-nav__link-text">
-																					Messages
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-info"></i>
-																				<span class="m-nav__link-text">
-																					FAQ
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																				<span class="m-nav__link-text">
-																					Support
-																				</span>
-																			</a>
-																		</li>
-																	</ul>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="m-widget2__item m-widget2__item--info">
-										<div class="m-widget2__checkbox">
-											<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-												<input type="checkbox">
-												<span></span>
-											</label>
-										</div>
-										<div class="m-widget2__desc">
-											<span class="m-widget2__text">
-												Completa Financial Report For Emirates Airlines
-											</span>
-											<br>
-											<span class="m-widget2__user-name">
-												<a href="#" class="m-widget2__link">
-													By Sean
-												</a>
-											</span>
-										</div>
-										<div class="m-widget2__actions">
-											<div class="m-widget2__actions-nav">
-												<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover">
-													<a href="#" class="m-dropdown__toggle">
-														<i class="la la-ellipsis-h"></i>
-													</a>
-													<div class="m-dropdown__wrapper">
-														<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-														<div class="m-dropdown__inner">
-															<div class="m-dropdown__body">
-																<div class="m-dropdown__content">
-																	<ul class="m-nav">
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-share"></i>
-																				<span class="m-nav__link-text">
-																					Activity
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-chat-1"></i>
-																				<span class="m-nav__link-text">
-																					Messages
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-info"></i>
-																				<span class="m-nav__link-text">
-																					FAQ
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																				<span class="m-nav__link-text">
-																					Support
-																				</span>
-																			</a>
-																		</li>
-																	</ul>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="tab-pane" id="m_widget2_tab2_content"></div>
-							<div class="tab-pane" id="m_widget2_tab3_content"></div>
-						</div>
-					</div>
-				</div>
-				<!--end:: Widgets/Tasks -->
-			</div>
-			<div class="col-xl-6">
-				<!--begin:: Widgets/Support Tickets -->
-				<div class="m-portlet m-portlet--full-height">
-					<div class="m-portlet__head">
-						<div class="m-portlet__head-caption">
-							<div class="m-portlet__head-title">
-								<h3 class="m-portlet__head-text">
-									News & Events
-								</h3>
-							</div>
-						</div>
-						<div class="m-portlet__head-tools">
-							<ul class="m-portlet__nav">
-								<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover" aria-expanded="true">
-									<a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl m-dropdown__toggle">
-										<i class="la la-ellipsis-h m--font-brand"></i>
-									</a>
-									<div class="m-dropdown__wrapper">
-										<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-										<div class="m-dropdown__inner">
-											<div class="m-dropdown__body">
-												<div class="m-dropdown__content">
-													<ul class="m-nav">
-														<li class="m-nav__item">
-															<a href="" class="m-nav__link">
-																<i class="m-nav__link-icon flaticon-share"></i>
-																<span class="m-nav__link-text">
-																	Activity
-																</span>
-															</a>
-														</li>
-														<li class="m-nav__item">
-															<a href="" class="m-nav__link">
-																<i class="m-nav__link-icon flaticon-chat-1"></i>
-																<span class="m-nav__link-text">
-																	Messages
-																</span>
-															</a>
-														</li>
-														<li class="m-nav__item">
-															<a href="" class="m-nav__link">
-																<i class="m-nav__link-icon flaticon-info"></i>
-																<span class="m-nav__link-text">
-																	FAQ
-																</span>
-															</a>
-														</li>
-														<li class="m-nav__item">
-															<a href="" class="m-nav__link">
-																<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																<span class="m-nav__link-text">
-																	Support
-																</span>
-															</a>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="m-portlet__body">
-						<div class="m-widget3">
-							<div class="m-widget3__item">
-								<div class="m-widget3__header">
-									<div class="m-widget3__user-img">
-										<img class="m-widget3__img" src="./assets/app/media/img/users/user1.jpg" alt="">
-									</div>
-									<div class="m-widget3__info">
-										<span class="m-widget3__username">
-											Melania Trump
-										</span>
-										<br>
-										<span class="m-widget3__time">
-											2 day ago
-										</span>
-									</div>
-									<span class="m-widget3__status m--font-info">
-										Pending
-									</span>
-								</div>
-								<div class="m-widget3__body">
-									<p class="m-widget3__text">
-										Lorem ipsum dolor sit amet,consectetuer edipiscing elit,sed diam nonummy nibh euismod tinciduntut laoreet doloremagna aliquam erat volutpat.
-									</p>
-								</div>
-							</div>
-							<div class="m-widget3__item">
-								<div class="m-widget3__header">
-									<div class="m-widget3__user-img">
-										<img class="m-widget3__img" src="./assets/app/media/img/users/user4.jpg" alt="">
-									</div>
-									<div class="m-widget3__info">
-										<span class="m-widget3__username">
-											Lebron King James
-										</span>
-										<br>
-										<span class="m-widget3__time">
-											1 day ago
-										</span>
-									</div>
-									<span class="m-widget3__status m--font-brand">
-										Open
-									</span>
-								</div>
-								<div class="m-widget3__body">
-									<p class="m-widget3__text">
-										Lorem ipsum dolor sit amet,consectetuer edipiscing elit,sed diam nonummy nibh euismod tinciduntut laoreet doloremagna aliquam erat volutpat.Ut wisi enim ad minim veniam,quis nostrud exerci tation ullamcorper.
-									</p>
-								</div>
-							</div>
-							<div class="m-widget3__item">
-								<div class="m-widget3__header">
-									<div class="m-widget3__user-img">
-										<img class="m-widget3__img" src="./assets/app/media/img/users/user5.jpg" alt="">
-									</div>
-									<div class="m-widget3__info">
-										<span class="m-widget3__username">
-											Deb Gibson
-										</span>
-										<br>
-										<span class="m-widget3__time">
-											3 weeks ago
-										</span>
-									</div>
-									<span class="m-widget3__status m--font-success">
-										Closed
-									</span>
-								</div>
-								<div class="m-widget3__body">
-									<p class="m-widget3__text">
-										Lorem ipsum dolor sit amet,consectetuer edipiscing elit,sed diam nonummy nibh euismod tinciduntut laoreet doloremagna aliquam erat volutpat.
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!--end:: Widgets/Support Tickets -->
-			</div>
-		</div>
-		<!--End::Main Portlet-->
-	
+<div class="m-content">
+  <!--begin:: Widgets/Stats-->
+  <!--Begin::Main Portlet-->
+
+  <!--End::Main Portlet-->
+
+  <!--Begin::Main Portlet-->
+  <div class="m-portlet" id="dashboard-data" style="display: none">
+    <div class="m-portlet__body m-portlet__body--no-padding">
+      <div class="row m-row--no-padding m-row--col-separator-xl">
+        <div class="col-xl-4">
+          <!--begin:: Widgets/Stats2-1 -->
+          <div class="m-widget1">
+            <div class="m-widget1__item">
+              <div
+                class="row m-row--no-padding align-items-center"
+                style="cursor: pointer"
+                (click)="redirectToRoute('student')"
+              >
+                <div class="col">
+                  <h3 class="m-widget1__title">Total Students</h3>
+                </div>
+                <div class="col m--align-right">
+                  <span class="m-widget1__number m--font-brand">
+                    {{dashboardData?.totalstudent}}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="m-widget1__item">
+              <div
+                class="row m-row--no-padding align-items-center"
+                style="cursor: pointer"
+                (click)="redirectToRoute('today-absent-student')"
+              >
+                <div class="col">
+                  <h3 class="m-widget1__title">Today Absent Students</h3>
+                </div>
+                <div class="col m--align-right">
+                  <span class="m-widget1__number m--font-danger">
+                    {{dashboardData?.todaytotalabsentstudents}}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="m-widget1__item">
+              <div
+                class="row m-row--no-padding align-items-center"
+                style="cursor: pointer"
+                (click)="redirectToRoute('attendance')"
+              >
+                <div class="col">
+                  <h3 class="m-widget1__title">Present Students</h3>
+                </div>
+                <div class="col m--align-right">
+                  <span class="m-widget1__number m--font-success">
+                    {{dashboardData?.totalstudent-dashboardData?.todaytotalabsentstudents}}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="m-widget1__item">
+              <div
+                class="row m-row--no-padding align-items-center"
+                style="cursor: pointer"
+                (click)="redirectToRoute('teacher')"
+              >
+                <div class="col">
+                  <h3 class="m-widget1__title">Total Teachers</h3>
+                </div>
+                <div class="col m--align-right">
+                  <span class="m-widget1__number m--font-accent">
+                    {{dashboardData?.totalteacher}}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="m-widget1__item">
+              <div class="row m-row--no-padding align-items-center">
+                <div class="col">
+                  <h3 class="m-widget1__title">Absent Teachers</h3>
+                </div>
+                <div class="col m--align-right">
+                  <span class="m-widget1__number m--font-info"> 1 </span>
+                </div>
+              </div>
+            </div>
+            <div class="m-widget1__item">
+              <div class="row m-row--no-padding align-items-center">
+                <div class="col">
+                  <h3 class="m-widget1__title">Present Teacher</h3>
+                </div>
+                <div class="col m--align-right">
+                  <span class="m-widget1__number m--font-warning"> 99 </span>
+                </div>
+              </div>
+            </div> -->
+          </div>
+          <!--end:: Widgets/Stats2-1 -->
+        </div>
+        <div class="col-xl-4">
+          <div class="m-widget1">
+            <div class="m-widget1__item">
+              <div class="row m-row--no-padding align-items-center">
+                <div class="col">
+                  <h3 class="m-widget1__title">Total School days</h3>
+                </div>
+                <div class="col m--align-right">
+                  <span class="m-widget1__number m--font-success">
+                    {{dashboardData?.totalschooldays}}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="m-widget1__item">
+              <div class="row m-row--no-padding align-items-center">
+                <div class="col">
+                  <h3 class="m-widget1__title">Total holidays</h3>
+                </div>
+                <div class="col m--align-right">
+                  <span class="m-widget1__number m--font-danger">
+                    {{dashboardData?.totalholidays}}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="m-widget1__item">
+              <div class="row m-row--no-padding align-items-center">
+                <div class="col">
+                  <h3 class="m-widget1__title">Next holiday</h3>
+                </div>
+                <div class="col m--align-right">
+                  <span class="m-widget1__number m--font-primary">
+                    {{dashboardData?.nextholiday}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="m-widget1">
+            <!--begin:: Widgets/Daily Sales-->
+            <h4 class="m-widget1__title">School Weekly Attendance</h4>
+            <div id="m_amcharts_1" style="height: 200px"></div>
+          </div>
+          <!--end:: Widgets/Daily Sales-->
+        </div>
+        <div class="col-xl-4">
+          <div class="m-widget1">
+            <!--begin:: Widgets/Stats2-3 -->
+            <h4 class="m-widget1__title">School Fees Details</h4>
+            <div id="m_amcharts_12" style="height: 200px"></div>
+            <h4 class="m-widget1__title">School Seats Details</h4>
+            <div id="m_amcharts_4" style="height: 200px"></div>
+            <!--begin:: Widgets/Stats2-3 -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--End::Main Portlet-->
+
+  <!--Begin::Main Portlet-->
+  <div class="row">
+    <div class="col-xl-6" *ngIf="todayattendancependinglistlength">
+      <!--begin:: Widgets/Tasks -->
+      <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <h3 class="m-portlet__head-text">Pending Attendance List</h3>
+            </div>
+          </div>
+        </div>
+        <div class="m-portlet__body">
+          <!--begin: Search Form -->
+          <div
+            class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30"
+          >
+            <div class="row align-items-center">
+              <div class="col-xl-8 order-2 order-xl-1">
+                <div class="form-group m-form__group row align-items-center">
+                  <div class="col-md-6">
+                    <div class="m-input-icon m-input-icon--left">
+                      <input
+                        type="text"
+                        class="form-control m-input m-input--solid"
+                        placeholder="Search..."
+                        id="m_form_search1"
+                      />
+                      <span class="m-input-icon__icon m-input-icon__icon--left">
+                        <span>
+                          <i class="la la-search"></i>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--end: Search Form -->
+          <!--begin: Datatable -->
+          <div class="m_datatable" id="local_data"></div>
+          <!--end: Datatable -->
+        </div>
+      </div>
+      <!--end:: Widgets/Tasks -->
+    </div>
+    <div class="col-xl-6" *ngIf="todayabsentstudentlistlength">
+      <!--begin:: Widgets/Support Tickets -->
+      <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <h3 class="m-portlet__head-text">Today's Absent Student List</h3>
+            </div>
+          </div>
+        </div>
+        <div class="m-portlet__body">
+          <!--begin: Search Form -->
+          <div
+            class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30"
+          >
+            <div class="row align-items-center">
+              <div class="col-xl-8 order-2 order-xl-1">
+                <div class="form-group m-form__group row align-items-center">
+                  <div class="col-md-6">
+                    <div class="m-input-icon m-input-icon--left">
+                      <input
+                        type="text"
+                        class="form-control m-input m-input--solid"
+                        placeholder="Search..."
+                        id="m_form_search"
+                      />
+                      <span class="m-input-icon__icon m-input-icon__icon--left">
+                        <span>
+                          <i class="la la-search"></i>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--end: Search Form -->
+          <!--begin: Datatable -->
+          <div class="m_datatable1" id="local_data"></div>
+          <!--end: Datatable -->
+        </div>
+      </div>
+      <!--end:: Widgets/Support Tickets -->
+    </div>
+  </div>
+  <!--End::Main Portlet-->
+  <!--Begin::Main Portlet-->
+  <div class="row">
+    <div class="col-xl-6">
+      <!--begin:: Widgets/Support Tickets -->
+      <div class="m-portlet m-portlet--full-height">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <h3 class="m-portlet__head-text">News & Events</h3>
+            </div>
+          </div>
+          <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+              <li
+                class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                data-dropdown-toggle="hover"
+                aria-expanded="true"
+              >
+                <a
+                  href="#"
+                  class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl m-dropdown__toggle"
+                >
+                  <i class="la la-ellipsis-h m--font-brand"></i>
+                </a>
+                <div class="m-dropdown__wrapper">
+                  <span
+                    class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"
+                  ></span>
+                  <div class="m-dropdown__inner">
+                    <!-- <div class="m-dropdown__body">
+                      <div class="m-dropdown__content">
+                        <ul class="m-nav">
+                          <li class="m-nav__item">
+                            <a href="" class="m-nav__link">
+                              <i class="m-nav__link-icon flaticon-share"></i>
+                              <span class="m-nav__link-text"> Activity </span>
+                            </a>
+                          </li>
+                          <li class="m-nav__item">
+                            <a href="" class="m-nav__link">
+                              <i class="m-nav__link-icon flaticon-chat-1"></i>
+                              <span class="m-nav__link-text"> Messages </span>
+                            </a>
+                          </li>
+                          <li class="m-nav__item">
+                            <a href="" class="m-nav__link">
+                              <i class="m-nav__link-icon flaticon-info"></i>
+                              <span class="m-nav__link-text"> FAQ </span>
+                            </a>
+                          </li>
+                          <li class="m-nav__item">
+                            <a href="" class="m-nav__link">
+                              <i class="m-nav__link-icon flaticon-lifebuoy"></i>
+                              <span class="m-nav__link-text"> Support </span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="m-portlet__body">
+          <div class="m-widget3">
+            <div *ngFor="let event of newsEventData" class="m-widget3__item">
+              <div class="m-widget3__header">
+                <div class="m-widget3__info">
+                  <span class="m-widget3__username"
+                    >{{event.newsEventTitle}}
+                  </span>
+                  <br />
+                  <span class="m-widget3__time">{{event.newsEventDate}}</span>
+                </div>
+                <span class="m-widget3__status m--font-info">
+                  {{ event.newsEventType === 1 ? 'News' : 'Event' }}
+                </span>
+              </div>
+              <div class="m-widget3__body">
+                <p class="m-widget3__text" style="padding: 15px">
+                  {{event.newsEventDetail}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--end:: Widgets/Support Tickets -->
+    </div>
+  </div>
+  <!--End::Main Portlet-->
 </div>

@@ -1,603 +1,737 @@
 <!-- BEGIN: Left Aside -->
-<button class="m-aside-left-close  m-aside-left-close--skin-dark" id="m_aside_left_close_btn" appunwraptag="">
-	<i class="la la-close"></i>
+<button
+  class="m-aside-left-close m-aside-left-close--skin-dark"
+  id="m_aside_left_close_btn"
+  appunwraptag=""
+>
+  <i class="la la-close"></i>
 </button>
-<div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-dark">
-	<!-- BEGIN: Aside Menu -->
-	<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark"
-		data-menu-vertical="true" data-menu-scrollable="false" data-menu-dropdown-timeout="500">
-		<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow">
-			<li class="m-menu__item  " routerLinkActive="m-menu__item--active"
-				[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-				<a routerLink="/dashboard" class="m-menu__link">
-					<i class="m-menu__link-icon flaticon-line-graph"></i>
-					<span class="m-menu__link-title">
-						<span class="m-menu__link-wrap">
-							<span class="m-menu__link-text">
-								Dashboard
-							</span>
-							<span class="m-menu__link-badge">
-								<span class="m-badge m-badge--danger">
-									2
-								</span>
-							</span>
-						</span>
-					</span>
-				</a>
-			</li>
-			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
-				[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
-				<a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
-					<i class="m-menu__link-icon fa fa-user-plus"></i>
-					<span class="m-menu__link-text">
-						Admission
-					</span>
-					<i class="m-menu__ver-arrow la la-angle-right"></i>
-				</a>
-				<div class="m-menu__submenu">
-					<span class="m-menu__arrow"></span>
-					<ul class="m-menu__subnav">
-						<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a href="#" class="m-menu__link">
-								<span class="m-menu__link-text">
-									Admission
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/admission" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Admission List
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/division-allocation" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Division Allocation
-								</span>
-							</a>
-						</li>
+<div
+  id="m_aside_left"
+  class="m-grid__item m-aside-left m-aside-left--skin-dark"
+>
+  <!-- BEGIN: Aside Menu -->
+  <div
+    id="m_ver_menu"
+    class="m-aside-menu m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark"
+    data-menu-vertical="true"
+    data-menu-scrollable="false"
+    data-menu-dropdown-timeout="500"
+  >
+    <ul class="m-menu__nav m-menu__nav--dropdown-submenu-arrow">
+      <ng-container *ngFor="let item of menuConfig">
+        <li
+          class="m-menu__item"
+          [ngClass]="{ 'm-menu__item--submenu': item.subItems }"
+          [routerLinkActive]="['m-menu__item--active']"
+          [routerLinkActiveOptions]="{ exact: true }"
+          [attr.aria-haspopup]="item.subItems ? 'true' : null"
+          *ngIf="item.label"
+        >
+          <a
+            [routerLink]="item.link ? item.link : null"
+            class="m-menu__link"
+            *ngIf="!item.subItems"
+          >
+            <i class="m-menu__link-icon {{ item.icon }}"></i>
+            <span class="m-menu__link-text">{{ item.label }}</span>
+          </a>
+          <a
+            href="#"
+            class="m-menu__link m-menu__toggle"
+            *ngIf="item.subItems"
+            (click)="toggleSubMenu(item)"
+          >
+            <i class="m-menu__link-icon {{ item.icon }}"></i>
+            <span class="m-menu__link-text">{{ item.label }}</span>
+            <i class="m-menu__ver-arrow la la-angle-right"></i>
+          </a>
+          <div class="m-menu__submenu" *ngIf="item.subItems">
+            <span class="m-menu__arrow"></span>
+            <ul class="m-menu__subnav">
+              <ng-container *ngFor="let subItem of item.subItems">
+                <li
+                  class="m-menu__item"
+                  *ngIf="subItem.label"
+                  [routerLinkActive]="['m-menu__item--active']"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  [attr.aria-haspopup]="subItem.subItems ? 'true' : null"
+                >
+                  <a [routerLink]="subItem.link" class="m-menu__link">
+                    <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                      <span></span>
+                    </i>
+                    <span class="m-menu__link-text">{{ subItem.label }}</span>
+                  </a>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+        </li>
+      </ng-container>
+    </ul>
 
-					</ul>
-				</div>
-			</li>
-			
-			
-			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
-				[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
-				<a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
-					<i class="m-menu__link-icon flaticon-users"></i>
-					<span class="m-menu__link-text">
-						Teachers
-					</span>
-					<i class="m-menu__ver-arrow la la-angle-right"></i>
-				</a>
-				<div class="m-menu__submenu">
-					<span class="m-menu__arrow"></span>
-					<ul class="m-menu__subnav">
-						<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a href="#" class="m-menu__link">
-								<span class="m-menu__link-text">
-									Teachers
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/teacher" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Teacher List
-								</span>
-							</a>
-						</li>
-						<!-- <li class="m-menu__item" routerLinkActive="m-menu__item--active" [routerLinkActiveOptions]="{ exact: true }"  aria-haspopup="true" >
-							<a  routerLink="/teacher-leave" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Teachers Leave
-								</span>
-							</a>
-						</li> -->
+    <!-- <ul class="m-menu__nav m-menu__nav--dropdown-submenu-arrow">
+      <li
+        class="m-menu__item"
+        routerLinkActive="m-menu__item--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-haspopup="true"
+      >
+        <a routerLink="/dashboard" class="m-menu__link">
+          <i class="m-menu__link-icon flaticon-line-graph"></i>
+          <span class="m-menu__link-title">
+            <span class="m-menu__link-wrap">
+              <span class="m-menu__link-text"> Dashboard </span>
+              <span class="m-menu__link-badge">
+              
+              </span>
+            </span>
+          </span>
+        </a>
+      </li>
+      <li
+        class="m-menu__item m-menu__item--submenu"
+        routerLinkActive="m-menu__item--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-haspopup="true"
+        data-menu-submenu-toggle="hover"
+      >
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
+          <i class="m-menu__link-icon fa fa-user-plus"></i>
+          <span class="m-menu__link-text"> Admission </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li
+              class="m-menu__item m-menu__item--parent"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text"> Admission </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/admission" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Admission List </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/division-allocation" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Division Allocation </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
 
-					</ul>
-				</div>
-			</li>
+      <li
+        class="m-menu__item m-menu__item--submenu"
+        routerLinkActive="m-menu__item--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-haspopup="true"
+        data-menu-submenu-toggle="hover"
+      >
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
+          <i class="m-menu__link-icon flaticon-users"></i>
+          <span class="m-menu__link-text"> Teachers </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li
+              class="m-menu__item m-menu__item--parent"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text"> Teachers </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/teacher" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Teacher List </span>
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+      </li>
 
-			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
-				[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
-				<a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
-					<i class="m-menu__link-icon flaticon-user"></i>
-					<span class="m-menu__link-text">
-						Student
-					</span>
-					<i class="m-menu__ver-arrow la la-angle-right"></i>
-				</a>
-				<div class="m-menu__submenu">
-					<span class="m-menu__arrow"></span>
-					<ul class="m-menu__subnav">
-						<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a href="#" class="m-menu__link">
-								<span class="m-menu__link-text">
-									Student
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/student" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Student List
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/absent-student" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Absent Student List
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/today-absent-student" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Today Absent Student
-								</span>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</li>
-			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
-				[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
-				<a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
-					<i class="m-menu__link-icon flaticon-list-1"></i>
-					<span class="m-menu__link-text">
-						Attendance
-					</span>
-					<i class="m-menu__ver-arrow la la-angle-right"></i>
-				</a>
-				<div class="m-menu__submenu">
-					<span class="m-menu__arrow"></span>
-					<ul class="m-menu__subnav">
-						<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a href="#" class="m-menu__link">
-								<span class="m-menu__link-text">
-									Attendance List
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/attendance" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Attendance
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/pending-attendance-record" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Pending Attendance List
-								</span>
-							</a>
-						</li>
+      <li
+        class="m-menu__item m-menu__item--submenu"
+        routerLinkActive="m-menu__item--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-haspopup="true"
+        data-menu-submenu-toggle="hover"
+      >
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
+          <i class="m-menu__link-icon flaticon-user"></i>
+          <span class="m-menu__link-text"> Student </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li
+              class="m-menu__item m-menu__item--parent"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text"> Student </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/student" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Student List </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/absent-student" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Absent Student List </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/today-absent-student" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Today Absent Student </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li
+        class="m-menu__item m-menu__item--submenu"
+        routerLinkActive="m-menu__item--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-haspopup="true"
+        data-menu-submenu-toggle="hover"
+      >
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
+          <i class="m-menu__link-icon flaticon-list-1"></i>
+          <span class="m-menu__link-text"> Attendance </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li
+              class="m-menu__item m-menu__item--parent"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text"> Attendance List </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/attendance" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Attendance </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/pending-attendance-record" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Pending Attendance List </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li
+        class="m-menu__item m-menu__item--submenu"
+        routerLinkActive="m-menu__item--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-haspopup="true"
+        data-menu-submenu-toggle="hover"
+      >
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
+          <i class="m-menu__link-icon fa fa-edit"></i>
+          <span class="m-menu__link-text"> Test Marks </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li
+              class="m-menu__item m-menu__item--parent"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text"> Test Marks </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/test-marks" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Test Marks </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/pending-marks-test" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Pending Test Marks </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li
+        class="m-menu__item"
+        routerLinkActive="m-menu__item--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-haspopup="true"
+      >
+        <a routerLink="/timetable" class="m-menu__link">
+          <i class="m-menu__link-icon flaticon-calendar-2"></i>
+          <span class="m-menu__link-title">
+            <span class="m-menu__link-wrap">
+              <span class="m-menu__link-text"> Time Table </span>
+            </span>
+          </span>
+        </a>
+      </li>
 
+      <li
+        class="m-menu__item"
+        routerLinkActive="m-menu__item--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-haspopup="true"
+      >
+        <a routerLink="/homework" class="m-menu__link">
+          <i class="m-menu__link-icon fa fa-tasks"></i>
+          <span class="m-menu__link-title">
+            <span class="m-menu__link-wrap">
+              <span class="m-menu__link-text"> Home Work </span>
+            </span>
+          </span>
+        </a>
+      </li>
 
-					</ul>
-				</div>
-			</li>
-			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
-				[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
-				<a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
-					<i class="m-menu__link-icon fa fa-edit"></i>
-					<span class="m-menu__link-text">
-						Test Marks
-					</span>
-					<i class="m-menu__ver-arrow la la-angle-right"></i>
-				</a>
-				<div class="m-menu__submenu">
-					<span class="m-menu__arrow"></span>
-					<ul class="m-menu__subnav">
-						<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a href="#" class="m-menu__link">
-								<span class="m-menu__link-text">
-									Test Marks
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/test-marks" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Test Marks
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/pending-marks-test" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Pending Test Marks
-								</span>
-							</a>
-						</li>
+      <li
+        class="m-menu__item m-menu__item--submenu"
+        routerLinkActive="m-menu__item--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-haspopup="true"
+        data-menu-submenu-toggle="hover"
+      >
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
+          <i class="m-menu__link-icon fa fa-book"></i>
+          <span class="m-menu__link-text"> Library </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li
+              class="m-menu__item m-menu__item--parent"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text"> Library </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/books-allocation" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Book Allocation </span>
+              </a>
+            </li>
 
-					</ul>
-				</div>
-			</li>
-			<li class="m-menu__item  " routerLinkActive="m-menu__item--active"
-				[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-				<a routerLink="/timetable" class="m-menu__link">
-					<i class="m-menu__link-icon flaticon-calendar-2"></i>
-					<span class="m-menu__link-title">
-						<span class="m-menu__link-wrap">
-							<span class="m-menu__link-text">
-								Time Table
-							</span>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/library-books" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Books List </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li
+        class="m-menu__item m-menu__item--submenu"
+        routerLinkActive="m-menu__item--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-haspopup="true"
+        data-menu-submenu-toggle="hover"
+      >
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
+          <i class="m-menu__link-icon flaticon-interface-6"></i>
+          <span class="m-menu__link-text"> Other Doc </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li
+              class="m-menu__item m-menu__item--parent"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text"> Living certificate </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/attendance-report" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> ID cards </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/leaving-certificate" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Living certificate </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/school-docs" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> School Documents </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li
+        class="m-menu__item m-menu__item--submenu"
+        routerLinkActive="m-menu__item--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-haspopup="true"
+        data-menu-submenu-toggle="hover"
+      >
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
+          <i class="m-menu__link-icon flaticon-diagram"></i>
+          <span class="m-menu__link-text"> Report </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li
+              class="m-menu__item m-menu__item--parent"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text"> Report </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/attendance-report" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Attendance Report </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/student-class-list-report" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Class Sheet </span>
+              </a>
+            </li>
 
-						</span>
-					</span>
-				</a>
-			</li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/test-result-report" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Test Result </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/final-result-report" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Final Result </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li
+        class="m-menu__item m-menu__item--submenu"
+        routerLinkActive="m-menu__item--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-haspopup="true"
+        data-menu-submenu-toggle="hover"
+      >
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
+          <i class="m-menu__link-icon flaticon-settings"></i>
+          <span class="m-menu__link-text"> Setting </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li
+              class="m-menu__item m-menu__item--parent"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text"> Setting </span>
+              </a>
+            </li>
 
-			<li class="m-menu__item  " routerLinkActive="m-menu__item--active"
-				[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-				<a routerLink="/homework" class="m-menu__link">
-					<i class="m-menu__link-icon fa fa-tasks"></i>
-					<span class="m-menu__link-title">
-						<span class="m-menu__link-wrap">
-							<span class="m-menu__link-text">
-								Home Work
-							</span>
-
-						</span>
-					</span>
-				</a>
-			</li>
-			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
-				[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
-				<a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
-					<i class="m-menu__link-icon flaticon-settings"></i>
-					<span class="m-menu__link-text">
-						Setting
-					</span>
-					<i class="m-menu__ver-arrow la la-angle-right"></i>
-				</a>
-				<div class="m-menu__submenu">
-					<span class="m-menu__arrow"></span>
-					<ul class="m-menu__subnav">
-						<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a href="#" class="m-menu__link">
-								<span class="m-menu__link-text">
-									Setting
-								</span>
-							</a>
-						</li>
-
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/fees-structure" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Fees Structure
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/division" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Division List
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/subject" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Subject List
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/test" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Test List
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/class" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Class list
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/class-teacher" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Class Teacher
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/teacher-subject" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Teacher Subject
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/holidays" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Holidays List
-								</span>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</li>
-
-			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
-				[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
-				<a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
-					<i class="m-menu__link-icon flaticon-diagram"></i>
-					<span class="m-menu__link-text">
-						Report
-					</span>
-					<i class="m-menu__ver-arrow la la-angle-right"></i>
-				</a>
-				<div class="m-menu__submenu">
-					<span class="m-menu__arrow"></span>
-					<ul class="m-menu__subnav">
-						<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a href="#" class="m-menu__link">
-								<span class="m-menu__link-text">
-									Report
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/attendance-report" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Attendance Report
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/student-class-list-report" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Class Sheet
-								</span>
-							</a>
-						</li>
-						
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/test-result-report" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Test Result
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/final-result-report" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Final Result
-								</span>
-							</a>
-						</li>
-
-					</ul>
-				</div>
-			</li>
-			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
-				[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
-				<a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
-					<i class="m-menu__link-icon flaticon-interface-6"></i>
-					<span class="m-menu__link-text">
-						Other Doc
-					</span>
-					<i class="m-menu__ver-arrow la la-angle-right"></i>
-				</a>
-				<div class="m-menu__submenu">
-					<span class="m-menu__arrow"></span>
-					<ul class="m-menu__subnav">
-						<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a href="#" class="m-menu__link">
-								<span class="m-menu__link-text">
-									Living certificate
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/attendance-report" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									ID cards
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/test-result-report" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Sheet
-								</span>
-							</a>
-						</li>
-						<!-- <li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/final-result-report" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Final Result
-								</span>
-							</a>
-						</li> -->
-
-					</ul>
-				</div>
-			</li>
-
-			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
-				[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
-				<a href="#" class="m-menu__link m-menu__toggle" (click)="openMenu()">
-					<i class="m-menu__link-icon fa fa-book"></i>
-					<span class="m-menu__link-text">
-						Library
-					</span>
-					<i class="m-menu__ver-arrow la la-angle-right"></i>
-				</a>
-				<div class="m-menu__submenu">
-					<span class="m-menu__arrow"></span>
-					<ul class="m-menu__subnav">
-						<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a href="#" class="m-menu__link">
-								<span class="m-menu__link-text">
-									Library
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/books-allocation" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Book Allocation
-								</span>
-							</a>
-						</li>
-
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
-							[routerLinkActiveOptions]="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/library-books" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Books List
-								</span>
-							</a>
-						</li>
-
-					</ul>
-				</div>
-			</li>
-			<!-- <li class="m-menu__item  " routerLinkActive="m-menu__item--active" [routerLinkActiveOptions]="{ exact: true }"  aria-haspopup="true" >
-					<a  routerLink="/bus-track" class="m-menu__link">
-						<i class="m-menu__link-icon flaticon-map-location"></i>
-						<span class="m-menu__link-title">
-							<span class="m-menu__link-wrap">
-								<span class="m-menu__link-text">
-									Bus Track
-								</span>
-								
-							</span>
-						</span>
-					</a>
-				</li> -->
-			<!-- <li class="m-menu__section">
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/fees-structure" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Fees Structure </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/division" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Division List </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/subject" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Subject List </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/test" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Test List </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/class" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Class list </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/class-teacher" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Class Teacher </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/teacher-subject" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Teacher Subject </span>
+              </a>
+            </li>
+            <li
+              class="m-menu__item"
+              routerLinkActive="m-menu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              aria-haspopup="true"
+            >
+              <a routerLink="/holidays" class="m-menu__link">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text"> Holidays List </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+     
 				<h4 class="m-menu__section-text">
 					Components
 				</h4>
@@ -2263,9 +2397,9 @@
 						</li>
 					</ul>
 				</div>
-			</li> -->
-		</ul>
-	</div>
-	<!-- END: Aside Menu -->
+			</li> 
+    </ul> -->
+  </div>
+  <!-- END: Aside Menu -->
 </div>
 <!-- END: Left Aside -->

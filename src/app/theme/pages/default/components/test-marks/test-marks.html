@@ -1,4 +1,4 @@
-<div id="addTemplate" style="display: none;">
+<div id="addTemplate" style="display: none">
   <div class="m-subheader">
     <div class="d-flex align-items-center">
       <div class="mr-auto">
@@ -11,34 +11,23 @@
               <i class="m-nav__link-icon la la-home"></i>
             </a>
           </li>
-          <li class="m-nav__separator">
-            -
-          </li>
+          <li class="m-nav__separator">-</li>
           <li class="m-nav__item">
             <a href="" class="m-nav__link">
-              <span class="m-nav__link-text">
-                Testmarks List
-              </span>
+              <span class="m-nav__link-text"> Testmarks List </span>
             </a>
           </li>
-          <li class="m-nav__separator">
-            -
-          </li>
+          <li class="m-nav__separator">-</li>
           <li class="m-nav__item">
             <a href="" class="m-nav__link">
-              <span class="m-nav__link-text">
-                Add Testmarks
-              </span>
+              <span class="m-nav__link-text"> Add Testmarks </span>
             </a>
           </li>
-
         </ul>
       </div>
-
     </div>
   </div>
   <div class="m-content">
-
     <div class="row">
       <div class="col-lg-12">
         <!--begin::Portlet-->
@@ -49,150 +38,166 @@
                 <span class="m-portlet__head-icon m--hide">
                   <i class="la la-gear"></i>
                 </span>
-                <h3 class="m-portlet__head-text">
-                  Add Testmarks
-                </h3>
+                <h3 class="m-portlet__head-text">Add Testmarks</h3>
               </div>
             </div>
           </div>
           <!--begin::Form-->
-          <form id="addTestmarksForm1" [formGroup]="addTestmarksFormList"
+          <form
+            id="addTestmarksForm1"
+            [formGroup]="addTestmarksFormList"
             class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
-            (ngSubmit)="addTestmarksSubmitForm(addTestmarksFormList.value)">
+            (ngSubmit)="addTestmarksSubmitForm(addTestmarksFormList.value)"
+          >
             <div class="m-portlet__body">
               <div class="form-group m-form__group row">
                 <div class="col-lg-3">
-                  <label class="col-form-label">
-                    Select Class
-                  </label>
+                  <label class="col-form-label"> Select Class </label>
                   <div>
-
-                    <select class="form-control m-select2 class_select2_drop_down" id="add_class_select2_1"
-                     formControlName="classId">
-                    </select>
-
+                    <select
+                      class="form-control m-select2 class_select2_drop_down"
+                      id="add_class_select2_1"
+                      formControlName="classId"
+                    ></select>
                   </div>
                 </div>
                 <div class="col-lg-3">
-                  <label class="col-form-label">
-                    Select Div
-                  </label>
+                  <label class="col-form-label"> Select Div </label>
                   <div>
-                    <select class="form-control m-select2 division_select2_drop_down" id="m_select2_2"
-                     formControlName="divId">
-                    </select>
-
+                    <select
+                      class="form-control m-select2 division_select2_drop_down"
+                      id="m_select2_2"
+                      formControlName="divId"
+                    ></select>
                   </div>
                 </div>
                 <div class="col-lg-3">
-                  <label class="col-form-label">
-                    Select Test
-                  </label>
+                  <label class="col-form-label"> Select Test </label>
                   <div>
-                    <select class="form-control m-select2 test_select2_drop_down" id="m_select2_3"
-                     formControlName="testId">
-                    </select>
+                    <select
+                      class="form-control m-select2 test_select2_drop_down"
+                      id="m_select2_3"
+                      formControlName="testId"
+                    ></select>
                   </div>
                 </div>
                 <div class="col-lg-3">
-                  <label class="col-form-label">
-                    Select Subject
-                  </label>
+                  <label class="col-form-label"> Select Subject </label>
                   <div>
-                    <select class="form-control m-select2 subject_select2_drop_down" id="m_select2_4"
-                     formControlName="subId">
-                    </select>
+                    <select
+                      class="form-control m-select2 subject_select2_drop_down"
+                      id="m_select2_4"
+                      formControlName="subId"
+                    ></select>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+            <div
+              class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
+            >
               <div class="m-form__actions m-form__actions--solid">
                 <div class="row">
                   <div class="col-lg-2"></div>
                   <div class="col-lg-6">
-                    <button type="submit" class="btn btn-brand" [disabled]="!addTestmarksFormList.valid">Show</button>
+                    <button
+                      type="submit"
+                      class="btn btn-brand"
+                      [disabled]="!addTestmarksFormList.valid"
+                    >
+                      Show
+                    </button>
 
-                    <button type="button" (click)="listTemplate()" class="reload btn btn-secondary">Cancel</button>
+                    <button
+                      type="button"
+                      (click)="listTemplate()"
+                      class="reload btn btn-secondary"
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
           </form>
-          <div id="addTestmarksForm2" class="m-section m-form--group-seperator-dashed">
+          <div
+            id="addTestmarksForm2"
+            class="m-section m-form--group-seperator-dashed"
+          >
             <div class="m-section__content">
-              <form id="addStudentTestmarksForm"
+              <form
+                id="addStudentTestmarksForm"
                 class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
-                (ngSubmit)="addStudentTestmarksSumitForm(addStudentData)">
+                (ngSubmit)="addStudentTestmarksSumitForm(addStudentData)"
+              >
                 <table class="table table-striped m-table">
                   <thead>
                     <tr>
-                      <th>
-                        Roll No
-                      </th>
-                      <th>
-                        Student Name
-                      </th>
-                      <th>
-                        Class-Div
-                      </th>
-                      <th>
-                        Subject
-                      </th>
-                      <th>
-                        Testmarks
-                      </th>
-                      <th>
-                        Totalmarks
-                      </th>
+                      <th>Roll No</th>
+                      <th>Student Name</th>
+                      <th>Class-Div</th>
+                      <th>Subject</th>
+                      <th>Testmarks</th>
+                      <th>Totalmarks</th>
                     </tr>
                   </thead>
                   <tbody>
-
                     <tr *ngFor="let Data of addStudentData; let i=index">
-                      <th scope="row">
-
-                        {{Data.rollNo}}
-                      </th>
-                      <td>
-                        {{Data.studentName}}
-                      </td>
-                      <td>
-                        {{Data.className}}-{{Data.divName}}
-                      </td>
-                      <td>
-                        {{Data.subName}}
-                      </td>
+                      <th scope="row">{{Data.rollNo}}</th>
+                      <td>{{Data.studentName}}</td>
+                      <td>{{Data.className}}-{{Data.divName}}</td>
+                      <td>{{Data.subName}}</td>
 
                       <td>
-
                         <div class="col-lg-6">
-                          <input class="form-control" (change)="setMarksVal($event.target,addStudentData[i].totalMarks)"
-                            value="{{Data.getMarks}}" max="{{addStudentData[i].totalMarks}}" type="number"
-                            [(ngModel)]="addStudentData[i].getMarks" [ngModelOptions]="{standalone: true}">
+                          <input
+                            class="form-control"
+                            (change)="setMarksVal($event.target,addStudentData[i].totalMarks)"
+                            value="{{Data.getMarks}}"
+                            max="{{addStudentData[i].totalMarks}}"
+                            type="number"
+                            [(ngModel)]="addStudentData[i].getMarks"
+                            [ngModelOptions]="{standalone: true}"
+                          />
                         </div>
-
                       </td>
                       <td>
-
                         <div class="col-lg-6">
-
-                          <input class="form-control totalmarksval" (change)="setTotalVal($event)" [value]="Data.totalMarks" type="number" [(ngModel)]="addStudentData[i].totalMarks" [ngModelOptions]="{standalone: true}">
-                  
+                          <input
+                            class="form-control totalmarksval"
+                            (change)="setTotalVal($event)"
+                            [value]="Data.totalMarks"
+                            type="number"
+                            [(ngModel)]="addStudentData[i].totalMarks"
+                            [ngModelOptions]="{standalone: true}"
+                          />
                         </div>
-
                       </td>
                     </tr>
                   </tbody>
                 </table>
-                <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                <div
+                  class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
+                >
                   <div class="m-form__actions m-form__actions--solid">
                     <div class="row">
                       <div class="col-lg-8"></div>
                       <div class="col-lg-4">
-                        <button type="submit" id="editTestmarksData" class="btn btn-brand">Submit</button>
+                        <button
+                          type="submit"
+                          id="editTestmarksData"
+                          class="btn btn-brand"
+                        >
+                          Submit
+                        </button>
 
-                        <button type="button" (click)="listTemplate()" class="reload btn btn-secondary">Cancel</button>
+                        <button
+                          type="button"
+                          (click)="listTemplate()"
+                          class="reload btn btn-secondary"
+                        >
+                          Cancel
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -207,7 +212,7 @@
     </div>
   </div>
 </div>
-<div id="editTemplate" style="display: none;">
+<div id="editTemplate" style="display: none">
   <div class="m-subheader">
     <div class="d-flex align-items-center">
       <div class="mr-auto">
@@ -220,34 +225,23 @@
               <i class="m-nav__link-icon la la-home"></i>
             </a>
           </li>
-          <li class="m-nav__separator">
-            -
-          </li>
+          <li class="m-nav__separator">-</li>
           <li class="m-nav__item">
             <a href="" class="m-nav__link">
-              <span class="m-nav__link-text">
-                Testmarks List
-              </span>
+              <span class="m-nav__link-text"> Testmarks List </span>
             </a>
           </li>
-          <li class="m-nav__separator">
-            -
-          </li>
+          <li class="m-nav__separator">-</li>
           <li class="m-nav__item">
             <a href="" class="m-nav__link">
-              <span class="m-nav__link-text">
-                Edit Testmarks
-              </span>
+              <span class="m-nav__link-text"> Edit Testmarks </span>
             </a>
           </li>
-
         </ul>
       </div>
-
     </div>
   </div>
   <div class="m-content">
-
     <div class="row">
       <div class="col-lg-12">
         <!--begin::Portlet-->
@@ -258,21 +252,27 @@
                 <span class="m-portlet__head-icon m--hide">
                   <i class="la la-gear"></i>
                 </span>
-                <h3 class="m-portlet__head-text">
-                  Edit Testmarks
-                </h3>
+                <h3 class="m-portlet__head-text">Edit Testmarks</h3>
               </div>
             </div>
             <div class="m-portlet__head-tools">
               <ul class="m-portlet__nav">
                 <li class="m-portlet__nav-item">
-                  <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                    data-dropdown-toggle="hover" aria-expanded="true">
-                    <a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                  <div
+                    class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                    data-dropdown-toggle="hover"
+                    aria-expanded="true"
+                  >
+                    <a
+                      href="#"
+                      class="m-portlet__nav-link btn btn-lg btn-secondary m-btn m-btn--icon m-btn--icon-only m-btn--pill m-dropdown__toggle"
+                    >
                       <i class="la la-ellipsis-h m--font-brand"></i>
                     </a>
                     <div class="m-dropdown__wrapper">
-                      <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                      <span
+                        class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"
+                      ></span>
                       <div class="m-dropdown__inner">
                         <div class="m-dropdown__body">
                           <div class="m-dropdown__content">
@@ -282,24 +282,35 @@
                                   Quick Actions
                                 </span>
                               </li>
-    
+
                               <li class="m-nav__item">
-                                <a href="" class="m-nav__link" (click)="genratefile()">
-                                  <i class="m-nav__link-icon fa fa-file-excel-o"></i>
+                                <a
+                                  href=""
+                                  class="m-nav__link"
+                                  (click)="genratefile()"
+                                >
+                                  <i
+                                    class="m-nav__link-icon fa fa-file-excel-o"
+                                  ></i>
                                   <span class="m-nav__link-text">
-                                   Export PDF
+                                    Export PDF
                                   </span>
                                 </a>
                               </li>
                               <li class="m-nav__item">
-                                <a (click)="tableToExcel('exportTable')" href="" class="m-nav__link">
-                                  <i class="m-nav__link-icon fa fa-file-pdf-o"></i>
+                                <a
+                                  (click)="tableToExcel('exportTable')"
+                                  href=""
+                                  class="m-nav__link"
+                                >
+                                  <i
+                                    class="m-nav__link-icon fa fa-file-pdf-o"
+                                  ></i>
                                   <span class="m-nav__link-text">
                                     Export Excel
                                   </span>
                                 </a>
                               </li>
-    
                             </ul>
                           </div>
                         </div>
@@ -314,80 +325,83 @@
             <div class="form-group m-form__group">
               <div class="m-section m-form--group-seperator-dashed">
                 <div class="m-section__content">
-                  <form id="editStudentTestmarksForm"
+                  <form
+                    id="editStudentTestmarksForm"
                     class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
-                    (ngSubmit)="editStudentTestmarksSumitForm(editTestMarksData)">
-                    <table class="table table-striped m-table" id="contentToConvert">
+                    (ngSubmit)="editStudentTestmarksSumitForm(editTestMarksData)"
+                  >
+                    <table
+                      class="table table-striped m-table"
+                      id="contentToConvert"
+                    >
                       <thead>
                         <tr>
-                          <th>
-                            Roll No
-                          </th>
-                          <th>
-                            Student Name
-                          </th>
-                          <th>
-                            Class-Div
-                          </th>
-                          <th>
-                            Subject
-                          </th>
-                          <th>
-                            Testmarks
-                          </th>
-                          <th>
-                            Totalmarks
-                          </th>
+                          <th>Roll No</th>
+                          <th>Student Name</th>
+                          <th>Class-Div</th>
+                          <th>Subject</th>
+                          <th>Testmarks</th>
+                          <th>Totalmarks</th>
                         </tr>
                       </thead>
                       <tbody>
-
                         <tr *ngFor="let Data of editTestMarksData; let i=index">
-                          <th scope="row">
-
-                            {{Data.TestmarksStudent.rollNo}}
-                          </th>
+                          <th scope="row">{{Data.TestmarksStudent.rollNo}}</th>
                           <td>
-                            {{Data.TestmarksStudent.firstName}} {{Data.TestmarksStudent.lastName}}
+                            {{Data.TestmarksStudent.firstName}}
+                            {{Data.TestmarksStudent.lastName}}
                           </td>
                           <td>
                             {{Data.TestmarksClass.className}}-{{Data.TestmarksDivision.divName}}
                           </td>
-                          <td>
-                            {{Data.TestmarksSubject.subName}}
-                          </td>
+                          <td>{{Data.TestmarksSubject.subName}}</td>
 
                           <td>
-
                             <div class="col-lg-6">
-                              <input class="form-control"
+                              <input
+                                class="form-control"
                                 (change)="setMarksVal($event.target,editTestMarksData[i].totalMarks)"
-                                value="{{Data.getMarks}}" max="{{editTestMarksData[i].totalMarks}}" type="number"
-                                [(ngModel)]="editTestMarksData[i].getMarks" [ngModelOptions]="{standalone: true}">
+                                value="{{Data.getMarks}}"
+                                max="{{editTestMarksData[i].totalMarks}}"
+                                type="number"
+                                [(ngModel)]="editTestMarksData[i].getMarks"
+                                [ngModelOptions]="{standalone: true}"
+                              />
                             </div>
-
                           </td>
                           <td>
-
                             <div class="col-lg-6">
-                              
-                                <input class="form-control totalmarksval" [value]="Data.totalMarks" type="number" [(ngModel)]="editTestMarksData[i].totalMarks" [ngModelOptions]="{standalone: true}" (change)="setTotalVal($event)">
-
+                              <input
+                                class="form-control totalmarksval"
+                                [value]="Data.totalMarks"
+                                type="number"
+                                [(ngModel)]="editTestMarksData[i].totalMarks"
+                                [ngModelOptions]="{standalone: true}"
+                                (change)="setTotalVal($event)"
+                              />
                             </div>
-
                           </td>
                         </tr>
                       </tbody>
                     </table>
-                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                    <div
+                      class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
+                    >
                       <div class="m-form__actions m-form__actions--solid">
                         <div class="row">
                           <div class="col-lg-8"></div>
                           <div class="col-lg-4">
-                            <button type="submit" class="btn btn-brand">Submit</button>
+                            <button type="submit" class="btn btn-brand">
+                              Submit
+                            </button>
 
-                            <button type="button" (click)="listTemplate()"
-                              class="reload btn btn-secondary">Cancel</button>
+                            <button
+                              type="button"
+                              (click)="listTemplate()"
+                              class="reload btn btn-secondary"
+                            >
+                              Cancel
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -411,9 +425,7 @@
         <h3 class="m-subheader__title m-subheader__title--separator">
           Test Marks List
         </h3>
-
       </div>
-
     </div>
   </div>
   <div class="m-content">
@@ -421,9 +433,7 @@
       <div class="m-portlet__head">
         <div class="m-portlet__head-caption">
           <div class="m-portlet__head-title">
-            <h3 class="m-portlet__head-text">
-              Test Marks List
-            </h3>
+            <h3 class="m-portlet__head-text">Test Marks List</h3>
           </div>
         </div>
         <!-- <div class="m-portlet__head-tools">
@@ -485,14 +495,20 @@
       </div>
       <div class="m-portlet__body">
         <!--begin: Search Form -->
-        <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+        <div
+          class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30"
+        >
           <div class="row align-items-center">
             <div class="col-xl-8 order-2 order-xl-1">
               <div class="form-group m-form__group row align-items-center">
                 <div class="col-md-4">
                   <div class="m-input-icon m-input-icon--left">
-                    <input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
-                      id="m_form_search">
+                    <input
+                      type="text"
+                      class="form-control m-input m-input--solid"
+                      placeholder="Search..."
+                      id="m_form_search"
+                    />
                     <span class="m-input-icon__icon m-input-icon__icon--left">
                       <span>
                         <i class="la la-search"></i>
@@ -503,14 +519,14 @@
               </div>
             </div>
             <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-
-              <a (click)="addTemplate()" href="#"
-                class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+              <a
+                (click)="addTemplate()"
+                href="#"
+                class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill"
+              >
                 <span>
                   <i class="flaticon-file"></i>
-                  <span>
-                    Add Test Record
-                  </span>
+                  <span> Add Test Record </span>
                 </span>
               </a>
               <div class="m-separator m-separator--dashed d-xl-none"></div>
@@ -525,8 +541,8 @@
     </div>
   </div>
 </div>
-<div >
-  <table id="exportTable" style="display:none">
+<div>
+  <table id="exportTable" style="display: none">
     <thead>
       <tr>
         <th>Sr No</th>
@@ -541,18 +557,14 @@
     <tbody>
       <tr *ngFor="let Data of editTestMarksData;let i = index">
         <td>{{i+1}}</td>
-        <td>
-          {{Data.TestmarksStudent.rollNo}}
-        </td>
+        <td>{{Data.TestmarksStudent.rollNo}}</td>
         <td>
           {{Data.TestmarksStudent.firstName}} {{Data.TestmarksStudent.lastName}}
         </td>
         <td>
           {{Data.TestmarksClass.className}}-{{Data.TestmarksDivision.divName}}
         </td>
-        <td>
-          {{Data.TestmarksSubject.subName}}
-        </td>
+        <td>{{Data.TestmarksSubject.subName}}</td>
         <td>{{Data.getMarks}}</td>
         <td>{{Data.totalMarks}}</td>
       </tr>

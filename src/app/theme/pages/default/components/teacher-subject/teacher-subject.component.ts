@@ -107,6 +107,24 @@ export class TeacherSubjectComponent implements OnInit, AfterViewInit {
         });
   
     }
+    
+    private deleteTeacherSubjectData(id:any){
+      const confirmation = window.confirm('Are you sure you want to delete this record?');
+    if (!confirmation) {
+      return; // Do nothing if the user cancels the confirmation
+    }
+  
+      this.baseservice.delete(<string>('teachersubject/' + id)).subscribe((data: any) => {
+        this.getTeacherSubjectList();
+          this.listTemplate();
+          toastr.success('Record deleted successfully...!');
+      },
+        (err) => {
+          toastr.error('Something went wrong...!');
+        });
+  
+    }
+    
   private editTeacherSubjectData(data:any){
     this.editTemplate();
     let excludeData  = data.split('*');
@@ -250,21 +268,6 @@ showtablerecord(data:any) {
          }
         },
       },
-      // {
-      //   field: 'active',
-      //   title: 'Status',
-      //   template: (row: any) => {
-      //     const status: { [key: string]: { title: string, class: string } } = {
-      //       'true': { title: 'Active', class: 'm-badge--success' },
-      //       'false': { title: 'Inactive', class: 'm-badge--danger' }
-      //     };
-          
-      //     // Check if the row.active value exists in the status object, if not, default to the inactive status.
-      //     const currentStatus = status[row.active.toString()] || status['false'];
-          
-      //     return `<span class="m-badge ${currentStatus.class} m-badge--wide">${currentStatus.title}</span>`;
-      //   }        
-      // },
       {
         field: 'createdAt',
         width: 110,
@@ -272,9 +275,13 @@ showtablerecord(data:any) {
         sortable: false,
         overflow: 'visible',
         template: (row: any) => {
-          return `<span class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
-            <i class="edit-button la la-edit" data-id="${row.classId}*${row.divId}*${row.subId}*${row.teacherId}"></i>
-          </span>`;
+          if(row.id==null){
+            return `<span class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"><i class="edit-button la la-edit" data-id="${row.classId}*${row.divId}*${row.subId}*${row.teacherId}"></i></span>`;
+          }else{
+            return `<span class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"><i class="edit-button la la-edit" data-id="${row.classId}*${row.divId}*${row.subId}*${row.teacherId}"></i>
+            </span><span class="btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"><i class="delete-button fa fa-trash-o" data-id="${row.id}"></i></span>`;
+          }
+         
         }
       }
     ]
@@ -313,90 +320,12 @@ showtablerecord(data:any) {
       const id = (e.target as HTMLElement).getAttribute('data-id');
       this.editTeacherSubjectData(id);
     }
+    if ((e.target as HTMLElement).classList.contains('delete-button')) {
+      e.preventDefault();
+      const id = (e.target as HTMLElement).getAttribute('data-id');
+      this.deleteTeacherSubjectData(id);
+    }
   });
 }
 
-  // public showtablerecord(data:any) {
-  //   this.datatable = {
-  //     data: {
-  //       type: 'local',
-  //       source: this.subjects,
-  //       pageSize: 10
-  //     },
-  //     layout: {
-  //       theme: 'default',
-  //       class: '',
-  //       scroll: false,
-  //       height: 450,
-  //       footer: false
-  //     },
-  //     sortable: true,
-  //     pagination: true,
-  //     columns: [
-  //       {
-  //         field: 'id',
-  //         title: 'Sr.No.'
-  //       },
-  //       {
-  //         field: 'subName',
-  //         title: 'Subject Name'
-  //       },
-  //       {
-  //         field: 'active',
-  //         title: 'Status',
-  //         template: (row: any) => {
-  //           const status = {
-  //             true: { title: 'Active', class: 'm-badge--success' },
-  //             false: { title: 'Inactive', class: 'm-badge--danger' }
-  //           };
-  //           return `<span class="m-badge ${status[row.active].class} m-badge--wide">${status[row.active].title}</span>`;
-  //         }
-  //       },
-  //       {
-  //         field: 'createdAt',
-  //         width: 110,
-  //         title: 'Actions',
-  //         sortable: false,
-  //         overflow: 'visible',
-  //         template: (row: any) => {
-  //           return `<span class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
-  //             <i class="edit-button la la-edit" data-id="${row.id}*${row.subName}"></i>
-  //           </span>`;
-  //         }
-  //       }
-  //     ]
-  //   };
-
-  //   const query = this.datatable.data;
-
-  //   // Attach event listeners using Angular's Renderer2
-  //   const mFormSearch = document.getElementById('m_form_search') as HTMLInputElement;
-  //   const mFormStatus = document.getElementById('m_form_status') as HTMLSelectElement;
-  //   const mFormType = document.getElementById('m_form_type') as HTMLSelectElement;
-
-  //   mFormSearch.addEventListener('keyup', (event) => {
-  //     this.datatable.search((event.target as HTMLInputElement).value.toLowerCase());
-  //   });
-  //   mFormSearch.value = query.generalSearch || '';
-
-  //   mFormStatus.addEventListener('change', () => {
-  //     this.datatable.search(mFormStatus.value, 'Status');
-  //   });
-  //   mFormStatus.value = query.Status || '';
-
-  //   mFormType.addEventListener('change', () => {
-  //     this.datatable.search(mFormType.value, 'Type');
-  //   });
-  //   mFormType.value = query.Type || '';
-
-  //   // Use Angular's Renderer2 for better event handling
-  //   const editButtons = document.querySelectorAll('.edit-button');
-  //   editButtons.forEach((button) => {
-  //     button.addEventListener('click', (event) => {
-  //       event.preventDefault();
-  //       const id = event.target.getAttribute('data-id');
-  //       this.editTeacherSubjectData(id);
-  //     });
-  //   });
-  // }
 }
