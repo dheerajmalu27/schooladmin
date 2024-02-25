@@ -1,0 +1,290 @@
+<!-- BEGIN: Subheader -->
+<!-- <div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        Newsevents
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a href="#" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          -
+        </li>
+        <li class="m-nav__item">
+          <a href="" class="m-nav__link">
+            <span class="m-nav__link-text">
+              Home
+            </span>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          -
+        </li>
+        <li class="m-nav__item">
+          <a href="" class="m-nav__link">
+            <span class="m-nav__link-text">
+              Add Newsevents
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+
+    </div>
+  </div>
+</div> -->
+<!-- END: Subheader -->
+
+<div class="m-content" id="addTemplate" style="display: none">
+  <div class="row">
+    <div class="col-lg-12">
+      <!--begin::Portlet-->
+      <div class="m-portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <span class="m-portlet__head-icon m--hide">
+                <i class="la la-gear"></i>
+              </span>
+              <h3 class="m-portlet__head-text">Add Newsevents</h3>
+            </div>
+          </div>
+        </div>
+
+        <form
+          class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+          [formGroup]="addNewseventsForm"
+          (ngSubmit)="addNewseventsSubmitForm(addNewseventsForm.value)"
+        >
+          <div class="m-portlet__body">
+            <div
+              class="form-group m-form__group row"
+              [ngClass]="{'has-danger':!addNewseventsForm.controls['classId'].valid && addNewseventsForm.controls['classId'].touched}"
+            >
+              <label class="col-lg-2 col-form-label">Select Class:</label>
+              <div class="col-lg-6">
+                <div class="input-group date">
+                  <select
+                    class="form-control m-select2 class_select2_drop_down"
+                    id="m_select2_1"
+                    formControlName="classId"
+                  >
+                    <option [ngValue]="null" disabled>Select a class</option>
+                  </select>
+                </div>
+                <span
+                  *ngIf="addNewseventsForm.controls['classId'].hasError('required') && addNewseventsForm.controls['classId'].touched"
+                  class="m--font-danger"
+                  >You must include a homework title.</span
+                >
+              </div>
+            </div>
+            <div
+              class="form-group m-form__group row"
+              [ngClass]="{'has-danger':!addNewseventsForm.controls['divId'].valid && addNewseventsForm.controls['divId'].touched}"
+            >
+              <label class="col-lg-2 col-form-label">Select Division:</label>
+              <div class="col-lg-6">
+                <div class="input-group date">
+                  <select
+                    class="form-control m-select2 division_select2_drop_down"
+                    id="m_select2_2"
+                    formControlName="divId"
+                  >
+                    <option [ngValue]="null">Select a division</option>
+                  </select>
+                </div>
+                <span
+                  *ngIf="addNewseventsForm.controls['divId'].hasError('required') && addNewseventsForm.controls['divId'].touched"
+                  class="m--font-danger"
+                  >You must include a homework division.</span
+                >
+              </div>
+            </div>
+            <div
+              class="form-group m-form__group row"
+              [ngClass]="{'has-danger':!addNewseventsForm.controls['subId'].valid && addNewseventsForm.controls['subId'].touched}"
+            >
+              <label class="col-lg-2 col-form-label">Select Subject:</label>
+              <div class="col-lg-6">
+                <div class="input-group date">
+                  <select
+                    class="form-control m-select2 subject_select2_drop_down"
+                    id="m_select2_2"
+                    formControlName="subId"
+                  >
+                    <option [ngValue]="null">Select a subject</option>
+                  </select>
+                </div>
+                <span
+                  *ngIf="addNewseventsForm.controls['subId'].hasError('required') && addNewseventsForm.controls['subId'].touched"
+                  class="m--font-danger"
+                  >You must include a homework subId.</span
+                >
+              </div>
+            </div>
+            <div
+              class="form-group m-form__group row"
+              [ngClass]="{'has-danger':!addNewseventsForm.controls['title'].valid && addNewseventsForm.controls['title'].touched}"
+            >
+              <label class="col-lg-2 col-form-label">Newsevents Title:</label>
+              <div class="col-lg-6">
+                <div class="input-group date">
+                  <input
+                    class="form-control m-input"
+                    type="text"
+                    autocomplete="off"
+                    formControlName="title"
+                  />
+                </div>
+                <span
+                  *ngIf="addNewseventsForm.controls['title'].hasError('required') && addNewseventsForm.controls['title'].touched"
+                  class="m--font-danger"
+                  >You must include a homework title.</span
+                >
+              </div>
+            </div>
+            <div
+              class="form-group m-form__group row"
+              [ngClass]="{'has-danger':!addNewseventsForm.controls['description'].valid && addNewseventsForm.controls['description'].touched}"
+            >
+              <label class="col-lg-2 col-form-label"
+                >Newsevents Description:</label
+              >
+              <div class="col-lg-6">
+                <div class="input-group date">
+                  <div class="summernote"></div>
+                </div>
+                <span
+                  *ngIf="addNewseventsForm.controls['description'].hasError('required') && addNewseventsForm.controls['description'].touched"
+                  class="m--font-danger"
+                  >You must include a homework description.</span
+                >
+              </div>
+            </div>
+
+            <div
+              class="form-group m-form__group row"
+              [ngClass]="{'has-danger':!addNewseventsForm.controls['deadline'].valid && addNewseventsForm.controls['deadline'].touched}"
+            >
+              <label class="col-lg-2 col-form-label"
+                >Newsevents Deadline:</label
+              >
+              <div class="col-lg-6">
+                <div class="input-group date">
+                  <input
+                    type="text"
+                    id="m_datepickerSet"
+                    autocomplete="off"
+                    class="form-control m-input"
+                    formControlName="deadline"
+                    name="deadline"
+                    placeholder="Select date"
+                  />
+                  <span class="input-group-addon">
+                    <i class="la la-calendar-check-o"></i>
+                  </span>
+                </div>
+                <span
+                  *ngIf="addNewseventsForm.controls['deadline'].hasError('required') && addNewseventsForm.controls['deadline'].touched"
+                  class="m--font-danger"
+                  >You must include a homework deadline.</span
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
+          >
+            <div class="m-form__actions m-form__actions--solid">
+              <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-6">
+                  <button
+                    type="submit"
+                    class="btn btn-brand"
+                    [disabled]="!addNewseventsForm.valid"
+                  >
+                    Submit
+                  </button>
+
+                  <button
+                    type="button"
+                    (click)="listTemplate()"
+                    class="btn btn-secondary"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!--end::Form-->
+      </div>
+      <!--end::Portlet-->
+    </div>
+  </div>
+</div>
+
+<div class="m-content" id="listTemplate">
+  <div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+      <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+          <h3 class="m-portlet__head-text">Newsevents List</h3>
+        </div>
+      </div>
+    </div>
+    <div class="m-portlet__body">
+      <!--begin: Search Form -->
+      <div
+        class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30"
+      >
+        <div class="row align-items-center">
+          <div class="col-xl-8 order-2 order-xl-1">
+            <div class="form-group m-form__group row align-items-center">
+              <div class="col-md-4">
+                <div class="m-input-icon m-input-icon--left">
+                  <input
+                    type="text"
+                    class="form-control m-input m-input--solid"
+                    placeholder="Search..."
+                    id="m_form_search"
+                  />
+                  <span class="m-input-icon__icon m-input-icon__icon--left">
+                    <span>
+                      <i class="la la-search"></i>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+            <a
+              (click)="addTemplate()"
+              href="#"
+              class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill"
+            >
+              <span>
+                <i class="flaticon-add"></i>
+                <span> add homework </span>
+              </span>
+            </a>
+            <div class="m-separator m-separator--dashed d-xl-none"></div>
+          </div>
+        </div>
+      </div>
+      <!--end: Search Form -->
+      <!--begin: Datatable -->
+      <div class="m_datatable" id="local_data"></div>
+      <!--end: Datatable -->
+    </div>
+  </div>
+</div>
