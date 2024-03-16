@@ -36,8 +36,22 @@
                 ST- {{studentInfo['id']}} </a
               ><br />
               <a class="m-card-profile__email m-link">
-                <b>Class:</b>
+                <b
+                  *ngIf="studentInfo['StudentClass']?.className && studentInfo['StudentDivision']?.divName"
+                >
+                  Class : {{studentInfo['StudentClass']?.className}} -
+                  {{studentInfo['StudentDivision']?.divName}}
+                </b>
               </a>
+
+              <br />
+
+              <span
+                class="export-pdf m-badge {{ studentInfo['active'] == 1 ? 'm-badge--success' : 'm-badge--danger' }} m-badge--wide"
+                style="font-size: 16px; padding: 5px; cursor: pointer"
+              >
+                {{ studentInfo['active'] == 1 ? 'Active' : 'Inactive' }}</span
+              >
             </div>
           </div>
 
@@ -97,6 +111,24 @@
                 </div>
               </div>
             </div>
+            <div class="m-widget1__item">
+              <div class="row m-row--no-padding align-items-center">
+                <div class="col">
+                  <span class="m-widget1__desc">
+                    <b>Religion:</b> {{studentInfo['religion']}}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="m-widget1__item">
+              <div class="row m-row--no-padding align-items-center">
+                <div class="col">
+                  <span class="m-widget1__desc">
+                    <b>Caste:</b> {{studentInfo['caste']}}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -120,7 +152,7 @@
                   Overview
                 </a>
               </li>
-              <li class="nav-item m-tabs__item">
+              <li class="nav-item m-tabs__item" (click)="showFeesDetailList()">
                 <a
                   class="nav-link m-tabs__link"
                   data-toggle="tab"
@@ -387,7 +419,13 @@
             class="tab-pane active"
             id="m_user_profile_tab_2"
             style="display: none"
-          ></div>
+          >
+            <div class="m-portlet__body">
+              <!--begin: Datatable -->
+              <div class="m_datatable_fees" id="fees_data"></div>
+              <!--end: Datatable -->
+            </div>
+          </div>
           <div
             class="tab-pane active"
             id="m_user_profile_tab_3"

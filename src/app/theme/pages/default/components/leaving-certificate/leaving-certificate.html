@@ -611,183 +611,243 @@
           class="close"
           (click)="hideModelPopup()"
         >
-          <span aria-hidden="true">×</span>
+          <span aria-hidden="true"><i class="fa fa-close"></i></span>
         </button>
       </div>
-      <div class="modal-body" id="contentData">
-        <div class="row">
-          <div class="col-12">
-            <div class="m-portlet m-portlet--full-height m-portlet--fit">
-              <div class="m-portlet__head">
-                <div class="m-portlet__head-title">
-                  <h3 class="m-portlet__head-text">
-                    Student Leaving Certificate
-                  </h3>
-                </div>
-                <div class="m-portlet__head-tools">
-                  <!-- Add any additional tools or buttons here if needed -->
-                </div>
-              </div>
-              <div class="m-portlet__body">
-                <div class="card">
-                  <div class="card-header bg-primary text-white">
-                    Student Information
-                  </div>
-                  <div class="card-body">
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>Student ID:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.studentId
-                        }}
-                      </div>
+      <div class="modal-body">
+        <div
+          class="container table-responsive mt-5 justify-content-center contentData"
+          id="contentData"
+          style="width: 850px"
+        >
+          <table class="table table-bordered" style="margin: 10px">
+            <thead class="thead-dark">
+              <tr>
+                <th colspan="2" class="text-center">
+                  <div class="row">
+                    <!-- School Logo Column -->
+                    <div class="col-md-2 text-center">
+                      <img
+                        src="{{ imageUrlPath }}{{ leavingCertificateStudentData.schoolLogo }}"
+                        alt="School Logo"
+                        style="max-width: 100px"
+                      />
                     </div>
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>Full Name:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.firstName
-                        }} {{
-                        leavingCertificateStudentData?.leavingcertificates?.middleName
-                        }} {{
-                        leavingCertificateStudentData?.leavingcertificates?.lastName
-                        }}
-                      </div>
-                    </div>
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>Date of Birth:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.dateOfBirth
-                        }}
-                      </div>
-                    </div>
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>Gender:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.gender
-                        }}
-                      </div>
-                    </div>
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>Roll No:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.rollNo
-                        }}
-                      </div>
-                    </div>
-
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>Mother's Name:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.motherName
-                        }}
-                      </div>
-                    </div>
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>Father's Name:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.fatherName
-                        }}
-                      </div>
-                    </div>
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>Nationality:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.nationality
-                        }}
-                      </div>
-                    </div>
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>Religion:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.religion
-                        }}
-                      </div>
-                    </div>
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>Caste:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.caste
-                        }}
-                      </div>
-                    </div>
-
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>Leaving Reason:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.leavingReason
-                        }}
-                      </div>
-                    </div>
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>General Conduct:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.generalConduct
-                        }}
-                      </div>
-                    </div>
-
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>Remark:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.remark
-                        }}
-                      </div>
-                    </div>
-                    <div class="row border-bottom mb-3">
-                      <div class="col-6">
-                        <strong>Other Data:</strong>
-                      </div>
-                      <div class="col-6">
-                        {{
-                        leavingCertificateStudentData?.leavingcertificates?.otherData
-                        }}
-                      </div>
+                    <!-- School Name and Address Column -->
+                    <div class="col-md-10">
+                      <h3>{{ leavingCertificateStudentData.schoolName }}</h3>
+                      <p>{{ leavingCertificateStudentData.schoolAddress }}</p>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                </th>
+              </tr>
+              <tr>
+                <th colspan="2" class="text-center">LEAVING CERTIFICATE</th>
+              </tr>
+            </thead>
+            <tbody id="contentData1">
+              <tr>
+                <td colspan="2">
+                  This is to certify that
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.firstName
+                    }} {{
+                    leavingCertificateStudentData?.leavingcertificates?.middleName
+                    }} {{
+                    leavingCertificateStudentData?.leavingcertificates?.lastName
+                    }}</strong
+                  >, having been a student of
+                  <strong>[School/Institution Name]</strong>, has satisfactorily
+                  completed his/her studies and is eligible to leave the
+                  institution.
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2"><strong>Details of the student:</strong></td>
+              </tr>
+              <tr>
+                <td>Student Name:</td>
+                <td>
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.firstName
+                    }} {{
+                    leavingCertificateStudentData?.leavingcertificates?.middleName
+                    }} {{
+                    leavingCertificateStudentData?.leavingcertificates?.lastName
+                    }}</strong
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Student ID:</td>
+                <td>
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.studentId
+                    }}</strong
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Date of Birth:</td>
+                <td>
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.dateOfBirth
+                    }}</strong
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Gender:</td>
+                <td>
+                  <strong>
+                    <span
+                      *ngIf="leavingCertificateStudentData?.leavingcertificates?.gender === 1"
+                      >Male</span
+                    >
+                    <span
+                      *ngIf="leavingCertificateStudentData?.leavingcertificates?.gender !== 1"
+                      >Female</span
+                    >
+                  </strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Roll No:</td>
+                <td>
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.rollNo
+                    }}</strong
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2"><strong>Personal Information:</strong></td>
+              </tr>
+              <tr>
+                <td>Father's Name:</td>
+                <td>
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.fatherName
+                    }}</strong
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Mother's Name:</td>
+                <td>
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.motherName
+                    }}</strong
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Nationality:</td>
+                <td>
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.nationality
+                    }}</strong
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Religion:</td>
+                <td>
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.religion
+                    }}</strong
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Caste:</td>
+                <td>
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.caste
+                    }}</strong
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2"><strong>Academic Details:</strong></td>
+              </tr>
+              <tr>
+                <td>Class/Grade:</td>
+                <td>
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.className
+                    }} {{
+                    leavingCertificateStudentData?.leavingcertificates?.divName
+                    }}</strong
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Conduct:</td>
+                <td>
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.generalConduct
+                    }}</strong
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Reason for Leaving:</td>
+                <td>
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.leavingReason
+                    }}</strong
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2"><strong>Remarks:</strong></td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.remark
+                    }}</strong
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Date of Issue:</td>
+                <td>
+                  <strong
+                    >{{
+                    leavingCertificateStudentData?.leavingcertificates?.createdAt
+                    | date: 'mediumDate' }}</strong
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+
         <div class="modal-footer" style="padding-top: 100px">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="tableToExcel('contentData1')"
+          >
+            <!-- <i class="m-nav__link-icon flaticon-multimedia-2"></i> -->
+            Excel
+          </button>
           <button
             type="button"
             class="btn btn-primary"
@@ -797,11 +857,19 @@
           </button>
           <button
             type="button"
-            class="btn btn-secondary"
+            class="btn btn-warning"
             data-dismiss="modal"
             (click)="printDiv('contentData')"
           >
             Print
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+            (click)="hideModelPopup()"
+          >
+            Cancel
           </button>
         </div>
       </div>

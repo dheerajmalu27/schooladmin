@@ -22,6 +22,7 @@ export const MENU_CONFIG = {
             './pages/default/components/admission/admission.module#AdmissionModule',
           module: 'AdmissionModule',
         },
+
         {
           label: 'Division Allocation',
           link: '/division-allocation',
@@ -30,6 +31,22 @@ export const MENU_CONFIG = {
           loadChildren:
             './pages/default/components/division-allocation/division-allocation.module#DivisionAllocationModule',
           module: 'DivisionAllocationModule',
+        },
+      ],
+    },
+
+    {
+      label: 'Fees',
+      icon: 'fa fa-money',
+      subItems: [
+        {
+          label: 'Pending Fees',
+          link: '/pending-fees',
+          icon: 'fa fa-user-plus',
+          path: 'pending-fees',
+          loadChildren:
+            './pages/default/components/pending-fees/pending-fees.module#PendingFeesModule',
+          module: 'PendingFeesModule',
         },
       ],
     },
@@ -173,32 +190,15 @@ export const MENU_CONFIG = {
         },
       ],
     },
-    {
-      label: 'Other Doc',
-      icon: 'flaticon-interface-6',
-      subItems: [
-        {
-          label: 'ID cards',
-          link: '/attendance-report',
-        },
-        {
-          label: 'Living certificate',
-          link: '/leaving-certificate',
-        },
-        {
-          label: 'School Documents',
-          link: '/school-docs',
-          path: 'school-docs',
-          loadChildren:
-            './pages/default/components/school-docs/school-docs.module#SchoolDocsModule',
-          module: 'SchoolDocsModule',
-        },
-      ],
-    },
+
     {
       label: 'Report',
       icon: 'flaticon-diagram',
       subItems: [
+        {
+          label: 'ID cards',
+          link: '/students-id',
+        },
         {
           label: 'Attendance Report',
           link: '/attendance-report',
@@ -303,6 +303,38 @@ export const MENU_CONFIG = {
         },
       ],
     },
+    {
+      label: 'Archive Room',
+      icon: 'fa fa-archive',
+      subItems: [
+        {
+          label: 'Living certificate',
+          link: '/leaving-certificate',
+        },
+        {
+          label: 'fees-receipt',
+          link: '/fees-receipt',
+          // icon: 'fa fa-user-plus',
+          path: 'fees-receipt',
+          loadChildren:
+            './pages/default/components/fees-payment/fees-payment.module#FeesPaymentModule',
+          module: 'FeesPaymentModule',
+        },
+        {
+          label: 'School Documents',
+          link: '/school-docs',
+          path: 'school-docs',
+          loadChildren:
+            './pages/default/components/school-docs/school-docs.module#SchoolDocsModule',
+          module: 'SchoolDocsModule',
+        },
+        {
+          label: 'Admission Records',
+          link: '/admission-records',
+        },
+      ],
+    },
+
     {
       path: 'student/profile/:id',
       loadChildren:

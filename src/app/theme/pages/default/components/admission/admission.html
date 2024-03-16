@@ -1,4 +1,4 @@
-<div id="addTemplate" style="display: none;">
+<div id="addTemplate" style="display: none">
   <div class="m-subheader">
     <div class="d-flex align-items-center">
       <div class="mr-auto">
@@ -7,22 +7,20 @@
         </h3>
         <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
           <li class="m-nav__item m-nav__item--home">
-            <a (click)="listTemplate()" href="#" class="m-nav__link m-nav__link--icon">
+            <a
+              (click)="listTemplate()"
+              href="#"
+              class="m-nav__link m-nav__link--icon"
+            >
               <i class="m-nav__link-icon la la-home"></i>
             </a>
           </li>
-          <li class="m-nav__separator">
-            -
-          </li>
+          <li class="m-nav__separator">-</li>
           <li class="m-nav__item m-nav__item--home">
-            <a href="#" class="m-nav__link m-nav__link--icon">
-              {{TitleSet}}
-            </a>
+            <a href="#" class="m-nav__link m-nav__link--icon"> {{TitleSet}} </a>
           </li>
-
         </ul>
       </div>
-
     </div>
   </div>
   <div class="m-content">
@@ -35,72 +33,93 @@
                 <span class="m-portlet__head-icon m--hide">
                   <i class="la la-gear"></i>
                 </span>
-                <h3 class="m-portlet__head-text">
-                  {{TitleSet}}
-                </h3>
+                <h3 class="m-portlet__head-text">{{TitleSet}}</h3>
               </div>
             </div>
           </div>
-          <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
-            [formGroup]="addAdmissionForm" (ngSubmit)="addAdmissionSubmitForm(addAdmissionForm.value)"
-            
-            enctype="multipart/form-data">
+          <form
+            class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+            [formGroup]="addAdmissionForm"
+            (ngSubmit)="addAdmissionSubmitForm(addAdmissionForm.value)"
+            enctype="multipart/form-data"
+          >
             <div class="m-portlet__body">
               <div id="m_user_profile_tab_1">
                 <div class="form-group m-form__group row">
-                  <div class="col-lg-4"
-                    [ngClass]="{'has-danger':!addAdmissionForm.controls['firstName'].valid && addAdmissionForm.controls['firstName'].touched}">
-                    <label class="col-form-label">
-                      First Name:
-                    </label>
+                  <div
+                    class="col-lg-4"
+                    [ngClass]="{'has-danger':!addAdmissionForm.controls['firstName'].valid && addAdmissionForm.controls['firstName'].touched}"
+                  >
+                    <label class="col-form-label"> First Name: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="first name" formControlName="firstName">
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="first name"
+                        formControlName="firstName"
+                      />
                       <span
                         *ngIf="addAdmissionForm.controls['firstName'].hasError('required') && addAdmissionForm.controls['firstName'].touched"
-                        class="m--font-danger">Please enter first name.</span>
+                        class="m--font-danger"
+                        >Please enter first name.</span
+                      >
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <label class="col-form-label">
-                      Middle Name:
-                    </label>
+                    <label class="col-form-label"> Middle Name: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="middle name" formControlName="middleName">
-
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="middle name"
+                        formControlName="middleName"
+                      />
                     </div>
                   </div>
-                  <div class="col-lg-4"
-                    [ngClass]="{'has-danger':!addAdmissionForm.controls['lastName'].valid && addAdmissionForm.controls['lastName'].touched}">
-                    <label class="col-form-label">
-                      Last Name:
-                    </label>
+                  <div
+                    class="col-lg-4"
+                    [ngClass]="{'has-danger':!addAdmissionForm.controls['lastName'].valid && addAdmissionForm.controls['lastName'].touched}"
+                  >
+                    <label class="col-form-label"> Last Name: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="last name" formControlName="lastName">
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="last name"
+                        formControlName="lastName"
+                      />
                       <span
                         *ngIf="addAdmissionForm.controls['lastName'].hasError('required') && addAdmissionForm.controls['lastName'].touched"
-                        class="m--font-danger">Please enter last name.</span>
+                        class="m--font-danger"
+                        >Please enter last name.</span
+                      >
                     </div>
                   </div>
                 </div>
                 <div class="form-group m-form__group row">
                   <div class="col-lg-4">
-                    <label class="col-form-label">
-                      Student Image:
-                    </label>
+                    <label class="col-form-label"> Student Image: </label>
                     <div>
-                      <input class="form-control" type="file" (change)="selectFile($event)" formControlName="image"
-                        id="imageInput">
+                      <input
+                        class="form-control"
+                        type="file"
+                        (change)="selectFile($event)"
+                        formControlName="image"
+                        id="imageInput"
+                      />
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <label class="col-form-label">
-                      Select Class
-                    </label>
+                    <label class="col-form-label"> Select Class </label>
                     <div>
-
-                      <select class="form-control m-select2 class_select2_drop_down" id="add_class_select2_1"
-                        formControlName="classId">
-                        <option [ngValue]="null" disabled>Select a class</option>
+                      <select
+                        class="form-control m-select2 class_select2_drop_down"
+                        id="add_class_select2_1"
+                        formControlName="classId"
+                      >
+                        <option [ngValue]="null" disabled>
+                          Select a class
+                        </option>
                       </select>
                       <!-- <span *ngIf="addAdmissionForm.controls['classId'].hasError('required') && addAdmissionForm.controls['classId'].touched"
                       class="m--font-danger">Please select class name.</span> -->
@@ -111,46 +130,58 @@
                       Previous Class Percentage
                     </label>
                     <div>
-                      
-                      <input class="form-control" type="text" placeholder="" formControlName="prevPercentage">
-
-
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        formControlName="prevPercentage"
+                      />
                     </div>
                   </div>
-
                 </div>
                 <div class="form-group m-form__group row">
                   <div class="col-lg-4">
-                    <label class="col-form-label">
-                      Date of birth:
-                    </label>
-                    <div class='input-group date'>
-                      <input type='text' id='m_datepickerSet' class="form-control m-input" formControlName="dob"
-                        name="dob" placeholder="Select date">
+                    <label class="col-form-label"> Date of birth: </label>
+                    <div class="input-group date">
+                      <input
+                        type="text"
+                        id="m_datepickerSet"
+                        class="form-control m-input"
+                        formControlName="dateOfBirth"
+                        name="dateOfBirth"
+                        placeholder="Select date"
+                      />
                       <span class="input-group-addon">
                         <i class="la la-calendar-check-o"></i>
                       </span>
-
                     </div>
-                    <!-- <span *ngIf="addAdmissionForm.controls['dob'].hasError('required')" class="m--font-danger">Please enter
+                    <!-- <span *ngIf="addAdmissionForm.controls['dateOfBirth'].hasError('required')" class="m--font-danger">Please enter
                   Date Of Birth.</span> -->
                   </div>
                   <div class="col-lg-4">
-                    <label class="col-form-label">
-                      Gender:
-                    </label>
+                    <label class="col-form-label"> Gender: </label>
                     <div>
                       <div class="radio">
                         <label>
-                          <input type="radio" name="gender" value="1"
-                            [checked]="addAdmissionForm.controls['gender'].value ==1" formControlName="gender">
+                          <input
+                            type="radio"
+                            name="gender"
+                            value="1"
+                            [checked]="addAdmissionForm.controls['gender'].value ==1"
+                            formControlName="gender"
+                          />
                           Male
                         </label>
                       </div>
                       <div class="radio">
                         <label>
-                          <input type="radio" name="gender" value="2"
-                            [checked]="addAdmissionForm.controls['gender'].value ==2" formControlName="gender">
+                          <input
+                            type="radio"
+                            name="gender"
+                            value="2"
+                            [checked]="addAdmissionForm.controls['gender'].value ==2"
+                            formControlName="gender"
+                          />
                           Female
                         </label>
                       </div>
@@ -159,485 +190,738 @@
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <label class="col-form-label">
-                      Blood Group:
-                    </label>
+                    <label class="col-form-label"> Blood Group: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="" formControlName="bloodGroup">
-
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        formControlName="bloodGroup"
+                      />
                     </div>
                   </div>
-
                 </div>
                 <div class="form-group m-form__group row">
                   <div class="col-lg-4">
-                    <label class="col-form-label">
-                      Nationality:
-                    </label>
+                    <label class="col-form-label"> Nationality: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="nationality" formControlName="nationality">
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="nationality"
+                        formControlName="nationality"
+                      />
                       <!-- <span *ngIf="addAdmissionForm.controls['nationality'].hasError('required') && addAdmissionForm.controls['nationality'].touched"
                       class="m--font-danger">Please enter nationality.</span> -->
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <label class="col-form-label">
-                      Religion:
-                    </label>
+                    <label class="col-form-label"> Religion: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="" formControlName="religion">
-
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        formControlName="religion"
+                      />
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <label class="col-form-label">
-                      Caste:
-                    </label>
+                    <label class="col-form-label"> Caste: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="" formControlName="caste">
-
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        formControlName="caste"
+                      />
                     </div>
                   </div>
                 </div>
 
                 <div class="form-group m-form__group row">
                   <div class="col-lg-4">
-                    <label class="col-form-label">
-                      Residential Address:
-                    </label>
+                    <label class="col-form-label"> Residential Address: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="address" formControlName="address">
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="address"
+                        formControlName="address"
+                      />
                       <!-- <span *ngIf="addAdmissionForm.controls['address'].hasError('required') && addAdmissionForm.controls['address'].touched"
                       class="m--font-danger">Please enter admission address.</span> -->
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <label class="col-form-label">
-                      Select State
-                    </label>
+                    <label class="col-form-label"> Select State </label>
                     <div>
-                      <select class="form-control m-select2 state_select2_drop_down" id="m_select2_1"
-                        formControlName="stateId">
-                      </select>
+                      <select
+                        class="form-control m-select2 state_select2_drop_down"
+                        id="m_select2_1"
+                        formControlName="stateId"
+                      ></select>
                       <!-- <span *ngIf="addAdmissionForm.controls['stateId'].hasError('required') && addAdmissionForm.controls['stateId'].touched"
                       class="m--font-danger">Please select state name.</span> -->
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <label class="col-form-label">
-                      Select City
-                    </label>
+                    <label class="col-form-label"> Select City </label>
                     <div>
-                      <select class="form-control m-select2 city_select2_drop_down" id="m_select2_2"
-                        formControlName="cityId">
-                      </select>
+                      <select
+                        class="form-control m-select2 city_select2_drop_down"
+                        id="m_select2_2"
+                        formControlName="cityId"
+                      ></select>
                       <!-- <span *ngIf="addAdmissionForm.controls['cityId'].hasError('required') && addAdmissionForm.controls['cityId'].touched"
                       class="m--font-danger">Please select city name.</span> -->
                     </div>
                   </div>
-
                 </div>
                 <div class="form-group m-form__group row">
-                  <div class="col-lg-4"
-                    [ngClass]="{'has-danger':!addAdmissionForm.controls['motherName'].valid && addAdmissionForm.controls['motherName'].touched}">
-                    <label class="col-form-label">
-                      Mother Name:
-                    </label>
+                  <div
+                    class="col-lg-4"
+                    [ngClass]="{'has-danger':!addAdmissionForm.controls['motherName'].valid && addAdmissionForm.controls['motherName'].touched}"
+                  >
+                    <label class="col-form-label"> Mother Name: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="mother name" formControlName="motherName">
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="mother name"
+                        formControlName="motherName"
+                      />
                       <span
                         *ngIf="addAdmissionForm.controls['motherName'].hasError('required') && addAdmissionForm.controls['motherName'].touched"
-                        class="m--font-danger">Please Enter father name.</span>
+                        class="m--font-danger"
+                        >Please Enter father name.</span
+                      >
                     </div>
                   </div>
-                  <div class="col-lg-4"
-                    [ngClass]="{'has-danger':!addAdmissionForm.controls['motherQual'].valid && addAdmissionForm.controls['motherQual'].touched}">
-                    <label class="col-form-label">
-                      Occupation:
-                    </label>
+                  <div
+                    class="col-lg-4"
+                    [ngClass]="{'has-danger':!addAdmissionForm.controls['motherQual'].valid && addAdmissionForm.controls['motherQual'].touched}"
+                  >
+                    <label class="col-form-label"> Occupation: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="mother occupation"
-                        formControlName="motherQual">
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="mother occupation"
+                        formControlName="motherQual"
+                      />
                       <span
                         *ngIf="addAdmissionForm.controls['motherQual'].hasError('required') && addAdmissionForm.controls['motherQual'].touched"
-                        class="m--font-danger">Please Enter father occupation.</span>
+                        class="m--font-danger"
+                        >Please Enter father occupation.</span
+                      >
                     </div>
                   </div>
-                  <div class="col-lg-4"
-                    [ngClass]="{'has-danger':!addAdmissionForm.controls['parentNumber'].valid && addAdmissionForm.controls['parentNumber'].touched}">
-                    <label class="col-form-label">
-                      Mobile No:
-                    </label>
+                  <div
+                    class="col-lg-4"
+                    [ngClass]="{'has-danger':!addAdmissionForm.controls['parentNumber'].valid && addAdmissionForm.controls['parentNumber'].touched}"
+                  >
+                    <label class="col-form-label"> Mobile No: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="moblie no" formControlName="parentNumber">
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="moblie no"
+                        formControlName="parentNumber"
+                      />
                       <span
                         *ngIf="addAdmissionForm.controls['parentNumber'].hasError('required') && addAdmissionForm.controls['parentNumber'].touched"
-                        class="m--font-danger">Please Enter Moblie No.</span>
+                        class="m--font-danger"
+                        >Please Enter Moblie No.</span
+                      >
                     </div>
                   </div>
-
-
                 </div>
 
                 <div class="form-group m-form__group row">
-                  <div class="col-lg-4"
-                    [ngClass]="{'has-danger':!addAdmissionForm.controls['fatherName'].valid && addAdmissionForm.controls['fatherName'].touched}">
-                    <label class="col-form-label">
-                      Father Name:
-                    </label>
+                  <div
+                    class="col-lg-4"
+                    [ngClass]="{'has-danger':!addAdmissionForm.controls['fatherName'].valid && addAdmissionForm.controls['fatherName'].touched}"
+                  >
+                    <label class="col-form-label"> Father Name: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="father name" formControlName="fatherName">
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="father name"
+                        formControlName="fatherName"
+                      />
                       <span
                         *ngIf="addAdmissionForm.controls['fatherName'].hasError('required') && addAdmissionForm.controls['fatherName'].touched"
-                        class="m--font-danger">Please Enter father name.</span>
+                        class="m--font-danger"
+                        >Please Enter father name.</span
+                      >
                     </div>
                   </div>
-                  <div class="col-lg-4"
-                    [ngClass]="{'has-danger':!addAdmissionForm.controls['fatherProf'].valid && addAdmissionForm.controls['fatherProf'].touched}">
-                    <label class="col-form-label">
-                      Occupation:
-                    </label>
+                  <div
+                    class="col-lg-4"
+                    [ngClass]="{'has-danger':!addAdmissionForm.controls['fatherProf'].valid && addAdmissionForm.controls['fatherProf'].touched}"
+                  >
+                    <label class="col-form-label"> Occupation: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="father occupation"
-                        formControlName="fatherProf">
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="father occupation"
+                        formControlName="fatherProf"
+                      />
                       <span
                         *ngIf="addAdmissionForm.controls['fatherProf'].hasError('required') && addAdmissionForm.controls['fatherProf'].touched"
-                        class="m--font-danger">Please Enter father occupation.</span>
+                        class="m--font-danger"
+                        >Please Enter father occupation.</span
+                      >
                     </div>
                   </div>
-                  <div class="col-lg-4"
-                    [ngClass]="{'has-danger':!addAdmissionForm.controls['parentNumberSecond'].valid && addAdmissionForm.controls['parentNumberSecond'].touched}">
-                    <label class="col-form-label">
-                      Mobile No:
-                    </label>
+                  <div
+                    class="col-lg-4"
+                    [ngClass]="{'has-danger':!addAdmissionForm.controls['parentNumberSecond'].valid && addAdmissionForm.controls['parentNumberSecond'].touched}"
+                  >
+                    <label class="col-form-label"> Mobile No: </label>
                     <div>
-                      <input class="form-control" type="text" placeholder="mobile no"
-                        formControlName="parentNumberSecond">
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="mobile no"
+                        formControlName="parentNumberSecond"
+                      />
                       <span
                         *ngIf="addAdmissionForm.controls['parentNumberSecond'].hasError('required') && addAdmissionForm.controls['parentNumberSecond'].touched"
-                        class="m--font-danger">Please Enter Moblie No.</span>
+                        class="m--font-danger"
+                        >Please Enter Moblie No.</span
+                      >
                     </div>
                   </div>
-
-
                 </div>
 
-
-                <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                <div
+                  class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
+                >
                   <div class="m-form__actions m-form__actions--solid">
                     <div class="row">
                       <div class="col-md-2"></div>
-                      <div class="col-md-4"><a class="btn btn-brand" (click)="paymenttab()" data-toggle="tab" href="#"
-                          role="tab">
+                      <div class="col-md-4">
+                        <a
+                          class="btn btn-brand"
+                          (click)="paymenttab()"
+                          data-toggle="tab"
+                          href="#"
+                          role="tab"
+                        >
                           Next
                         </a>
-                        <a class="btn btn-secondary" data-toggle="tab" href="#" (click)="listTemplate()" role="tab">
+                        <a
+                          class="btn btn-secondary"
+                          data-toggle="tab"
+                          href="#"
+                          (click)="listTemplate()"
+                          role="tab"
+                        >
                           Cancel
                         </a>
                       </div>
-
                     </div>
                   </div>
                 </div>
               </div>
-              <div id="m_user_profile_tab_2" style="display: none;">
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['totalFee'].valid && addAdmissionForm.controls['totalFee'].touched}">
-                  <label class="col-lg-2 col-form-label">Total Fee {{ feesData?.totalFee ? '(' + feesData.totalFee + ')'
-                    : '' }}:</label>
+              <div id="m_user_profile_tab_2" style="display: none">
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['totalFee'].valid && addAdmissionForm.controls['totalFee'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Total Fee {{ feesData?.totalFee ? '(' + feesData.totalFee +
+                    ')' : '' }}:</label
+                  >
                   <div class="col-lg-6">
-                    <div class='input-group'>
-                      <input class="form-control m-input" (input)="calculatepayment($event, feesData)" type="number"
-                        autocomplete="off" formControlName="totalFee" [max]="feesData?.totalFee">
+                    <div class="input-group">
+                      <input
+                        class="form-control m-input"
+                        (input)="calculatepayment($event, feesData)"
+                        type="number"
+                        autocomplete="off"
+                        formControlName="totalFee"
+                        [max]="feesData?.totalFee"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['totalFee'].hasError('required') && addAdmissionForm.controls['totalFee'].touched"
-                      class="m--font-danger">You must put a Total Fee.</span>
+                      class="m--font-danger"
+                      >You must put a Total Fee.</span
+                    >
                     <span
                       *ngIf="addAdmissionForm.controls['totalFee'].hasError('max') && addAdmissionForm.controls['totalFee'].touched"
-                      class="m--font-danger">Total Fee cannot exceed {{ feesData?.totalFee }}.</span>
+                      class="m--font-danger"
+                      >Total Fee cannot exceed {{ feesData?.totalFee }}.</span
+                    >
                   </div>
                 </div>
 
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger':!addAdmissionForm.controls['tuitionFee'].valid && addAdmissionForm.controls['tuitionFee'].touched}">
-                  <label class="col-lg-2 col-form-label">Tuition Fee {{ feesData?.tuitionFee ? '(' + feesData.tuitionFee
-                    + ')' : '' }}:</label>
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger':!addAdmissionForm.controls['tuitionFee'].valid && addAdmissionForm.controls['tuitionFee'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Tuition Fee {{ feesData?.tuitionFee ? '(' +
+                    feesData.tuitionFee + ')' : '' }}:</label
+                  >
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="number" autocomplete="off" formControlName="tuitionFee">
-
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="number"
+                        autocomplete="off"
+                        formControlName="tuitionFee"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['tuitionFee'].hasError('required') && addAdmissionForm.controls['tuitionFee'].touched"
-                      class="m--font-danger">You must put a Tuition Fee.</span>
+                      class="m--font-danger"
+                      >You must put a Tuition Fee.</span
+                    >
                   </div>
                 </div>
 
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['developmentFee'].valid && addAdmissionForm.controls['developmentFee'].touched}">
-                  <label class="col-lg-2 col-form-label">Development Fee {{ feesData?.developmentFee ? '(' +
-                    feesData.developmentFee + ')' : '' }}:</label>
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['developmentFee'].valid && addAdmissionForm.controls['developmentFee'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Development Fee {{ feesData?.developmentFee ? '(' +
+                    feesData.developmentFee + ')' : '' }}:</label
+                  >
 
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="number" autocomplete="off"
-                        formControlName="developmentFee">
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="number"
+                        autocomplete="off"
+                        formControlName="developmentFee"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['developmentFee'].hasError('required') && addAdmissionForm.controls['developmentFee'].touched"
-                      class="m--font-danger">You must put a Development Fee.</span>
+                      class="m--font-danger"
+                      >You must put a Development Fee.</span
+                    >
                   </div>
                 </div>
                 <!-- Examination Fee -->
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['examinationFee'].valid && addAdmissionForm.controls['examinationFee'].touched}">
-
-                  <label class="col-lg-2 col-form-label">Examination Fee {{ feesData?.examinationFee ? '(' +
-                    feesData.examinationFee + ')' : '' }}:</label>
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['examinationFee'].valid && addAdmissionForm.controls['examinationFee'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Examination Fee {{ feesData?.examinationFee ? '(' +
+                    feesData.examinationFee + ')' : '' }}:</label
+                  >
 
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="number" autocomplete="off"
-                        formControlName="examinationFee">
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="number"
+                        autocomplete="off"
+                        formControlName="examinationFee"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['examinationFee'].hasError('required') && addAdmissionForm.controls['examinationFee'].touched"
-                      class="m--font-danger">You must put a Examination Fee.</span>
+                      class="m--font-danger"
+                      >You must put a Examination Fee.</span
+                    >
                   </div>
                 </div>
 
                 <!-- Sports Fee -->
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['sportsFee'].valid && addAdmissionForm.controls['sportsFee'].touched}">
-                  <label class="col-lg-2 col-form-label">Sports Fee {{ feesData?.sportsFee ? '(' + feesData.sportsFee +
-                    ')' : '' }}:</label>
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['sportsFee'].valid && addAdmissionForm.controls['sportsFee'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Sports Fee {{ feesData?.sportsFee ? '(' +
+                    feesData.sportsFee + ')' : '' }}:</label
+                  >
 
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="number" autocomplete="off" formControlName="sportsFee">
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="number"
+                        autocomplete="off"
+                        formControlName="sportsFee"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['sportsFee'].hasError('required') && addAdmissionForm.controls['sportsFee'].touched"
-                      class="m--font-danger">You must put a Sports Fee.</span>
+                      class="m--font-danger"
+                      >You must put a Sports Fee.</span
+                    >
                   </div>
                 </div>
 
                 <!-- Transportation Fee -->
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['transportationFee'].valid && addAdmissionForm.controls['transportationFee'].touched}">
-                  <label class="col-lg-2 col-form-label">Transportation Fee {{ feesData?.transportationFee ? '(' +
-                    feesData.transportationFee + ')' : '' }}:</label>
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['transportationFee'].valid && addAdmissionForm.controls['transportationFee'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Transportation Fee {{ feesData?.transportationFee ? '(' +
+                    feesData.transportationFee + ')' : '' }}:</label
+                  >
 
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="number" autocomplete="off"
-                        formControlName="transportationFee">
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="number"
+                        autocomplete="off"
+                        formControlName="transportationFee"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['transportationFee'].hasError('required') && addAdmissionForm.controls['transportationFee'].touched"
-                      class="m--font-danger">You must put a Transportation Fee.</span>
+                      class="m--font-danger"
+                      >You must put a Transportation Fee.</span
+                    >
                   </div>
                 </div>
 
                 <!-- Library Fee -->
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['libraryFee'].valid && addAdmissionForm.controls['libraryFee'].touched}">
-                  <label class="col-lg-2 col-form-label">Library Fee {{ feesData?.libraryFee ? '(' + feesData.libraryFee
-                    + ')' : '' }}:</label>
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['libraryFee'].valid && addAdmissionForm.controls['libraryFee'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Library Fee {{ feesData?.libraryFee ? '(' +
+                    feesData.libraryFee + ')' : '' }}:</label
+                  >
 
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="number" autocomplete="off" formControlName="libraryFee">
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="number"
+                        autocomplete="off"
+                        formControlName="libraryFee"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['libraryFee'].hasError('required') && addAdmissionForm.controls['libraryFee'].touched"
-                      class="m--font-danger">You must put a Library Fee.</span>
+                      class="m--font-danger"
+                      >You must put a Library Fee.</span
+                    >
                   </div>
                 </div>
 
                 <!-- Lab Fee -->
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['labFee'].valid && addAdmissionForm.controls['labFee'].touched}">
-                  <label class="col-lg-2 col-form-label">Lab Fee {{ feesData?.labFee ? '(' + feesData.labFee + ')' : ''
-                    }}:</label>
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['labFee'].valid && addAdmissionForm.controls['labFee'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Lab Fee {{ feesData?.labFee ? '(' + feesData.labFee + ')' :
+                    '' }}:</label
+                  >
 
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="number" autocomplete="off" formControlName="labFee">
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="number"
+                        autocomplete="off"
+                        formControlName="labFee"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['labFee'].hasError('required') && addAdmissionForm.controls['labFee'].touched"
-                      class="m--font-danger">You must put a Lab Fee.</span>
+                      class="m--font-danger"
+                      >You must put a Lab Fee.</span
+                    >
                   </div>
                 </div>
 
                 <!-- Security Fee -->
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['securityFee'].valid && addAdmissionForm.controls['securityFee'].touched}">
-                  <label class="col-lg-2 col-form-label">Security Fee {{ feesData?.securityFee ? '(' +
-                    feesData.securityFee + ')' : '' }}:</label>
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['securityFee'].valid && addAdmissionForm.controls['securityFee'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Security Fee {{ feesData?.securityFee ? '(' +
+                    feesData.securityFee + ')' : '' }}:</label
+                  >
 
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="number" autocomplete="off"
-                        formControlName="securityFee">
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="number"
+                        autocomplete="off"
+                        formControlName="securityFee"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['securityFee'].hasError('required') && addAdmissionForm.controls['securityFee'].touched"
-                      class="m--font-danger">You must put a Security Fee.</span>
+                      class="m--font-danger"
+                      >You must put a Security Fee.</span
+                    >
                   </div>
                 </div>
 
                 <!-- Other Fee -->
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['otherFee'].valid && addAdmissionForm.controls['otherFee'].touched}">
-                  <label class="col-lg-2 col-form-label">Other Fee {{ feesData?.otherFee ? '(' + feesData.otherFee + ')'
-                    : '' }}:</label>
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['otherFee'].valid && addAdmissionForm.controls['otherFee'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Other Fee {{ feesData?.otherFee ? '(' + feesData.otherFee +
+                    ')' : '' }}:</label
+                  >
 
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="number" autocomplete="off" formControlName="otherFee">
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="number"
+                        autocomplete="off"
+                        formControlName="otherFee"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['otherFee'].hasError('required') && addAdmissionForm.controls['otherFee'].touched"
-                      class="m--font-danger">You must put a Other Fee.</span>
+                      class="m--font-danger"
+                      >You must put a Other Fee.</span
+                    >
                   </div>
                 </div>
 
                 <!-- Payment Frequency -->
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['paymentFrequency'].valid && addAdmissionForm.controls['paymentFrequency'].touched}">
-                  <label class="col-lg-2 col-form-label">Payment Frequency {{ feesData?.paymentFrequency ? '(' +
-                    feesData.paymentFrequency + ')' : '' }}:</label>
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['paymentFrequency'].valid && addAdmissionForm.controls['paymentFrequency'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Payment Frequency {{ feesData?.paymentFrequency ? '(' +
+                    feesData.paymentFrequency + ')' : '' }}:</label
+                  >
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="text" autocomplete="off"
-                        formControlName="paymentFrequency">
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="text"
+                        autocomplete="off"
+                        formControlName="paymentFrequency"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['paymentFrequency'].hasError('required') && addAdmissionForm.controls['paymentFrequency'].touched"
-                      class="m--font-danger">You must put a Payment Frequency.</span>
+                      class="m--font-danger"
+                      >You must put a Payment Frequency.</span
+                    >
                   </div>
                 </div>
 
                 <!-- Due Date -->
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['dueDate'].valid && addAdmissionForm.controls['dueDate'].touched}">
-                  <label class="col-lg-2 col-form-label">Due Date {{ feesData?.dueDate ? '(' + feesData.dueDate + ')' :
-                    '' }}:</label>
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['dueDate'].valid && addAdmissionForm.controls['dueDate'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Due Date {{ feesData?.dueDate ? '(' + feesData.dueDate +
+                    ')' : '' }}:</label
+                  >
 
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="date" autocomplete="off" formControlName="dueDate">
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="date"
+                        autocomplete="off"
+                        formControlName="dueDate"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['dueDate'].hasError('required') && addAdmissionForm.controls['dueDate'].touched"
-                      class="m--font-danger">You must put a Due Date.</span>
+                      class="m--font-danger"
+                      >You must put a Due Date.</span
+                    >
                   </div>
                 </div>
 
                 <!-- Late Fee -->
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['lateFee'].valid && addAdmissionForm.controls['lateFee'].touched}">
-                  <label class="col-lg-2 col-form-label">Late Fee {{ feesData?.lateFee ? '(' + feesData.lateFee + ')' :
-                    '' }}:</label>
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['lateFee'].valid && addAdmissionForm.controls['lateFee'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Late Fee {{ feesData?.lateFee ? '(' + feesData.lateFee +
+                    ')' : '' }}:</label
+                  >
 
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="number" autocomplete="off" formControlName="lateFee">
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="number"
+                        autocomplete="off"
+                        formControlName="lateFee"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['lateFee'].hasError('required') && addAdmissionForm.controls['lateFee'].touched"
-                      class="m--font-danger">You must put a Late Fee.</span>
+                      class="m--font-danger"
+                      >You must put a Late Fee.</span
+                    >
                   </div>
                 </div>
 
                 <!-- Discount -->
-                <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['discount'].valid && addAdmissionForm.controls['discount'].touched}">
-                  <label class="col-lg-2 col-form-label">Discount {{ feesData?.discount ? '(' + feesData.discount + ')'
-                    : '' }}:</label>
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['discount'].valid && addAdmissionForm.controls['discount'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Discount {{ feesData?.discount ? '(' + feesData.discount +
+                    ')' : '' }}:</label
+                  >
 
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="number" autocomplete="off" formControlName="discount">
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="number"
+                        autocomplete="off"
+                        formControlName="discount"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['discount'].hasError('required') && addAdmissionForm.controls['discount'].touched"
-                      class="m--font-danger">You must put a Discount.</span>
+                      class="m--font-danger"
+                      >You must put a Discount.</span
+                    >
                   </div>
                 </div>
 
-                
-
-                  <!-- remainingAmount -->
-                  <div class="form-group m-form__group row"
-                  [ngClass]="{'has-danger': !addAdmissionForm.controls['remainingAmount'].valid && addAdmissionForm.controls['remainingAmount'].touched}">
-                  <label class="col-lg-2 col-form-label">Remaining Amount :</label>
+                <!-- remainingAmount -->
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['remainingAmount'].valid && addAdmissionForm.controls['remainingAmount'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Remaining Amount :</label
+                  >
 
                   <div class="col-lg-6">
-                    <div class='input-group date'>
-                      <input class="form-control m-input" type="number" autocomplete="off" formControlName="remainingAmount">
+                    <div class="input-group date">
+                      <input
+                        class="form-control m-input"
+                        type="number"
+                        autocomplete="off"
+                        formControlName="remainingAmount"
+                      />
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['remainingAmount'].hasError('required') && addAdmissionForm.controls['remainingAmount'].touched"
-                      class="m--font-danger">You must put a remaining Amount.</span>
+                      class="m--font-danger"
+                      >You must put a remaining Amount.</span
+                    >
                   </div>
                 </div>
 
-                 <!-- paymentMethod -->
-                 <div class="form-group m-form__group row"
-                 [ngClass]="{'has-danger': !addAdmissionForm.controls['paymentMethod'].valid && addAdmissionForm.controls['paymentMethod'].touched}">
-                 <label class="col-lg-2 col-form-label">Payment Method :</label>
+                <!-- paymentMethod -->
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['paymentMethod'].valid && addAdmissionForm.controls['paymentMethod'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Payment Method :</label
+                  >
 
-                 <div class="col-lg-6">
-                   <div class='input-group'>
-                     <input class="form-control m-input" type="text" autocomplete="off" formControlName="paymentMethod">
-                   </div>
-                   <span
-                     *ngIf="addAdmissionForm.controls['paymentMethod'].hasError('required') && addAdmissionForm.controls['paymentMethod'].touched"
-                     class="m--font-danger">You must put a payment method.</span>
-                 </div>
-               </div>
-                   <!-- paymentDetail -->
-                 <div class="form-group m-form__group row"
-                 [ngClass]="{'has-danger': !addAdmissionForm.controls['paymentDetail'].valid && addAdmissionForm.controls['paymentDetail'].touched}">
-                 <label class="col-lg-2 col-form-label">Payment Detail :</label>
+                  <div class="col-lg-6">
+                    <div class="input-group">
+                      <input
+                        class="form-control m-input"
+                        type="text"
+                        autocomplete="off"
+                        formControlName="paymentMethod"
+                      />
+                    </div>
+                    <span
+                      *ngIf="addAdmissionForm.controls['paymentMethod'].hasError('required') && addAdmissionForm.controls['paymentMethod'].touched"
+                      class="m--font-danger"
+                      >You must put a payment method.</span
+                    >
+                  </div>
+                </div>
+                <!-- paymentDetail -->
+                <div
+                  class="form-group m-form__group row"
+                  [ngClass]="{'has-danger': !addAdmissionForm.controls['paymentDetail'].valid && addAdmissionForm.controls['paymentDetail'].touched}"
+                >
+                  <label class="col-lg-2 col-form-label"
+                    >Payment Detail :</label
+                  >
 
-                 <div class="col-lg-6">
-                   <div class='input-group'>
-                     <input class="form-control m-input" type="text" autocomplete="off" formControlName="paymentDetail">
-                   </div>
-                   <span
-                     *ngIf="addAdmissionForm.controls['paymentDetail'].hasError('required') && addAdmissionForm.controls['paymentDetail'].touched"
-                     class="m--font-danger">You must put a payment Detail.</span>
-                 </div>
-               </div>
-               
+                  <div class="col-lg-6">
+                    <div class="input-group">
+                      <input
+                        class="form-control m-input"
+                        type="text"
+                        autocomplete="off"
+                        formControlName="paymentDetail"
+                      />
+                    </div>
+                    <span
+                      *ngIf="addAdmissionForm.controls['paymentDetail'].hasError('required') && addAdmissionForm.controls['paymentDetail'].touched"
+                      class="m--font-danger"
+                      >You must put a payment Detail.</span
+                    >
+                  </div>
+                </div>
 
-                <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                <div
+                  class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
+                >
                   <div class="m-form__actions m-form__actions--solid">
                     <div class="row">
                       <div class="col-lg-2"></div>
                       <div class="col-lg-6">
-                        <button type="button" class="btn btn-brand" (click)="previoustab()">Previous</button>
+                        <button
+                          type="button"
+                          class="btn btn-brand"
+                          (click)="previoustab()"
+                        >
+                          Previous
+                        </button>
 
-                        <button type="submit" class="btn btn-brand" [disabled]="!addAdmissionForm.valid">Submit</button>
+                        <button
+                          type="submit"
+                          class="btn btn-brand"
+                          [disabled]="!addAdmissionForm.valid"
+                        >
+                          Submit
+                        </button>
 
-                        <button type="button" (click)="listTemplate()" class="btn btn-secondary">Cancel</button>
+                        <button
+                          type="button"
+                          (click)="listTemplate()"
+                          class="btn btn-secondary"
+                        >
+                          Cancel
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
-
           </form>
-
         </div>
-
       </div>
     </div>
   </div>
@@ -649,9 +933,7 @@
         <h3 class="m-subheader__title m-subheader__title--separator">
           Admission List
         </h3>
-
       </div>
-
     </div>
   </div>
   <div class="m-content">
@@ -659,21 +941,28 @@
       <div class="m-portlet__head">
         <div class="m-portlet__head-caption">
           <div class="m-portlet__head-title">
-            <h3 class="m-portlet__head-text">
-              Admission List
-            </h3>
+            <h3 class="m-portlet__head-text">Admission List</h3>
           </div>
         </div>
         <div class="m-portlet__head-tools">
           <ul class="m-portlet__nav">
             <li class="m-portlet__nav-item">
               <div class="m-widget4">
-                <div class="m-widget4__item btn m-btn  m-btn--icon" (click)="tableToExcel('exportTable')">
-                  <div class="m-widget4__img m-widget4__img--icon"><img src="./assets/app/media/img/files/csv.svg"
-                      alt=""></div>
-                  <div class="m-widget4__info"><span class="m-widget4__text">Export Excel </span></div>
-                  <div class="m-widget4__ext"><a href="#" class="m-widget4__icon"
-                      ng-reflect-href="#"><i class="la la-download"></i></a></div>
+                <div
+                  class="m-widget4__item btn m-btn m-btn--icon"
+                  (click)="tableToExcel('exportTable')"
+                >
+                  <div class="m-widget4__img m-widget4__img--icon">
+                    <img src="./assets/app/media/img/files/csv.svg" alt="" />
+                  </div>
+                  <div class="m-widget4__info">
+                    <span class="m-widget4__text">Export Excel </span>
+                  </div>
+                  <div class="m-widget4__ext">
+                    <a href="#" class="m-widget4__icon" ng-reflect-href="#"
+                      ><i class="la la-download"></i
+                    ></a>
+                  </div>
                 </div>
               </div>
             </li>
@@ -682,14 +971,20 @@
       </div>
       <div class="m-portlet__body">
         <!--begin: Search Form -->
-        <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+        <div
+          class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30"
+        >
           <div class="row align-items-center">
             <div class="col-xl-8 order-2 order-xl-1">
               <div class="form-group m-form__group row align-items-center">
                 <div class="col-md-4">
                   <div class="m-input-icon m-input-icon--left">
-                    <input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
-                      id="m_form_search">
+                    <input
+                      type="text"
+                      class="form-control m-input m-input--solid"
+                      placeholder="Search..."
+                      id="m_form_search"
+                    />
                     <span class="m-input-icon__icon m-input-icon__icon--left">
                       <span>
                         <i class="la la-search"></i>
@@ -700,14 +995,14 @@
               </div>
             </div>
             <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-
-              <a (click)="showModelPopup()" href="#"
-                class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+              <a
+                (click)="showModelPopup()"
+                href="#"
+                class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill"
+              >
                 <span>
                   <i class="la la-user-plus"></i>
-                  <span>
-                    Add Admission
-                  </span>
+                  <span> Add Admission </span>
                 </span>
               </a>
               <div class="m-separator m-separator--dashed d-xl-none"></div>
@@ -723,7 +1018,7 @@
   </div>
 </div>
 <div>
-  <table id="exportTable" style="display:none">
+  <table id="exportTable" style="display: none">
     <thead>
       <tr>
         <th>Sr No</th>
@@ -732,64 +1027,120 @@
         <th>Student Name</th>
         <th>Parent Name</th>
         <th>Contact No</th>
-        <th>Admission Date</th>
+        <th>Payment Receipt Id</th>
+        <th>Fees Paid Date</th>
+        <th>Tuition Fee</th>
+        <th>Development Fee</th>
+        <th>Examination Fee</th>
+        <th>Sports Fee</th>
+        <th>Transportation Fee</th>
+        <th>Library Fee</th>
+        <th>Lab Fee</th>
+        <th>Security Fee</th>
+        <th>Other Fee</th>
+        <th>Total Fee</th>
+        <th>Paid Amount</th>
+        <th>Payment Method</th>
+        <th>Payment Detail</th>
+        <th>isStudent</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let admission of admissionData;let i = index">
+      <tr *ngFor="let admission of admissionReportData;let i = index">
         <td>{{i+1}}</td>
-        <td>{{admission.className}}</td>
+        <td>{{admission.className}}-{{admission.divName}}</td>
         <td>{{admission.studentId}}</td>
         <td>{{admission.firstName}} {{admission.lastName}}</td>
         <td>{{admission.fatherName}} {{admission.lastName}}</td>
         <td>{{admission.parentNumber}}</td>
+        <td>{{admission.paymentId}}</td>
         <td>{{admission.createdAt}}</td>
+        <td>{{admission.tuitionFee}}</td>
+        <td>{{admission.developmentFee}}</td>
+        <td>{{admission.examinationFee}}</td>
+        <td>{{admission.sportsFee}}</td>
+        <td>{{admission.transportationFee}}</td>
+        <td>{{admission.libraryFee}}</td>
+        <td>{{admission.labFee}}</td>
+        <td>{{admission.securityFee}}</td>
+        <td>{{admission.otherFee}}</td>
+        <td>{{admission.totalFee}}</td>
+        <td>{{admission.paymentAmount}}</td>
+        <td>{{admission.paymentMethod}}</td>
+        <td>{{admission.paymentDetail}}</td>
+        <td>{{admission.isallocated}}</td>
       </tr>
     </tbody>
   </table>
 </div>
 <!-- <div class="d-block modal fade show" style="display: none"> -->
-<div class="d-block" id="myModel" style="display: none;">
-	<div class="modal-dialog" style="display: none;">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">Modal title</h4><button type="button" aria-label="Close" class="close" (click)="hideModelPopup()"><span
-						aria-hidden="true">×</span></button>
-			</div>
-			<div class="modal-body">
+<div class="d-block" id="myModel" style="display: none">
+  <div class="modal-dialog" style="display: none">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Modal title</h4>
+        <button
+          type="button"
+          aria-label="Close"
+          class="close"
+          (click)="hideModelPopup()"
+        >
+          <span aria-hidden="true"
+            ><i class="fa fa-close"></i><i class="fa fa-close"></i>×</span
+          >
+        </button>
+      </div>
+      <div class="modal-body">
         <div class="form-group m-form__group row">
-
           <div class="col-md-12">
-            <label class="col-form-label">
-              Admission Student Type
-            </label>
+            <label class="col-form-label"> Admission Student Type </label>
             <div>
-              <select class="form-control" [(ngModel)]="selectedAdmissionType" (change)="onAdmissionTypeChange()">
+              <select
+                class="form-control"
+                [(ngModel)]="selectedAdmissionType"
+                (change)="onAdmissionTypeChange()"
+              >
                 <option [ngValue]="null" disabled>Select Admission Type</option>
                 <option value="old">Old Admission</option>
                 <option value="new">New Admission</option>
               </select>
             </div>
           </div>
-          
+
           <div class="col-md-12" *ngIf="isStudentSelectionVisible">
-            <label class="col-form-label">
-              Select Student
-            </label>
+            <label class="col-form-label"> Select Student </label>
             <div>
               <select class="form-control" [(ngModel)]="selectedStudent">
                 <option [ngValue]="null" disabled>Select a Student</option>
-                <option *ngFor="let student of finalResultStudentData" [ngValue]="student.id">{{ student.text }}</option>
-
+                <option
+                  *ngFor="let student of finalResultStudentData"
+                  [ngValue]="student.id"
+                >
+                  {{ student.text }}
+                </option>
               </select>
             </div>
           </div>
         </div>
-			</div>
-			<div class="modal-footer">
-        <button type="button" class="btn btn-primary" [disabled]="selectedAdmissionType === 'old' && !selectedStudent" (click)="onSubmit()">Submit</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="hideModelPopup()">Close</button>
       </div>
-		</div>
-	</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="selectedAdmissionType === 'old' && !selectedStudent"
+          (click)="onSubmit()"
+        >
+          Submit
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="hideModelPopup()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

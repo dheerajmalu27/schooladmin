@@ -299,6 +299,31 @@ const routes: Routes = [
         data: { roles: ['admin'] },
       },
       {
+        path: 'admission-records',
+        loadChildren: () =>
+          import(
+            './pages/default/components/admission-records/admission-records.module'
+          ).then((x) => x.AdmissionRecordsModule),
+        data: { roles: ['admin'] },
+      },
+      {
+        path: 'fees-receipt',
+        loadChildren: () =>
+          import(
+            './pages/default/components/fees-payment/fees-payment.module'
+          ).then((x) => x.FeesPaymentModule),
+        data: { roles: ['admin'] },
+      },
+
+      {
+        path: 'pending-fees',
+        loadChildren: () =>
+          import(
+            './pages/default/components/pending-fees/pending-fees.module'
+          ).then((x) => x.PendingFeesModule),
+        data: { roles: ['admin'] },
+      },
+      {
         path: 'division-allocation',
         loadChildren: () =>
           import(
@@ -320,6 +345,14 @@ const routes: Routes = [
           import(
             './pages/default/components/school-docs/school-docs.module'
           ).then((x) => x.SchoolDocsModule),
+        data: { roles: ['admin', 'classteacher', 'teacher'] },
+      },
+      {
+        path: 'students-id',
+        loadChildren: () =>
+          import(
+            './pages/default/components/student-id/student-id.module'
+          ).then((x) => x.StudentIdModule),
         data: { roles: ['admin', 'classteacher', 'teacher'] },
       },
 
