@@ -1,0 +1,206 @@
+<!-- BEGIN: Subheader -->
+<div id="formTemplate">
+  <div class="m-content">
+    <div class="row">
+      <div class="col-lg-12">
+        <!--begin::Portlet-->
+        <div class="m-portlet">
+          <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+              <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                  <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">Student Id Cards</h3>
+              </div>
+            </div>
+          </div>
+          <!--begin::Form-->
+          <form
+            id="attendanceReport1"
+            [formGroup]="classStudentReportForm"
+            class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+            (ngSubmit)="attendanceReportSubmitForm(classStudentReportForm.value)"
+          >
+            <div class="m-portlet__body">
+              <div class="form-group m-form__group row">
+                <div class="col-md-6">
+                  <label class="col-form-label"> Select Class </label>
+                  <div>
+                    <select
+                      class="form-control m-select2 class_select2_drop_down"
+                      id="m_select2_1"
+                      formControlName="classId"
+                    ></select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="col-form-label"> Select Div </label>
+                  <div>
+                    <select
+                      class="form-control m-select2 division_select2_drop_down"
+                      id="m_select2_2"
+                      formControlName="divId"
+                    ></select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
+            >
+              <div class="m-form__actions m-form__actions--solid">
+                <div class="row">
+                  <div class="col-lg-2"></div>
+                  <div class="col-lg-6">
+                    <button
+                      type="submit"
+                      class="btn btn-brand"
+                      [disabled]="!classStudentReportForm.valid"
+                    >
+                      Show
+                    </button>
+
+                    <button type="reset" class="reload btn btn-secondary">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <!--end::Form-->
+        </div>
+        <!--end::Portlet-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<table id="exportTable" style="display: none">
+  <thead>
+    <tr>
+      <th>Roll No</th>
+      <th>Full Name</th>
+      <th *ngFor="let dateHeader of dateHeaders">{{ dateHeader }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of StudentClassListData">
+      <td>{{ student.rollNo }}</td>
+      <td>{{ student.fullName }}</td>
+      <td *ngFor="let dateHeader of dateHeaders">{{ student[dateHeader] }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="d-block" id="myModel" style="display: none">
+  <div class="modal-open" style="display: none">
+    <div class="modal-content" style="overflow-y: scroll; height: 100vh">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ pdfFileName | uppercase }}</h4>
+        <button
+          type="button"
+          aria-label="Close"
+          class="close"
+          (click)="hideModelPopup()"
+        >
+          <span aria-hidden="true"><i class="fa fa-close"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container" id="contentData">
+          <div class="row justify-content-center">
+            <div
+              class="col-mb-4"
+              *ngFor="let studentData of StudentClassListData"
+            >
+              <!-- Student ID Card -->
+              <div class="card mb-3">
+                <!-- School Logo and Name -->
+                <div class="card-header">
+                  <div class="row align-items-center">
+                    <!-- School Logo Column -->
+                    <div class="col-auto">
+                      <img
+                        src="{{imageUrlPath}}{{studentData.schoolLogo}}"
+                        alt="School Logo"
+                        class="img-fluid mb-2"
+                        style="max-width: 100px"
+                      />
+                    </div>
+                    <!-- School Name and Address Column -->
+                    <div class="col">
+                      <h5>{{studentData.schoolName}}</h5>
+                      <h6>{{studentData.schoolAddress}}</h6>
+                    </div>
+                  </div>
+                </div>
+                <!-- Student Photo and Details -->
+                <div class="card-body">
+                  <img
+                    src="{{imageUrlPath}}{{studentData.profileImage}}"
+                    alt="Student Photo"
+                    class="img-fluid mb-2 mx-auto d-block"
+                  />
+                  <h5 class="card-title text-center">STUDENT ID CARD</h5>
+                  <div class="row">
+                    <div class="col-sm">
+                      <p><strong>Name:</strong> {{ studentData.fullName }}</p>
+                      <p><strong>Roll No:</strong> {{ studentData.rollNo }}</p>
+                      <p>
+                        <strong>Emergency Person Name:</strong> {{
+                        studentData.fatherName }}
+                      </p>
+                      <p>
+                        <strong>Emergency Number:</strong> {{
+                        studentData.parentNumber }}
+                      </p>
+                      <p>
+                        <strong>Class:</strong> {{ studentData.className }}
+                        <strong>Division:</strong> {{ studentData.divName }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal-footer"
+        style="padding-top: 100px; padding-bottom: 100px"
+      >
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="tableToExcel('exportTable')"
+        >
+          <!-- <i class="m-nav__link-icon flaticon-multimedia-2"></i> -->
+          Excel
+        </button>
+        <button type="button" class="btn btn-primary" (click)="generateFile()">
+          PDF
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning"
+          data-dismiss="modal"
+          (click)="printDiv('contentData')"
+        >
+          Print
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="hideModelPopup()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
