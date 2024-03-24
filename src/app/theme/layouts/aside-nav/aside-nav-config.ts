@@ -36,7 +36,7 @@ export const MENU_CONFIG = {
     },
 
     {
-      label: 'Fees',
+      label: 'Fees & Expenses',
       icon: 'fa fa-money',
       subItems: [
         {
@@ -47,6 +47,15 @@ export const MENU_CONFIG = {
           loadChildren:
             './pages/default/components/pending-fees/pending-fees.module#PendingFeesModule',
           module: 'PendingFeesModule',
+        },
+        {
+          label: 'Expenses',
+          link: '/expenses',
+          icon: 'fa fa-user-plus',
+          path: 'expenses',
+          loadChildren:
+            './pages/default/components/expenses/expenses.module#ExpensesModule',
+          module: 'ExpensesModule',
         },
       ],
     },

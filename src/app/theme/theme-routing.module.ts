@@ -324,6 +324,14 @@ const routes: Routes = [
         data: { roles: ['admin'] },
       },
       {
+        path: 'expenses',
+        loadChildren: () =>
+          import('./pages/default/components/expenses/expenses.module').then(
+            (x) => x.ExpensesModule
+          ),
+        data: { roles: ['admin'] },
+      },
+      {
         path: 'division-allocation',
         loadChildren: () =>
           import(
@@ -547,6 +555,13 @@ const routes: Routes = [
   },
   {
     path: 'login',
+    loadChildren: () =>
+      import(
+        './pages/self-layout-blank/snippets/pages/user/user-login-2/user-login-2.module'
+      ).then((x) => x.UserLogin2Module),
+  },
+  {
+    path: 'reset-password/:token',
     loadChildren: () =>
       import(
         './pages/self-layout-blank/snippets/pages/user/user-login-2/user-login-2.module'

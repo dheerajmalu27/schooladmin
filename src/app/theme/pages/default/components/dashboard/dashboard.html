@@ -99,28 +99,56 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="m-widget1__item">
-              <div class="row m-row--no-padding align-items-center">
+            <div class="m-widget1">
+              <!--begin:: Widgets/Daily Sales-->
+              <h4 class="m-widget1__title">School Weekly Attendance</h4>
+              <div id="m_amcharts_1" style="height: 200px"></div>
+            </div>
+            <!--end:: Widgets/Daily Sales-->
+          </div>
+          <!--end:: Widgets/Stats2-1 -->
+        </div>
+        <div class="col-xl-4">
+          <div class="m-widget1">
+            <div class="m-widget1__item">
+              <div
+                class="row m-row--no-padding align-items-center"
+                style="cursor: pointer"
+                (click)="redirectToRoute('student')"
+              >
                 <div class="col">
-                  <h3 class="m-widget1__title">Absent Teachers</h3>
+                  <h3 class="m-widget1__title">Total Pending Fees</h3>
                 </div>
                 <div class="col m--align-right">
-                  <span class="m-widget1__number m--font-info"> 1 </span>
+                  <span class="m-widget1__number m--font-danger">
+                    {{feesData?.remainingFeesSum}}
+                  </span>
                 </div>
               </div>
             </div>
             <div class="m-widget1__item">
-              <div class="row m-row--no-padding align-items-center">
+              <div
+                class="row m-row--no-padding align-items-center"
+                style="cursor: pointer"
+                (click)="redirectToRoute('today-absent-student')"
+              >
                 <div class="col">
-                  <h3 class="m-widget1__title">Present Teacher</h3>
+                  <h3 class="m-widget1__title">Total Paid Fees</h3>
                 </div>
                 <div class="col m--align-right">
-                  <span class="m-widget1__number m--font-warning"> 99 </span>
+                  <span class="m-widget1__number m--font-brand">
+                    {{feesData?.totalPaidFeesSum}}
+                  </span>
                 </div>
               </div>
-            </div> -->
+            </div>
+            <!--begin:: Widgets/Stats2-3 -->
+            <div class="m-widget1__item">
+              <h4 class="m-widget1__title">School Fees Details</h4>
+              <div id="m_amcharts_12" style="height: 200px"></div>
+            </div>
+            <!--begin:: Widgets/Stats2-3 -->
           </div>
-          <!--end:: Widgets/Stats2-1 -->
         </div>
         <div class="col-xl-4">
           <div class="m-widget1">
@@ -160,22 +188,10 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="m-widget1">
-            <!--begin:: Widgets/Daily Sales-->
-            <h4 class="m-widget1__title">School Weekly Attendance</h4>
-            <div id="m_amcharts_1" style="height: 200px"></div>
-          </div>
-          <!--end:: Widgets/Daily Sales-->
-        </div>
-        <div class="col-xl-4">
-          <div class="m-widget1">
-            <!--begin:: Widgets/Stats2-3 -->
-            <h4 class="m-widget1__title">School Fees Details</h4>
-            <div id="m_amcharts_12" style="height: 200px"></div>
-            <h4 class="m-widget1__title">School Seats Details</h4>
-            <div id="m_amcharts_4" style="height: 200px"></div>
-            <!--begin:: Widgets/Stats2-3 -->
+            <div class="m-widget1__item">
+              <h4 class="m-widget1__title">School Seats Details</h4>
+              <div id="m_amcharts_4" style="height: 200px"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -275,10 +291,6 @@
       </div>
       <!--end:: Widgets/Support Tickets -->
     </div>
-  </div>
-  <!--End::Main Portlet-->
-  <!--Begin::Main Portlet-->
-  <div class="row">
     <div class="col-xl-6">
       <!--begin:: Widgets/Support Tickets -->
       <div class="m-portlet m-portlet--full-height">
