@@ -14,6 +14,7 @@ import * as _ from 'lodash';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { CommonService } from '../../../../../_services/common-api.service';
+import { environment } from 'src/environments/environment';
 declare let $: any;
 declare var toastr: any;
 @Component({
@@ -22,6 +23,7 @@ declare var toastr: any;
   encapsulation: ViewEncapsulation.None,
 })
 export class finalResultReportComponent implements OnInit, AfterViewInit {
+  imageUrlPath = environment.apiImageUrl;
   datatable: any;
   showTemplate: any;
   classData: any;
@@ -101,7 +103,28 @@ export class finalResultReportComponent implements OnInit, AfterViewInit {
         const imgData = canvas.toDataURL('image/png');
         const imgWidth = pdf.internal.pageSize.getWidth();
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        await pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+
+        // Calculate the aspect ratio of the image
+        const imgAspectRatio = imgWidth / imgHeight;
+
+        // Calculate the maximum dimensions of the image to fit the page
+        let maxImgWidth = pdfWidth;
+        let maxImgHeight = pdfHeight;
+
+        if (imgAspectRatio > pdfWidth / pdfHeight) {
+          maxImgHeight = maxImgWidth / imgAspectRatio;
+        } else {
+          maxImgWidth = maxImgHeight * imgAspectRatio;
+        }
+
+        // Calculate the position to center the image
+        const xPos = (pdfWidth - maxImgWidth) / 2;
+        const yPos = (pdfHeight - maxImgHeight) / 2;
+
+        await pdf.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight);
 
         // If this is the last card, save the PDF
         if (index === cards.length - 1) {

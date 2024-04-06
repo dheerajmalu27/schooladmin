@@ -98,7 +98,7 @@
                 </div>
                 <div class="form-group m-form__group row">
                   <div class="col-lg-4">
-                    <label class="col-form-label"> Student Image: </label>
+                    <label class="col-form-label">Student Image:</label>
                     <div>
                       <input
                         class="form-control"
@@ -106,8 +106,24 @@
                         (change)="selectFile($event)"
                         formControlName="image"
                         id="imageInput"
+                        accept="image/*"
                       />
                     </div>
+                    <div
+                      *ngIf="addAdmissionForm.get('image').value && !addAdmissionForm.get('image').errors"
+                    >
+                      <div
+                        *ngIf="addAdmissionForm.get('image').value.size / 1024 / 1024 > 2"
+                        class="text-danger"
+                      >
+                        File size should be within 2 MB.
+                      </div>
+                    </div>
+                    <span
+                      *ngIf="addAdmissionForm.controls['image'].hasError('required') && addAdmissionForm.controls['image'].touched"
+                      class="m--font-danger"
+                      >Please upload image of student.</span
+                    >
                   </div>
                   <div class="col-lg-4">
                     <label class="col-form-label"> Select Class </label>
@@ -155,9 +171,20 @@
                         <i class="la la-calendar-check-o"></i>
                       </span>
                     </div>
-                    <!-- <span *ngIf="addAdmissionForm.controls['dateOfBirth'].hasError('required')" class="m--font-danger">Please enter
-                  Date Of Birth.</span> -->
+                    <!-- <span
+                      *ngIf="addAdmissionForm.get('dateOfBirth').hasError('required')"
+                      class="text-danger"
+                    >
+                      Please enter Date Of Birth.
+                    </span> -->
+                    <span
+                      *ngIf="addAdmissionForm.get('dateOfBirth').errors?.invalidDate"
+                      class="text-danger"
+                    >
+                      Please enter a valid date.
+                    </span>
                   </div>
+
                   <div class="col-lg-4">
                     <label class="col-form-label"> Gender: </label>
                     <div>
@@ -249,8 +276,11 @@
                         placeholder="address"
                         formControlName="address"
                       />
-                      <!-- <span *ngIf="addAdmissionForm.controls['address'].hasError('required') && addAdmissionForm.controls['address'].touched"
-                      class="m--font-danger">Please enter admission address.</span> -->
+                      <span
+                        *ngIf="addAdmissionForm.controls['address'].hasError('required') && addAdmissionForm.controls['address'].touched"
+                        class="m--font-danger"
+                        >Please enter student address.</span
+                      >
                     </div>
                   </div>
                   <div class="col-lg-4">
@@ -330,9 +360,9 @@
                         formControlName="parentNumber"
                       />
                       <span
-                        *ngIf="addAdmissionForm.controls['parentNumber'].hasError('required') && addAdmissionForm.controls['parentNumber'].touched"
+                        *ngIf="addAdmissionForm.controls['parentNumber'].touched && (addAdmissionForm.controls['parentNumber'].hasError('required') || !addAdmissionForm.controls['parentNumber'].valid)"
                         class="m--font-danger"
-                        >Please Enter Moblie No.</span
+                        >Please Enter Valid Moblie No.</span
                       >
                     </div>
                   </div>
@@ -390,9 +420,9 @@
                         formControlName="parentNumberSecond"
                       />
                       <span
-                        *ngIf="addAdmissionForm.controls['parentNumberSecond'].hasError('required') && addAdmissionForm.controls['parentNumberSecond'].touched"
+                        *ngIf="addAdmissionForm.controls['parentNumberSecond'].touched && (addAdmissionForm.controls['parentNumberSecond'].hasError('required') || !addAdmissionForm.controls['parentNumberSecond'].valid)"
                         class="m--font-danger"
-                        >Please Enter Moblie No.</span
+                        >Please Enter Valid Moblie No.</span
                       >
                     </div>
                   </div>
@@ -701,7 +731,7 @@
                 </div>
 
                 <!-- Payment Frequency -->
-                <div
+                <!-- <div
                   class="form-group m-form__group row"
                   [ngClass]="{'has-danger': !addAdmissionForm.controls['paymentFrequency'].valid && addAdmissionForm.controls['paymentFrequency'].touched}"
                 >
@@ -724,7 +754,7 @@
                       >You must put a Payment Frequency.</span
                     >
                   </div>
-                </div>
+                </div> -->
 
                 <!-- Due Date -->
                 <div
@@ -739,11 +769,16 @@
                   <div class="col-lg-6">
                     <div class="input-group date">
                       <input
+                        type="text"
+                        id="m_dueDate"
                         class="form-control m-input"
-                        type="date"
-                        autocomplete="off"
                         formControlName="dueDate"
+                        name="dueDate"
+                        placeholder="Select date"
                       />
+                      <span class="input-group-addon">
+                        <i class="la la-calendar-check-o"></i>
+                      </span>
                     </div>
                     <span
                       *ngIf="addAdmissionForm.controls['dueDate'].hasError('required') && addAdmissionForm.controls['dueDate'].touched"

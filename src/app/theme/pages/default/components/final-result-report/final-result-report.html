@@ -61,97 +61,87 @@
           class="row justify-content-center"
           *ngFor="let student of finalResultData"
         >
-          <div class="col-md-4 student-row">
+          <div class="col-md-5 student-row" style="padding-top: 15px">
             <!--begin:: Widgets/Latest Updates-->
-            <div class="m-portlet m-portlet--full-height m-portlet--fit">
-              <div class="m-portlet__head">
-                <div
-                  class="m-portlet__head-caption"
-                  style="
-                    text-align: center;
-                    padding: 20px;
-                    text-transform: capitalize;
-                  "
-                >
-                  <h3
-                    class="m-portlet__head-text"
-                    style="color: #36a3f7 !important"
-                  >
-                    {{schoolProfileData.schoolName}}
-                  </h3>
-                  <h5 style="color: #36a3f7 !important">
-                    {{schoolProfileData.schoolAddress}}
-                  </h5>
-                  <h6 style="color: #36a3f7 !important">
-                    School Reg No:{{schoolProfileData.regNo}}
-                  </h6>
+            <div class="card mb-4">
+              <!-- School Logo and Name -->
 
-                  <div
-                    class="row"
-                    style="font-size: 1rem; font-weight: 500; margin-bottom: 0"
-                  >
-                    <div class="col-3">
-                      <p>Student ID: {{ student.studentId }}</p>
-                    </div>
-                    <div class="col-6">
-                      <p>Student Name: {{ student.studentName }}</p>
-                    </div>
-                    <!-- <div class="col-3">
-												<p>Roll No: {{ student.rollNo }}</p>
-											</div> -->
+              <div class="card-header">
+                <div class="row align-items-center">
+                  <!-- School Logo Column -->
+                  <div class="col-auto">
+                    <img
+                      src="{{imageUrlPath}}{{schoolProfileData.schoolLogo}}"
+                      alt="School Logo"
+                      class="img-fluid mb-2"
+                      style="max-width: 100px"
+                    />
                   </div>
-
-                  <div
-                    class="row"
-                    style="font-size: 1rem; font-weight: 500; margin-bottom: 0"
-                  >
-                    <div class="col-3">
-                      <p>Percentage: {{ student.percentage }}</p>
-                    </div>
-                    <div class="col-6">
-                      <p>Rank: {{ student.rank }}</p>
-                    </div>
-                    <div class="col-3">
-                      <p>Result: Final Result</p>
-                    </div>
+                  <!-- School Name and Address Column -->
+                  <div class="col">
+                    <h5>{{schoolProfileData.schoolName}}</h5>
+                    <h6>{{schoolProfileData.schoolAddress}}</h6>
+                    <h6>School Reg No:{{schoolProfileData.regNo}}</h6>
                   </div>
                 </div>
+                <!-- Student Information -->
               </div>
-              <div class="m-portlet__body">
-                <div
-                  class="m-widget4 m-widget4--chart-bottom"
-                  style="min-height: 350px"
-                >
-                  <div
-                    class="m-widget4__item"
-                    *ngFor="let subject of parseResultData(student.resultData);let i = index"
-                  >
-                    <div class="m-widget4__ext">
-                      <a
-                        href="#"
-                        class="m-widget4__icon m--font-brand"
-                        *ngIf="subject.name!='Total'"
-                      >
-                        {{i+1}}
-                      </a>
-                    </div>
-                    <div class="m-widget4__info">
-                      <span class="m-widget4__text"> {{ subject.name }} </span>
-                    </div>
-                    <div class="m-widget4__ext">
-                      <span class="m-widget4__stats m--font-info">
-                        <span class="m-widget4__number m--font-accent">
-                          {{ subject.marks }}/{{ subject.total }}
-                        </span>
-                      </span>
-                    </div>
+              <!-- Subject Marks Table -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <table class="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <th class="font-weight-bold">Student ID</th>
+                          <td>{{ student.studentId }}</td>
+                          <th class="font-weight-bold">Percentage</th>
+                          <td>{{ student.percentage }}</td>
+                        </tr>
+                        <tr>
+                          <th class="font-weight-bold">Student Name</th>
+                          <td>{{ student.studentName }}</td>
+                          <th class="font-weight-bold">Rank</th>
+                          <td>{{ student.rank }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Subject</th>
+                      <th>Marks</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Loop through subjectData and display subject marks -->
+                    <tr
+                      *ngFor="let subject of parseResultData(student.resultData);let i = index"
+                    >
+                      <td *ngIf="subject.name!='Total'">{{i+1}}</td>
+                      <td *ngIf="subject.name!='Total'">{{ subject.name }}</td>
+                      <td *ngIf="subject.name!='Total'">
+                        {{ subject.marks }}/{{ subject.total }}
+                      </td>
+                      <td *ngIf="subject.name=='Total'" colspan="2">
+                        <b> {{ subject.name }}</b>
+                      </td>
+                      <td *ngIf="subject.name=='Total'">
+                        <b>{{ subject.marks }}/{{ subject.total }}</b>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <!-- Total Marks Row -->
+                </table>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <div class="modal-footer" style="padding-top: 100px">
         <button
           type="button"

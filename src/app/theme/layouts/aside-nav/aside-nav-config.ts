@@ -321,6 +321,14 @@ export const MENU_CONFIG = {
           link: '/leaving-certificate',
         },
         {
+          label: 'Old Student List',
+          link: '/old-student',
+          icon: 'flaticon-user',
+          path: 'old-student',
+          loadChildren: './pages/default/components/student/student.module',
+          module: 'OldStudentModule',
+        },
+        {
           label: 'fees-receipt',
           link: '/fees-receipt',
           // icon: 'fa fa-user-plus',
@@ -522,6 +530,7 @@ export const MENU_CONFIG = {
           loadChildren: './pages/default/components/student/student.module',
           module: 'StudentModule',
         },
+
         {
           label: 'Today Absent Student',
           link: '/today-absent-student',

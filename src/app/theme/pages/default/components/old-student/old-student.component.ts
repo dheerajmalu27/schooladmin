@@ -25,10 +25,10 @@ declare let $: any;
 declare var toastr: any;
 @Component({
   selector: '.m-grid__item.m-grid__item--fluid.m-wrapper',
-  templateUrl: './student.html',
+  templateUrl: './old-student.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class StudentComponent implements OnInit, AfterViewInit {
+export class OldStudentComponent implements OnInit, AfterViewInit {
   datatable: any; // Change the type to your actual data type
   studentData: any = null;
   TitleSet: any = null;
@@ -199,7 +199,7 @@ export class StudentComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {}
   private getStudentList() {
-    this.baseservice.get('student?active=1').subscribe(
+    this.baseservice.get('student?active=0').subscribe(
       (data: any) => {
         this.studentData = data.student;
         this.refreshDataTable(data);

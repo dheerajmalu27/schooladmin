@@ -84,6 +84,14 @@ const routes: Routes = [
         data: { roles: ['admin', 'classteacher', 'teacher'] },
       },
       {
+        path: 'old-student',
+        loadChildren: () =>
+          import(
+            './pages/default/components/old-student/old-student.module'
+          ).then((x) => x.OldStudentModule),
+        data: { roles: ['admin'] },
+      },
+      {
         path: 'absent-student',
         loadChildren: () =>
           import(

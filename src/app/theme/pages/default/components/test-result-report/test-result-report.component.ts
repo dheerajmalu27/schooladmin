@@ -11,14 +11,19 @@ import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { environment } from 'src/environments/environment';
 import { CommonService } from '../../../../../_services/common-api.service';
 declare let $: any;
 @Component({
   selector: '.m-grid__item.m-grid__item--fluid.m-wrapper',
   templateUrl: './test-result-report.html',
+  styles: [
+    '.progress-card {  border: 1px solid #dee2e6; border-radius: 0.25rem;padding: 1rem;margin-bottom: 1rem;}',
+  ],
   encapsulation: ViewEncapsulation.None,
 })
 export class testResultReportComponent implements OnInit, AfterViewInit {
+  imageUrlPath = environment.apiImageUrl;
   myArray = [];
   classData: any = null;
   testResultData: any;
@@ -131,32 +136,7 @@ export class testResultReportComponent implements OnInit, AfterViewInit {
 
     document.body.innerHTML = originalContents;
   }
-  // public generateFile() {
-  //   const data = document.getElementById('contentData');
-  //   console.log(data);
 
-  //   if (!data) {
-  //     console.error('Element #contentToConvert not found!');
-  //     return; // exit the function if the element wasn't found
-  //   }
-  //   data.style.background = 'white';
-
-  //   // Determine the dimensions of the content
-  //   let contentWidth = data.offsetWidth - 150;
-  //   const contentHeight = data.offsetHeight;
-
-  //   // Create a PDF with the same dimensions as the content
-  //   const pdf = new jsPDF('p', 'mm', [contentWidth, contentHeight]);
-  //   // const pdf = new jsPDF('p', 'mm', 'a4');
-  //   // Convert the content to a canvas
-  //   html2canvas(data, { useCORS: true, scale: 2, logging: false }).then(
-  //     (canvas) => {
-  //       const contentDataURL = canvas.toDataURL('image/png');
-  //       pdf.addImage(contentDataURL, 'PNG', 0, 0, contentWidth, contentHeight);
-  //       pdf.save(this.pdfFileName); // Generated PDF
-  //     }
-  //   );
-  // }
   public async generateFile() {
     const cards = document.querySelectorAll<HTMLElement>('.student-row');
 
@@ -220,27 +200,7 @@ export class testResultReportComponent implements OnInit, AfterViewInit {
       };
     });
   }
-  public genratefile() {
-    const data = document.getElementById('pdfgeneratehtml');
 
-    if (!data) {
-      console.error('Element #contentToConvert not found!');
-      return; // exit the function if the element wasn't found
-    }
-    html2canvas(data, { useCORS: true, scale: 2 }).then((canvas) => {
-      // Few necessary setting options
-      var imgWidth = 208;
-      var pageHeight = 295;
-      var imgHeight = (canvas.height * imgWidth) / canvas.width;
-      var heightLeft = imgHeight;
-
-      const contentDataURL = canvas.toDataURL('image/png');
-      let pdf = new jsPDF('p', 'mm', 'a4'); //new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
-      var position = 0;
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-      pdf.save(this.pdfFileName); // Generated PDF
-    });
-  }
   ngAfterViewInit() {}
   public showModelPopup() {
     $('#myModel').addClass('modal fade show');

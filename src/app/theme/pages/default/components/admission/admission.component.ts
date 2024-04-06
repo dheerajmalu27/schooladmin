@@ -5,6 +5,7 @@ import {
   AfterViewInit,
   Renderer2,
   ElementRef,
+  ViewChild,
 } from '@angular/core';
 import { Helpers } from '../../../../../helpers';
 import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
@@ -31,6 +32,7 @@ declare var moment: any;
   encapsulation: ViewEncapsulation.None,
 })
 export class AdmissionComponent implements OnInit, AfterViewInit {
+  @ViewChild('datepicker') datepicker!: ElementRef;
   datatable: any; // Change the type to your actual data type
   admissionData: any = null;
   admissionReportData: any = null;
@@ -66,8 +68,8 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
       firstName: new FormControl('', Validators.required),
       middleName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
-      image: new FormControl(),
-      dateOfBirth: new FormControl(),
+      image: [null],
+      dateOfBirth: [''], // Custom age validation
       classId: new FormControl(),
       divId: new FormControl(),
       nationality: new FormControl('', Validators.required),
@@ -116,6 +118,44 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
 
     this.listTemplate();
   }
+  fileSizeValidator(maxSizeInMB: number) {
+    return (control: FormControl) => {
+      if (control.value && control.value.size) {
+        const fileSizeInMB = control.value.size / (1024 * 1024); // Convert bytes to MB
+        if (fileSizeInMB > maxSizeInMB) {
+          return {
+            fileSizeExceeded: {
+              maxFileSize: maxSizeInMB,
+              actualFileSize: fileSizeInMB,
+            },
+          };
+        }
+      }
+      return null;
+    };
+  }
+  onDateSelected(date: Date) {
+    this.addAdmissionForm.get('dateOfBirth').setValue(date); // Update the form control value
+    this.addAdmissionForm.get('dateOfBirth').markAsDirty();
+  }
+
+  // Custom validator for age validation
+  ageValidator(minimumAge: any) {
+    return (control: FormControl) => {
+      const currentDate = new Date();
+      const selectedDate = new Date(control.value);
+      const age = currentDate.getFullYear() - selectedDate.getFullYear();
+      if (age < minimumAge) {
+        return {
+          ageValidation: {
+            requiredAge: minimumAge,
+            actualAge: age,
+          },
+        };
+      }
+      return null;
+    };
+  }
   listTemplate() {
     $('#addTemplate').hide();
     $('#listTemplate').show();
@@ -137,10 +177,6 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
       '.m-grid__item.m-grid__item--fluid.m-wrapper',
       'assets/demo/default/custom/components/forms/widgets/select2.js'
     );
-    this._script.load(
-      '.m-grid__item.m-grid__item--fluid.m-wrapper',
-      'assets/demo/default/custom/components/forms/widgets/bootstrap-datepicker.js'
-    );
 
     $('#m_datepickerSet').datepicker({
       format: 'yyyy-mm-dd', // Set the date format
@@ -149,8 +185,18 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
         leftArrow: '<i class="la la-angle-left"></i>',
         rightArrow: '<i class="la la-angle-right"></i>',
       },
+      startDate: '-20y',
+      endDate: '-5y',
     });
-    $('#m_datepickerSet').on('change', function () {});
+    $('#m_dueDate').datepicker({
+      format: 'yyyy-mm-dd', // Set the date format
+      todayHighlight: true,
+      templates: {
+        leftArrow: '<i class="la la-angle-left"></i>',
+        rightArrow: '<i class="la la-angle-right"></i>',
+      },
+      startDate: '1d',
+    });
   }
   disableOtherFeeControl() {
     // this.addAdmissionForm.get('totalFee').disable();
@@ -187,8 +233,10 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
     $('#m_user_profile_tab_2').show();
   }
   public previoustab() {
-    $('#m_user_profile_tab_2').hide();
-    $('#m_user_profile_tab_1').show();
+    console.log(this.addAdmissionForm);
+
+    // $('#m_user_profile_tab_2').hide();
+    // $('#m_user_profile_tab_1').show();
   }
   public calculatepayment(event: any, feeData: any) {
     const totalFeeValue = event.target.value;
@@ -337,6 +385,17 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
         leftArrow: '<i class="la la-angle-left"></i>',
         rightArrow: '<i class="la la-angle-right"></i>',
       },
+      startDate: '-20y',
+      endDate: '-5y',
+    });
+    $('#m_dueDate').datepicker({
+      format: 'yyyy-mm-dd', // Set the date format
+      todayHighlight: true,
+      templates: {
+        leftArrow: '<i class="la la-angle-left"></i>',
+        rightArrow: '<i class="la la-angle-right"></i>',
+      },
+      startDate: '1d',
     });
     setTimeout(() => {
       $('.class_select2_drop_down')
@@ -359,6 +418,7 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
     $('#listTemplate').hide();
     $('#addTemplate').hide();
     $('#addTemplate').show();
+
     let feesPaymentDetails = JSON.parse(admissionData.feesPaymentDetails);
     this.addAdmissionForm.setValue({
       id: admissionData.id,
@@ -368,7 +428,7 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
       lastName: admissionData.lastName,
       // image: admissionData.profileImage,
       image: '',
-      dateOfBirth: admissionData.dateOfBirth,
+      dateOfBirth: '',
       classId: admissionData.classId,
       divId: admissionData.divId,
       nationality: admissionData.nationality,
@@ -447,7 +507,27 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
       paymentMethod: admissionData.paymentMethod,
       paymentDetail: admissionData.paymentDetail,
     });
+    $('#m_datepickerSet').datepicker({
+      format: 'yyyy-mm-dd',
+      todayHighlight: true,
+      templates: {
+        leftArrow: '<i class="la la-angle-left"></i>',
+        rightArrow: '<i class="la la-angle-right"></i>',
+      },
+      startDate: '-20y',
+      endDate: '-5y',
+    });
+    $('#m_dueDate').datepicker({
+      format: 'yyyy-mm-dd', // Set the date format
+      todayHighlight: true,
+      templates: {
+        leftArrow: '<i class="la la-angle-left"></i>',
+        rightArrow: '<i class="la la-angle-right"></i>',
+      },
+      startDate: '1d',
+    });
 
+    $('#m_datepickerSet').datepicker('setDate', admissionData.dateOfBirth);
     this.disableOtherFeeControl();
     this._script.load(
       '.m-grid__item.m-grid__item--fluid.m-wrapper',
@@ -457,14 +537,7 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
       '.m-grid__item.m-grid__item--fluid.m-wrapper',
       'assets/demo/default/custom/components/forms/widgets/bootstrap-datepicker.js'
     );
-    $('#m_datepickerSet').datepicker({
-      format: 'yyyy-mm-dd',
-      todayHighlight: true,
-      templates: {
-        leftArrow: '<i class="la la-angle-left"></i>',
-        rightArrow: '<i class="la la-angle-right"></i>',
-      },
-    });
+
     setTimeout(() => {
       $('.class_select2_drop_down')
         .val(<string>admissionData.classId)
@@ -613,8 +686,19 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
     this.baseservice.get('classlist').subscribe(
       (data: any) => {
         this.classData = data.class;
+        // Add an empty option as the first element in the classData array
+        this.classData.unshift({ id: '', text: 'select class' });
+
         $('.class_select2_drop_down').empty().trigger('change');
         (<any>$('.class_select2_drop_down')).select2({ data: this.classData });
+
+        // Disable the "select class" option
+        $('.class_select2_drop_down option').each(() => {
+          if ($(this).text() === 'select class') {
+            $(this).prop('disabled', true);
+          }
+        });
+
         $('.class_select2_drop_down').on('change', (event: any) => {
           console.log(event);
           this.onClassChange();
@@ -625,6 +709,7 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
       }
     );
   }
+
   onClassChange() {
     const selectedClassId = $('.class_select2_drop_down').val();
     this.addAdmissionForm.controls['classId'].setValue(selectedClassId);
@@ -680,6 +765,7 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
     data.divId = 1;
     data.classId = $('.class_select2_drop_down').val();
     data.dateOfBirth = $('#m_datepickerSet').val();
+    data.dueDate = $('#m_dueDate').val();
 
     const fileInput = document.getElementById(
       'imageInput'
@@ -701,6 +787,7 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
     if (fileInput && fileInput.files) {
       if (fileInput.files.length > 0) {
         formData.set('image', fileInput.files[0]);
+        data.image = fileInput.files[0];
       }
     }
     if (data.id != '' && data.id != undefined && data.id != null) {
@@ -722,8 +809,10 @@ export class AdmissionComponent implements OnInit, AfterViewInit {
       delete data.id;
       delete data.studentId;
       // console.log(formData);
-      console.log(data);
-      this.baseservice.post('admission', data).subscribe(
+      formData.delete('studentId');
+      formData.delete('id');
+      // console.log(data);
+      this.baseservice.post('admission', formData).subscribe(
         (data: any) => {
           this.getAdmissionList();
           this.listTemplate();
